@@ -175,78 +175,6 @@ function fjp_whatsapp_flotante() {
         </a>
     </div>
 
-    <style>
-    .whatsapp-flotante {
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        z-index: 9999;
-        animation: whatsapp-entrada 0.5s ease-out;
-    }
-
-    .whatsapp-btn {
-        display: flex;
-        align-items: center;
-        background: #25D366;
-        color: white;
-        padding: 15px 20px;
-        border-radius: 50px;
-        text-decoration: none;
-        box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
-        transition: all 0.3s ease;
-        font-family: 'Inter', sans-serif;
-        font-weight: 500;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .whatsapp-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4);
-        background: #128C7E;
-    }
-
-    .whatsapp-btn i {
-        font-size: 24px;
-        margin-right: 10px;
-    }
-
-    .whatsapp-text {
-        font-size: 14px;
-        white-space: nowrap;
-    }
-
-    @keyframes whatsapp-entrada {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @media (max-width: 768px) {
-        .whatsapp-flotante {
-            bottom: 20px;
-            right: 20px;
-        }
-
-        .whatsapp-btn {
-            padding: 12px 16px;
-        }
-
-        .whatsapp-text {
-            display: none;
-        }
-
-        .whatsapp-btn i {
-            margin-right: 0;
-            font-size: 20px;
-        }
-    }
-    </style>
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -322,72 +250,6 @@ add_action('wp_generate_attachment_metadata', 'fjp_generar_webp');
  */
 function fjp_personalizar_givewp_form($form_id) {
     ?>
-    <style>
-    .give-form-wrap {
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    }
-
-    .give-total-wrap {
-        background: #2A9D8F;
-        color: white;
-        padding: 20px;
-        border-radius: 10px;
-        text-align: center;
-        margin-bottom: 25px;
-    }
-
-    .give-total-wrap .give-currency-symbol {
-        background: #264653;
-        padding: 5px 10px;
-        border-radius: 5px;
-        margin-right: 5px;
-    }
-
-    .give-btn {
-        background: linear-gradient(135deg, #2A9D8F 0%, #264653 100%);
-        border: none;
-        padding: 15px 30px;
-        border-radius: 8px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        transition: all 0.3s ease;
-    }
-
-    .give-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(42, 157, 143, 0.4);
-    }
-
-    .give-form .form-row label {
-        font-weight: 600;
-        color: #264653;
-        margin-bottom: 8px;
-    }
-
-    .give-form input[type="text"],
-    .give-form input[type="email"],
-    .give-form input[type="tel"],
-    .give-form select,
-    .give-form textarea {
-        border: 2px solid #e9ecef;
-        border-radius: 8px;
-        padding: 12px 15px;
-        transition: all 0.3s ease;
-    }
-
-    .give-form input:focus,
-    .give-form select:focus,
-    .give-form textarea:focus {
-        border-color: #2A9D8F;
-        box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.1);
-        outline: none;
-    }
-    </style>
-
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Añadir animación al montos
@@ -744,36 +606,8 @@ function fjp_cambiar_prefijo_tablas() {
     */
 }
 
-/**
- * Proteger contra inyección SQL
- */
-function fjp_proteger_sql_injection($input) {
-    global $wpdb;
-
-    if (is_array($input)) {
-        return array_map('fjp_proteger_sql_injection', $input);
-    }
-
-    // Escapar caracteres especiales
-    $input = $wpdb->_real_escape($input);
-
-    // Eliminar palabras reservadas de SQL
-    $sql_keywords = ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'UNION', 'WHERE', 'OR', 'AND', 'LIKE', 'SCRIPT', 'ALERT'];
-    $input = str_ireplace($sql_keywords, '', $input);
-
-    return $input;
-}
-
-// Aplicar protección a todos los inputs
-foreach ($_GET as $key => $value) {
-    $_GET[$key] = fjp_proteger_sql_injection($value);
-}
-foreach ($_POST as $key => $value) {
-    $_POST[$key] = fjp_proteger_sql_injection($value);
-}
-foreach ($_REQUEST as $key => $value) {
-    $_REQUEST[$key] = fjp_proteger_sql_injection($value);
-}
+// Se ha eliminado la función fjp_proteger_sql_injection por problemas de seguridad y compatibilidad.
+// WordPress ya maneja la sanitización de inputs a través de sus APIs (prepare, sanitize_*, etc).
 
 // ===== FUNCIONES DE RENDIMIENTO PARA PÁGINAS ESPECÍFICAS =====
 
