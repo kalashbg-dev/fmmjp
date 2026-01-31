@@ -15,23 +15,39 @@
         "first_day": 1
       },
       {
-        "key": "field_url_noticia",
+        "key": "field_url_noticia_legacy",
         "label": "URL de la Noticia",
         "name": "url_de_noticia",
         "type": "url",
-        "instructions": "Ingrese el enlace original de la noticia",
-        "required": 1,
+        "instructions": "Ingrese el enlace original de la noticia (Principal)",
+        "required": 0,
         "placeholder": "https://ejemplo.com/noticia"
       },
       {
-        "key": "field_fuente_noticia",
+        "key": "field_url_noticia_shortcode",
+        "label": "URL Externa (Shortcode)",
+        "name": "url_noticia",
+        "type": "url",
+        "instructions": "Usado en loops de noticias",
+        "required": 0
+      },
+      {
+        "key": "field_fuente_legacy",
         "label": "Fuente",
         "name": "fuente",
         "type": "text",
-        "instructions": "Nombre del medio o fuente original de la noticia",
-        "required": 1,
-        "placeholder": "Ej: Diario La Nación, Infobae, etc.",
+        "instructions": "Nombre del medio o fuente original",
+        "required": 0,
+        "placeholder": "Ej: Diario La Nación",
         "maxlength": 100
+      },
+      {
+        "key": "field_fuente_shortcode",
+        "label": "Fuente (Shortcode)",
+        "name": "fuente_noticia",
+        "type": "text",
+        "instructions": "Usado en loops de noticias",
+        "required": 0
       },
       {
         "key": "field_autor_noticia",
@@ -125,6 +141,109 @@
     ],
     "active": true,
     "description": "Campos para el Custom Post Type Noticias"
+  },
+  {
+    "key": "group_testimonios_cpt",
+    "title": "Campos de Testimonios (CPT)",
+    "fields": [
+      {
+        "key": "field_cargo_testimonio",
+        "label": "Cargo / Rol",
+        "name": "cargo_testimonio",
+        "type": "text",
+        "instructions": "Ej: Voluntaria Educativa",
+        "required": 0
+      },
+      {
+        "key": "field_organizacion_testimonio",
+        "label": "Organización",
+        "name": "organizacion_testimonio",
+        "type": "text",
+        "instructions": "Organización a la que pertenece (opcional)",
+        "required": 0
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "post_type",
+          "operator": "==",
+          "value": "testimonios"
+        }
+      ]
+    ],
+    "active": true
+  },
+  {
+    "key": "group_voluntariado_pagina",
+    "title": "Configuración Página Voluntariado",
+    "fields": [
+      {
+        "key": "field_voluntariado_testimonios",
+        "label": "Testimonios de Voluntarios",
+        "name": "voluntariado_testimonios",
+        "type": "repeater",
+        "instructions": "Agregar testimonios específicos para la página de voluntariado",
+        "required": 0,
+        "layout": "row",
+        "button_label": "Agregar Testimonio",
+        "sub_fields": [
+          {
+            "key": "field_vol_testimonio_nombre",
+            "label": "Nombre",
+            "name": "nombre",
+            "type": "text"
+          },
+          {
+            "key": "field_vol_testimonio_cargo",
+            "label": "Cargo",
+            "name": "cargo",
+            "type": "text"
+          },
+          {
+            "key": "field_vol_testimonio_texto",
+            "label": "Testimonio",
+            "name": "testimonio",
+            "type": "textarea"
+          },
+          {
+            "key": "field_vol_testimonio_imagen",
+            "label": "Imagen",
+            "name": "imagen",
+            "type": "image",
+            "return_format": "url"
+          }
+        ]
+      },
+      {
+        "key": "field_voluntariado_areas",
+        "label": "Áreas de Voluntariado",
+        "name": "voluntariado_areas",
+        "type": "repeater",
+        "instructions": "Definir las áreas disponibles en el formulario",
+        "required": 0,
+        "layout": "table",
+        "button_label": "Agregar Área",
+        "sub_fields": [
+          {
+            "key": "field_vol_area_titulo",
+            "label": "Título",
+            "name": "titulo",
+            "type": "text"
+          }
+        ]
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "page_template",
+          "operator": "==",
+          "value": "page-voluntariado.php"
+        }
+      ]
+    ],
+    "active": true
   },
   {
     "key": "group_configuracion_general",
