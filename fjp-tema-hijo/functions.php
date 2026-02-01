@@ -721,3 +721,12 @@ require_once FJP_THEME_DIR . '/inc/shortcodes.php';
  * Agregar funciones de utilidad
  */
 require_once FJP_THEME_DIR . '/functions-advanced.php';
+
+/**
+ * Habilitar soporte para estilos del editor y theme.json
+ */
+function fjp_setup_theme_features() {
+    add_theme_support('editor-styles');
+    add_editor_style('style.css');
+}
+add_action('after_setup_theme', 'fjp_setup_theme_features');

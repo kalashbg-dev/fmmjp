@@ -9,7 +9,7 @@ Bienvenido a la guía oficial del sitio web de la Fundación Juventud Progresist
 
 1.  **Editor de Bloques (Gutenberg)**: Para editar textos, imágenes y estructura de las páginas de manera visual.
 2.  **Componentes Dinámicos (Shortcodes)**: Para secciones automáticas como Noticias, Alianzas y Donaciones.
-3.  **Design Tokens**: Un sistema de diseño centralizado para mantener la coherencia visual.
+3.  **Editor del Sitio (Global Styles)**: Un sistema de diseño centralizado para mantener la coherencia visual desde el admin.
 
 ---
 
@@ -20,7 +20,7 @@ Bienvenido a la guía oficial del sitio web de la Fundación Juventud Progresist
 3.  [Componentes Dinámicos (Shortcodes)](#3-componentes-dinámicos-shortcodes)
 4.  [Configuración de Noticias](#4-configuración-de-noticias)
 5.  [Sistema de Donaciones](#5-sistema-de-donaciones)
-6.  [Personalización Visual](#6-personalización-visual)
+6.  [Personalización Visual (Global Styles)](#6-personalización-visual-global-styles)
 
 ---
 
@@ -124,17 +124,19 @@ El tema soporta **GiveWP** para procesar donaciones.
 
 ---
 
-## 6. PERSONALIZACIÓN VISUAL
+## 6. PERSONALIZACIÓN VISUAL (GLOBAL STYLES)
 
-Los colores y tipografías están centralizados. Para cambiarlos globalmente, un desarrollador debe editar el archivo `style.css` y modificar las variables en `:root`.
+Gracias a la integración con `theme.json`, puedes personalizar la identidad visual del sitio directamente desde el panel de administración, sin tocar código CSS.
 
-```css
-:root {
-    --fjp-primary: #0056D2; /* Color principal */
-    --fjp-secondary: #28A745; /* Color secundario */
-    /* ... */
-}
-```
+### Cómo cambiar colores y fuentes:
+1.  Ve a **Apariencia > Editor**.
+2.  Haz clic en el icono de **Estilos** (círculo mitad negro/blanco) en la esquina superior derecha.
+3.  Desde allí podrás editar:
+    -   **Paleta de Colores**: Cambia el "Azul Primario", "Verde Secundario", etc. Esto actualizará automáticamente todos los botones, fondos y textos que usen estos colores.
+    -   **Tipografía**: Cambia la fuente de los Encabezados (Montserrat) o del Cuerpo (Inter), así como sus tamaños base.
+    -   **Diseño**: Ajusta el ancho del contenido o el espaciado entre bloques.
+
+> **Nota:** Estos cambios anularán los valores por defecto definidos en el tema, dándote control total sobre la estética.
 
 ---
 
