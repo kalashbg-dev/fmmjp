@@ -12,8 +12,9 @@ $noticia_id = get_the_ID();
 $titulo = get_the_title();
 $contenido = get_the_content();
 $fecha = get_field('fecha_de_publicacion', $noticia_id);
-$fuente = get_field('fuente', $noticia_id);
-$url_noticia = get_field('url_de_noticia', $noticia_id);
+// Check new field first, then legacy
+$fuente = get_field('fuente_noticia', $noticia_id) ?: get_field('fuente', $noticia_id);
+$url_noticia = get_field('url_noticia', $noticia_id) ?: get_field('url_de_noticia', $noticia_id);
 $autor = get_field('autor_de_la_noticia', $noticia_id);
 $resumen = get_field('resumen_de_la_noticia', $noticia_id);
 $categoria_tematica = get_field('categoria_tematica', $noticia_id);
