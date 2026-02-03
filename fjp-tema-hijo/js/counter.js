@@ -6,26 +6,31 @@ jQuery(document).ready(function($) {
         var options = {
             root: null,
             rootMargin: '0px',
-            threshold: 0.5
+            threshold: 0.1 // Trigger sooner
         };
 
         var observer = new IntersectionObserver(function(entries, observer) {
             entries.forEach(function(entry) {
                 if (entry.isIntersecting) {
                     var target = $(entry.target);
-                    var countTo = target.attr('data-target');
+                    // Ensure we parse the target number correctly, removing commas if present
+                    var rawTarget = target.attr('data-target');
+                    var countTo = parseInt(rawTarget.replace(/,/g, ''), 10);
 
-                    $({ countNum: target.text() }).animate({
+                    // Stop any running animation
+                    target.stop(true, true);
+
+                    $({ countNum: 0 }).animate({
                         countNum: countTo
                     },
                     {
                         duration: 2000,
-                        easing: 'linear',
+                        easing: 'swing', // 'swing' is smoother than 'linear'
                         step: function() {
                             target.text(Math.floor(this.countNum));
                         },
                         complete: function() {
-                            target.text(this.countNum);
+                            target.text(countTo); // Set final value explicitly
                         }
                     });
 
