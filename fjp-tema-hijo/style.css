@@ -1738,3 +1738,12 @@ textarea.form-control {
     position: relative;
     z-index: 2;
 }
+
+/* Counter Section Shortcode Styling */
+.fjp-counter-section {
+    padding: var(--fjp-spacing-xl) 0;
+    background-color: var(--fjp-primary); /* Default background to ensure visibility */
+    color: var(--fjp-white);
+    border-radius: var(--fjp-radius-md);
+    margin-bottom: var(--fjp-spacing-lg);
+}
