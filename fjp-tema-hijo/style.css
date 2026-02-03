@@ -1719,3 +1719,22 @@ textarea.form-control {
 .wp-block-details { background: var(--fjp-white); border: 1px solid var(--fjp-gray); border-radius: var(--fjp-radius-md); padding: 1rem; margin-bottom: 1rem; }
 .wp-block-details summary { font-weight: 700; color: var(--fjp-dark-blue); cursor: pointer; }
 .wp-block-quote { border-left: 4px solid var(--fjp-yellow); padding-left: 1rem; font-style: italic; color: var(--fjp-dark-gray); }
+
+/* Helper for Inner Page Hero */
+.fjp-hero-interior {
+    padding: var(--fjp-spacing-xxl) 0;
+    color: var(--fjp-white);
+    position: relative;
+    overflow: hidden;
+}
+.fjp-hero-interior::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.fjp-hero-interior > * {
+    position: relative;
+    z-index: 2;
+}
