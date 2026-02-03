@@ -15,39 +15,22 @@
         "first_day": 1
       },
       {
-        "key": "field_url_noticia_legacy",
+        "key": "field_url_noticia",
         "label": "URL de la Noticia",
-        "name": "url_de_noticia",
+        "name": "url_noticia",
         "type": "url",
-        "instructions": "Ingrese el enlace original de la noticia (Principal)",
+        "instructions": "Ingrese el enlace original de la noticia (si es externa)",
         "required": 0,
         "placeholder": "https://ejemplo.com/noticia"
       },
       {
-        "key": "field_url_noticia_shortcode",
-        "label": "URL Externa (Shortcode)",
-        "name": "url_noticia",
-        "type": "url",
-        "instructions": "Usado en loops de noticias",
-        "required": 0
-      },
-      {
-        "key": "field_fuente_legacy",
+        "key": "field_fuente_noticia",
         "label": "Fuente",
-        "name": "fuente",
+        "name": "fuente_noticia",
         "type": "text",
         "instructions": "Nombre del medio o fuente original",
         "required": 0,
-        "placeholder": "Ej: Diario La Nación",
-        "maxlength": 100
-      },
-      {
-        "key": "field_fuente_shortcode",
-        "label": "Fuente (Shortcode)",
-        "name": "fuente_noticia",
-        "type": "text",
-        "instructions": "Usado en loops de noticias",
-        "required": 0
+        "placeholder": "Ej: Diario La Nación"
       },
       {
         "key": "field_autor_noticia",
