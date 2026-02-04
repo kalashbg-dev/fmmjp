@@ -1,755 +1,519 @@
 <?php
 /**
- * FJP - Fundación Juventud Progresista
- * Functions del tema hijo de Astra
+ * FJP Premium - Fundación Juventud Progresista
+ * Premium Child Theme for Astra
  *
- * @package FJP
+ * A professional-grade WordPress theme with native Gutenberg integration,
+ * advanced custom post types, and seamless style synchronization.
+ *
+ * @package FJP_Premium
  * @author Equipo de Desarrollo Web FJP
- * @version 1.0.0
+ * @version 2.0.0
+ * @link https://fundacionjuventudprogresista.org
  */
 
-// Prevenir acceso directo
+// Prevent direct access
 if (!defined('ABSPATH')) {
-    exit;
+    exit('Direct access forbidden.');
 }
 
 /**
- * Definir constantes del tema
+ * ==============================================
+ * THEME CONSTANTS
+ * ==============================================
  */
-define('FJP_VERSION', '1.0.0');
+define('FJP_VERSION', '2.0.0');
 define('FJP_THEME_DIR', get_stylesheet_directory());
-define('FJP_THEME_URI', get_stylesheet_directory_uri());
+define('FJP_THEME_URI', get_stylesheet_directory_url());
+define('FJP_INC_DIR', FJP_THEME_DIR . '/inc');
+define('FJP_ASSETS_URI', FJP_THEME_URI . '/assets');
 
 /**
- * Cargar scripts y estilos del tema hijo
+ * ==============================================
+ * THEME SETUP
+ * ==============================================
  */
-function fjp_enqueue_scripts() {
-    // Estilos principales
-    wp_enqueue_style('fjp-main', FJP_THEME_URI . '/style.css', array('astra-theme-css'), FJP_VERSION);
+function fjp_premium_setup() {
+    // Load text domain for translations
+    load_child_theme_textdomain('fjp', FJP_THEME_DIR . '/languages');
+    
+    // Add theme support features
+    add_theme_support('post-thumbnails');
+    add_theme_support('html5', array(
+        'search-form',
+        'comment-form',
+        'comment-list',
+        'gallery',
+        'caption',
+        'style',
+        'script'
+    ));
+    add_theme_support('responsive-embeds');
+    add_theme_support('editor-styles');
+    add_theme_support('wp-block-styles');
+    add_theme_support('align-wide');
+    add_theme_support('custom-logo');
+    add_theme_support('custom-header');
+    add_theme_support('custom-background');
+    add_theme_support('title-tag');
+    
+    // Add editor stylesheet
+    add_editor_style('style.css');
+    
+    // Register custom image sizes
+    add_image_size('fjp-hero', 1920, 1080, true);
+    add_image_size('fjp-featured', 1200, 675, true);
+    add_image_size('fjp-thumbnail', 600, 400, true);
+    add_image_size('fjp-card', 400, 300, true);
+    add_image_size('fjp-logo', 200, 100, false);
+    add_image_size('fjp-profile', 150, 150, true);
+    
+    // Register navigation menus
+    register_nav_menus(array(
+        'primary' => __('Menú Principal', 'fjp'),
+        'footer' => __('Menú del Footer', 'fjp'),
+        'social' => __('Redes Sociales', 'fjp'),
+    ));
+}
+add_action('after_setup_theme', 'fjp_premium_setup');
 
-    // Scripts principales
-    wp_enqueue_script('fjp-main', FJP_THEME_URI . '/js/main.js', array('jquery'), FJP_VERSION, true);
-    wp_enqueue_script('fjp-counter', FJP_THEME_URI . '/js/counter.js', array('jquery'), FJP_VERSION, true);
-    wp_enqueue_script('fjp-news', FJP_THEME_URI . '/js/news.js', array('jquery'), FJP_VERSION, true);
-    wp_enqueue_script('fjp-donations', FJP_THEME_URI . '/js/donations.js', array('jquery'), FJP_VERSION, true);
-    wp_enqueue_script('fjp-volunteers', FJP_THEME_URI . '/js/volunteers.js', array('jquery'), FJP_VERSION, true);
-
-    // Localizar scripts para AJAX
-    wp_localize_script('fjp-main', 'fjp_ajax', array(
+/**
+ * ==============================================
+ * ENQUEUE STYLES & SCRIPTS
+ * ==============================================
+ */
+function fjp_premium_enqueue_assets() {
+    // Parent theme styles (Astra)
+    wp_enqueue_style('astra-theme-css', get_template_directory_uri() . '/style.css', array(), FJP_VERSION);
+    
+    // Child theme main stylesheet
+    wp_enqueue_style('fjp-main-styles', FJP_THEME_URI . '/style.css', array('astra-theme-css'), FJP_VERSION);
+    
+    // Google Fonts
+    wp_enqueue_style(
+        'fjp-google-fonts',
+        'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap',
+        array(),
+        null
+    );
+    
+    // Font Awesome
+    wp_enqueue_style(
+        'fjp-font-awesome',
+        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
+        array(),
+        '6.4.0'
+    );
+    
+    // Animate.css for animations
+    wp_enqueue_style(
+        'fjp-animate',
+        'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css',
+        array(),
+        '4.1.1'
+    );
+    
+    // Bootstrap Grid (optional, only if needed)
+    wp_enqueue_style(
+        'fjp-bootstrap-grid',
+        'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap-grid.min.css',
+        array(),
+        '5.3.0'
+    );
+    
+    // Main JavaScript
+    wp_enqueue_script('fjp-main-js', FJP_THEME_URI . '/js/main.js', array('jquery'), FJP_VERSION, true);
+    
+    // Counter animations
+    wp_enqueue_script('fjp-counter-js', FJP_THEME_URI . '/js/counter.js', array('jquery'), FJP_VERSION, true);
+    
+    // News/Blog functionality
+    if (is_singular('noticias') || is_post_type_archive('noticias') || is_page('noticias')) {
+        wp_enqueue_script('fjp-news-js', FJP_THEME_URI . '/js/news.js', array('jquery'), FJP_VERSION, true);
+    }
+    
+    // Volunteer form functionality
+    if (is_page('voluntariado') || is_page('voluntarios')) {
+        wp_enqueue_script('fjp-volunteers-js', FJP_THEME_URI . '/js/volunteers.js', array('jquery'), FJP_VERSION, true);
+    }
+    
+    // Donations functionality
+    if (is_page('donaciones') || is_page('donar')) {
+        wp_enqueue_script('fjp-donations-js', FJP_THEME_URI . '/js/donations.js', array('jquery'), FJP_VERSION, true);
+    }
+    
+    // Localize scripts for AJAX
+    wp_localize_script('fjp-main-js', 'fjpData', array(
         'ajax_url' => admin_url('admin-ajax.php'),
         'nonce' => wp_create_nonce('fjp_nonce'),
-        'api_url' => home_url('/wp-json/wp/v2/')
+        'api_url' => esc_url_raw(rest_url('wp/v2/')),
+        'theme_url' => FJP_THEME_URI,
+        'site_name' => get_bloginfo('name'),
+        'site_url' => home_url('/'),
     ));
-
-    // Estilos de Bootstrap para componentes específicos
-    wp_enqueue_style('bootstrap-grid', 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap-grid.min.css', array(), '5.1.3');
-
-    // Font Awesome
-    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css', array(), '6.4.0');
-
-    // Animate.css (Required for homepage animations)
-    wp_enqueue_style('animate-css', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css', array(), '4.1.1');
-
-    // Google Fonts
-    wp_enqueue_style('fjp-google-fonts', 'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap', array(), null);
-}
-add_action('wp_enqueue_scripts', 'fjp_enqueue_scripts', 20);
-
-/**
- * Registrar Custom Post Type: Noticias
- */
-function fjp_register_noticias_cpt() {
-    $labels = array(
-        'name'                  => _x('Noticias', 'Post type general name', 'fjp'),
-        'singular_name'         => _x('Noticia', 'Post type singular name', 'fjp'),
-        'menu_name'             => _x('Noticias', 'Admin Menu text', 'fjp'),
-        'name_admin_bar'        => _x('Noticia', 'Add New on Toolbar', 'fjp'),
-        'add_new'               => __('Agregar Nueva', 'fjp'),
-        'add_new_item'          => __('Agregar Nueva Noticia', 'fjp'),
-        'new_item'              => __('Nueva Noticia', 'fjp'),
-        'edit_item'             => __('Editar Noticia', 'fjp'),
-        'view_item'             => __('Ver Noticia', 'fjp'),
-        'all_items'             => __('Todas las Noticias', 'fjp'),
-        'search_items'          => __('Buscar Noticias', 'fjp'),
-        'parent_item_colon'     => __('Noticias Padre:', 'fjp'),
-        'not_found'             => __('No se encontraron noticias.', 'fjp'),
-        'not_found_in_trash'    => __('No se encontraron noticias en la papelera.', 'fjp'),
-        'featured_image'        => _x('Imagen de Portada', 'Overrides the "Featured Image" phrase for this post type. Added in 4.3', 'fjp'),
-        'set_featured_image'    => _x('Asignar imagen de portada', 'Overrides the "Set featured image" phrase for this post type. Added in 4.3', 'fjp'),
-        'remove_featured_image' => _x('Eliminar imagen de portada', 'Overrides the "Remove featured image" phrase for this post type. Added in 4.3', 'fjp'),
-        'use_featured_image'    => _x('Usar como imagen de portada', 'Overrides the "Use as featured image" phrase for this post type. Added in 4.3', 'fjp'),
-        'archives'              => _x('Archivos de Noticias', 'The post type archive label used in nav menus. Default "Post Archives". Added in 4.4', 'fjp'),
-        'insert_into_item'      => _x('Insertar en la noticia', 'Overrides the "Insert into post"/"Insert into page" phrase (used when inserting media into a post). Added in 4.4', 'fjp'),
-        'uploaded_to_this_item' => _x('Subido a esta noticia', 'Overrides the "uploaded to this post"/"uploaded to this page" phrase (used when viewing media attached to a post). Added in 4.4', 'fjp'),
-        'filter_items_list'     => _x('Filtrar lista de noticias', 'Screen reader text for the filter links heading on the post type listing screen. Default "Filter posts list"/"Filter pages list". Added in 4.4', 'fjp'),
-        'items_list_navigation' => _x('Navegación de lista de noticias', 'Screen reader text for the pagination heading on the post type listing screen. Default "Posts list navigation"/"Pages list navigation". Added in 4.4', 'fjp'),
-        'items_list'            => _x('Lista de noticias', 'Screen reader text for the items list heading on the post type listing screen. Default "Posts list"/"Pages list". Added in 4.4', 'fjp'),
-    );
-
-    $args = array(
-        'labels'             => $labels,
-        'public'             => true,
-        'publicly_queryable' => true,
-        'show_ui'            => true,
-        'show_in_menu'       => true,
-        'query_var'          => true,
-        'rewrite'            => array('slug' => 'noticias', 'with_front' => false),
-        'capability_type'    => 'post',
-        'has_archive'        => true,
-        'hierarchical'       => false,
-        'menu_position'      => 5,
-        'menu_icon'          => 'dashicons-media-document',
-        'supports'           => array('title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments'),
-        'show_in_rest'       => true,
-        'rest_base'          => 'noticias',
-        'rest_controller_class' => 'WP_REST_Posts_Controller',
-    );
-
-    register_post_type('noticias', $args);
-}
-add_action('init', 'fjp_register_noticias_cpt');
-
-/**
- * Registrar taxonomías para Noticias
- */
-function fjp_register_noticias_taxonomies() {
-    // Categorías de Noticias
-    $labels = array(
-        'name'              => _x('Categorías de Noticias', 'taxonomy general name', 'fjp'),
-        'singular_name'     => _x('Categoría de Noticia', 'taxonomy singular name', 'fjp'),
-        'search_items'      => __('Buscar Categorías', 'fjp'),
-        'all_items'         => __('Todas las Categorías', 'fjp'),
-        'parent_item'       => __('Categoría Padre', 'fjp'),
-        'parent_item_colon' => __('Categoría Padre:', 'fjp'),
-        'edit_item'         => __('Editar Categoría', 'fjp'),
-        'update_item'       => __('Actualizar Categoría', 'fjp'),
-        'add_new_item'      => __('Agregar Nueva Categoría', 'fjp'),
-        'new_item_name'     => __('Nombre de Nueva Categoría', 'fjp'),
-        'menu_name'         => __('Categorías', 'fjp'),
-    );
-
-    $args = array(
-        'hierarchical'      => true,
-        'labels'            => $labels,
-        'show_ui'           => true,
-        'show_admin_column' => true,
-        'query_var'         => true,
-        'rewrite'           => array('slug' => 'categoria-noticias'),
-        'show_in_rest'      => true,
-    );
-
-    register_taxonomy('categoria_noticias', array('noticias'), $args);
-
-    // Etiquetas de Noticias
-    $labels = array(
-        'name'                       => _x('Etiquetas de Noticias', 'taxonomy general name', 'fjp'),
-        'singular_name'             => _x('Etiqueta de Noticia', 'taxonomy singular name', 'fjp'),
-        'search_items'               => __('Buscar Etiquetas', 'fjp'),
-        'popular_items'               => __('Etiquetas Populares', 'fjp'),
-        'all_items'                   => __('Todas las Etiquetas', 'fjp'),
-        'parent_item'                 => null,
-        'parent_item_colon'           => null,
-        'edit_item'                   => __('Editar Etiqueta', 'fjp'),
-        'update_item'                 => __('Actualizar Etiqueta', 'fjp'),
-        'add_new_item'                => __('Agregar Nueva Etiqueta', 'fjp'),
-        'new_item_name'               => __('Nombre de Nueva Etiqueta', 'fjp'),
-        'separate_items_with_commas' => __('Separar etiquetas con comas', 'fjp'),
-        'add_or_remove_items'         => __('Agregar o eliminar etiquetas', 'fjp'),
-        'choose_from_most_used'       => __('Elegir de las más usadas', 'fjp'),
-        'not_found'                   => __('No se encontraron etiquetas.', 'fjp'),
-        'menu_name'                   => __('Etiquetas', 'fjp'),
-    );
-
-    $args = array(
-        'hierarchical'          => false,
-        'labels'                => $labels,
-        'show_ui'               => true,
-        'show_admin_column'     => true,
-        'update_count_callback' => '_update_post_term_count',
-        'query_var'             => true,
-        'rewrite'               => array('slug' => 'etiqueta-noticias'),
-        'show_in_rest'          => true,
-    );
-
-    register_taxonomy('etiqueta_noticias', 'noticias', $args);
-}
-add_action('init', 'fjp_register_noticias_taxonomies');
-
-/**
- * Registrar Custom Post Type: Voluntarios
- */
-function fjp_register_voluntarios_cpt() {
-    $labels = array(
-        'name'                  => _x('Voluntarios', 'Post type general name', 'fjp'),
-        'singular_name'         => _x('Voluntario', 'Post type singular name', 'fjp'),
-        'menu_name'             => _x('Voluntarios', 'Admin Menu text', 'fjp'),
-        'name_admin_bar'        => _x('Voluntario', 'Add New on Toolbar', 'fjp'),
-        'add_new'               => __('Agregar Nuevo', 'fjp'),
-        'add_new_item'          => __('Agregar Nuevo Voluntario', 'fjp'),
-        'new_item'              => __('Nuevo Voluntario', 'fjp'),
-        'edit_item'             => __('Editar Voluntario', 'fjp'),
-        'view_item'             => __('Ver Voluntario', 'fjp'),
-        'all_items'             => __('Todos los Voluntarios', 'fjp'),
-        'search_items'          => __('Buscar Voluntarios', 'fjp'),
-        'not_found'             => __('No se encontraron voluntarios.', 'fjp'),
-        'not_found_in_trash'    => __('No se encontraron voluntarios en la papelera.', 'fjp'),
-    );
-
-    $args = array(
-        'labels'             => $labels,
-        'public'             => false,
-        'show_ui'            => true,
-        'show_in_menu'       => true,
-        'query_var'          => false,
-        'capability_type'    => 'post',
-        'has_archive'        => false,
-        'hierarchical'       => false,
-        'menu_position'      => 6,
-        'menu_icon'          => 'dashicons-groups',
-        'supports'           => array('title'),
-        'show_in_rest'       => false,
-    );
-
-    register_post_type('voluntarios', $args);
-}
-add_action('init', 'fjp_register_voluntarios_cpt');
-
-/**
- * Registrar Custom Post Type: Alianzas
- */
-function fjp_register_alianzas_cpt() {
-    $labels = array(
-        'name'                  => _x('Alianzas', 'Post type general name', 'fjp'),
-        'singular_name'         => _x('Alianza', 'Post type singular name', 'fjp'),
-        'menu_name'             => _x('Alianzas', 'Admin Menu text', 'fjp'),
-        'name_admin_bar'        => _x('Alianza', 'Add New on Toolbar', 'fjp'),
-        'add_new'               => __('Agregar Nuevo', 'fjp'),
-        'add_new_item'          => __('Agregar Nuevo Alianza', 'fjp'),
-        'new_item'              => __('Nueva Alianza', 'fjp'),
-        'edit_item'             => __('Editar Alianza', 'fjp'),
-        'view_item'             => __('Ver Alianza', 'fjp'),
-        'all_items'             => __('Todas las Alianzas', 'fjp'),
-        'search_items'          => __('Buscar Alianzas', 'fjp'),
-        'not_found'             => __('No se encontraron alianzas.', 'fjp'),
-        'not_found_in_trash'    => __('No se encontraron alianzas en la papelera.', 'fjp'),
-    );
-
-    $args = array(
-        'labels'             => $labels,
-        'public'             => true,
-        'publicly_queryable' => true,
-        'show_ui'            => true,
-        'show_in_menu'       => true,
-        'query_var'          => true,
-        'rewrite'            => array('slug' => 'alianzas', 'with_front' => false),
-        'capability_type'    => 'post',
-        'has_archive'        => true,
-        'hierarchical'       => false,
-        'menu_position'      => 7,
-        'menu_icon'          => 'dashicons-networking',
-        'supports'           => array('title', 'thumbnail'),
-        'show_in_rest'       => true,
-    );
-
-    register_post_type('alianzas', $args);
-}
-add_action('init', 'fjp_register_alianzas_cpt');
-
-/**
- * Registrar Custom Post Type: Testimonios
- */
-function fjp_register_testimonios_cpt() {
-    $labels = array(
-        'name'                  => _x('Testimonios', 'Post type general name', 'fjp'),
-        'singular_name'         => _x('Testimonio', 'Post type singular name', 'fjp'),
-        'menu_name'             => _x('Testimonios', 'Admin Menu text', 'fjp'),
-        'name_admin_bar'        => _x('Testimonio', 'Add New on Toolbar', 'fjp'),
-        'add_new'               => __('Agregar Nuevo', 'fjp'),
-        'add_new_item'          => __('Agregar Nuevo Testimonio', 'fjp'),
-        'new_item'              => __('Nuevo Testimonio', 'fjp'),
-        'edit_item'             => __('Editar Testimonio', 'fjp'),
-        'view_item'             => __('Ver Testimonio', 'fjp'),
-        'all_items'             => __('Todos los Testimonios', 'fjp'),
-        'search_items'          => __('Buscar Testimonios', 'fjp'),
-        'not_found'             => __('No se encontraron testimonios.', 'fjp'),
-        'not_found_in_trash'    => __('No se encontraron testimonios en la papelera.', 'fjp'),
-    );
-
-    $args = array(
-        'labels'             => $labels,
-        'public'             => true,
-        'publicly_queryable' => true,
-        'show_ui'            => true,
-        'show_in_menu'       => true,
-        'query_var'          => true,
-        'rewrite'            => array('slug' => 'testimonios', 'with_front' => false),
-        'capability_type'    => 'post',
-        'has_archive'        => true,
-        'hierarchical'       => false,
-        'menu_position'      => 8,
-        'menu_icon'          => 'dashicons-format-quote',
-        'supports'           => array('title', 'editor', 'thumbnail'),
-        'show_in_rest'       => true,
-    );
-
-    register_post_type('testimonios', $args);
-}
-add_action('init', 'fjp_register_testimonios_cpt');
-
-/**
- * Registrar ACF para Noticias Externas
- */
-function fjp_register_acf_noticias() {
-    if (function_exists('acf_add_local_field_group')) {
-        acf_add_local_field_group(array(
-            'key' => 'group_noticias_externas',
-            'title' => 'Información de Noticia Externa',
-            'fields' => array(
-                array(
-                    'key' => 'field_url_noticia',
-                    'label' => 'URL de Noticia',
-                    'name' => 'url_noticia',
-                    'type' => 'url',
-                    'instructions' => 'URL completa de la noticia original (incluir https://)',
-                    'required' => false,
-                    'conditional_logic' => 0,
-                    'wrapper' => array(
-                        'width' => '',
-                        'class' => '',
-                        'id' => '',
-                    ),
-                    'default_value' => '',
-                    'placeholder' => 'https://ejemplo.com/noticia',
-                ),
-                array(
-                    'key' => 'field_fuente_noticia',
-                    'label' => 'Fuente',
-                    'name' => 'fuente_noticia',
-                    'type' => 'text',
-                    'instructions' => 'Nombre del medio o fuente original de la noticia',
-                    'required' => false,
-                    'conditional_logic' => 0,
-                    'wrapper' => array(
-                        'width' => '',
-                        'class' => '',
-                        'id' => '',
-                    ),
-                    'default_value' => '',
-                    'placeholder' => 'Ej: Diario Libre, Listín Diario, etc.',
-                    'prepend' => '',
-                    'append' => '',
-                    'maxlength' => '',
-                ),
-                array(
-                    'key' => 'field_imagen_portada',
-                    'label' => 'Imagen de Portada',
-                    'name' => 'imagen_portada',
-                    'type' => 'image',
-                    'instructions' => 'Imagen principal de la noticia (si es diferente a la destacada)',
-                    'required' => false,
-                    'conditional_logic' => 0,
-                    'wrapper' => array(
-                        'width' => '',
-                        'class' => '',
-                        'id' => '',
-                    ),
-                    'return_format' => 'array',
-                    'preview_size' => 'medium',
-                    'library' => 'all',
-                    'min_width' => '',
-                    'min_height' => '',
-                    'min_size' => '',
-                    'max_width' => '',
-                    'max_height' => '',
-                    'max_size' => '',
-                    'mime_types' => '',
-                ),
-            ),
-            'location' => array(
-                array(
-                    array(
-                        'param' => 'post_type',
-                        'operator' => '==',
-                        'value' => 'noticias',
-                    ),
-                ),
-            ),
-            'menu_order' => 0,
-            'position' => 'normal',
-            'style' => 'default',
-            'label_placement' => 'top',
-            'instruction_placement' => 'label',
-            'hide_on_screen' => '',
-            'active' => true,
-            'description' => '',
-            'show_in_rest' => 1,
-        ));
+    
+    // Comments script (if enabled)
+    if (is_singular() && comments_open() && get_option('thread_comments')) {
+        wp_enqueue_script('comment-reply');
     }
 }
-add_action('acf/init', 'fjp_register_acf_noticias');
+add_action('wp_enqueue_scripts', 'fjp_premium_enqueue_assets', 20);
 
 /**
- * Redireccionar noticias externas
+ * ==============================================
+ * LOAD MODULAR COMPONENTS
+ * ==============================================
  */
-function fjp_redirect_noticias_externas() {
+
+// Custom Post Types
+require_once FJP_INC_DIR . '/custom-post-types.php';
+
+// ACF Field Groups
+require_once FJP_INC_DIR . '/acf-fields.php';
+
+// ACF Blocks (Gutenberg integration)
+if (file_exists(FJP_INC_DIR . '/acf-blocks.php')) {
+    require_once FJP_INC_DIR . '/acf-blocks.php';
+}
+
+// Shortcodes
+require_once FJP_INC_DIR . '/shortcodes.php';
+
+// Customizer (Theme options)
+require_once FJP_INC_DIR . '/customizer.php';
+
+// Patterns (Block patterns)
+require_once FJP_INC_DIR . '/patterns.php';
+
+// Custom layout metabox (Pro features)
+require_once FJP_INC_DIR . '/custom-layout-metabox.php';
+
+// Performance optimizations
+require_once FJP_INC_DIR . '/performance.php';
+
+// Admin customizations
+if (is_admin()) {
+    require_once FJP_INC_DIR . '/admin.php';
+}
+
+// REST API extensions
+if (file_exists(FJP_INC_DIR . '/rest-api.php')) {
+    require_once FJP_INC_DIR . '/rest-api.php';
+}
+
+// Security enhancements
+if (file_exists(FJP_INC_DIR . '/security.php')) {
+    require_once FJP_INC_DIR . '/security.php';
+}
+
+/**
+ * ==============================================
+ * BODY CLASSES
+ * ==============================================
+ */
+function fjp_premium_body_classes($classes) {
     global $post;
-
-    if (is_singular('noticias')) {
-        $url_externa = get_field('url_noticia', $post->ID);
-
-        if (!empty($url_externa) && filter_var($url_externa, FILTER_VALIDATE_URL)) {
-            wp_redirect($url_externa, 301);
-            exit;
+    
+    // Add page slug
+    if (is_singular()) {
+        $classes[] = 'page-' . $post->post_name;
+    }
+    
+    // Add post type
+    if (is_singular()) {
+        $classes[] = 'post-type-' . get_post_type();
+    }
+    
+    // Add custom classes based on ACF options
+    if (function_exists('get_field')) {
+        if (get_field('page_header_transparent')) {
+            $classes[] = 'fjp-transparent-header';
+        }
+        if (get_field('page_header_sticky')) {
+            $classes[] = 'fjp-sticky-header';
+        }
+        if (get_field('page_hide_title')) {
+            $classes[] = 'fjp-hide-title';
+        }
+        if (get_field('page_hide_footer')) {
+            $classes[] = 'fjp-hide-footer';
+        }
+        
+        // Add width class
+        $width = get_field('page_width');
+        if ($width && $width !== 'default') {
+            $classes[] = 'fjp-width-' . $width;
         }
     }
-}
-add_action('template_redirect', 'fjp_redirect_noticias_externas');
-
-/**
- * Detectar idioma del navegador y redireccionar
- */
-function fjp_detectar_idioma_y_redireccionar() {
-    if (!is_admin() && !isset($_COOKIE['fjp_idioma_detectado'])) {
-        $idioma_navegador = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-
-        // Establecer cookie para evitar redirecciones repetidas
-        setcookie('fjp_idioma_detectado', $idioma_navegador, time() + (86400 * 30), '/'); // 30 días
-
-        // Si el idioma es inglés, redirigir a versión en inglés
-        if ($idioma_navegador === 'en') {
-            $url_en = home_url('/en');
-            if (function_exists('tp_url')) {
-                $url_en = tp_url('/en');
-            }
-            wp_redirect($url_en);
-            exit;
-        }
-    }
-}
-add_action('init', 'fjp_detectar_idioma_y_redireccionar');
-
-/**
- * Optimización automática de imágenes
- */
-function fjp_optimizar_imagenes($content) {
-    return preg_replace('/<img([^>]+?)>/', '<img$1 loading="lazy" decoding="async">', $content);
-}
-add_filter('the_content', 'fjp_optimizar_imagenes');
-
-/**
- * Agregar metaboxes personalizados
- */
-function fjp_agregar_metaboxes() {
-    add_meta_box(
-        'fjp_informacion_destacada',
-        'Información Destacada',
-        'fjp_render_metabox_destacado',
-        array('noticias', 'alianzas', 'testimonios'),
-        'side',
-        'default'
-    );
-}
-add_action('add_meta_boxes', 'fjp_agregar_metaboxes');
-
-function fjp_render_metabox_destacado($post) {
-    $value = get_post_meta($post->ID, '_fjp_destacado', true);
-    wp_nonce_field('fjp_destacado_nonce', 'fjp_destacado_nonce');
-    ?>
-    <label for="fjp_destacado">
-        <input type="checkbox" id="fjp_destacado" name="fjp_destacado" value="1" <?php checked($value, '1'); ?> />
-        Marcar como destacado
-    </label>
-    <?php
-}
-
-/**
- * Guardar metaboxes
- */
-function fjp_guardar_metaboxes($post_id) {
-    if (!isset($_POST['fjp_destacado_nonce'])) {
-        return;
-    }
-
-    if (!wp_verify_nonce($_POST['fjp_destacado_nonce'], 'fjp_destacado_nonce')) {
-        return;
-    }
-
-    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-        return;
-    }
-
-    if (!current_user_can('edit_post', $post_id)) {
-        return;
-    }
-
-    $destacado = isset($_POST['fjp_destacado']) ? '1' : '0';
-    update_post_meta($post_id, '_fjp_destacado', $destacado);
-}
-add_action('save_post', 'fjp_guardar_metaboxes');
-
-/**
- * Agregar columnas personalizadas al admin
- */
-function fjp_agregar_columnas_admin($columns) {
-    $columns['destacado'] = 'Destacado';
-    $columns['fecha_evento'] = 'Fecha Evento';
-    return $columns;
-}
-add_filter('manage_noticias_posts_columns', 'fjp_agregar_columnas_admin');
-add_filter('manage_alianzas_posts_columns', 'fjp_agregar_columnas_admin');
-
-function fjp_render_columnas_admin($column, $post_id) {
-    switch ($column) {
-        case 'destacado':
-            $destacado = get_post_meta($post_id, '_fjp_destacado', true);
-            echo $destacado === '1' ? '<span style="color: #28a745;">✓ Sí</span>' : '<span style="color: #dc3545;">✗ No</span>';
-            break;
-
-        case 'fecha_evento':
-            echo get_the_date('d/m/Y', $post_id);
-            break;
-    }
-}
-add_action('manage_posts_custom_column', 'fjp_render_columnas_admin', 10, 2);
-
-/**
- * Función para obtener noticias destacadas
- */
-function fjp_obtener_noticias_destacadas($cantidad = 3) {
-    $args = array(
-        'post_type' => 'noticias',
-        'posts_per_page' => $cantidad,
-        'meta_query' => array(
-            array(
-                'key' => '_fjp_destacado',
-                'value' => '1',
-                'compare' => '='
-            )
-        ),
-        'orderby' => 'date',
-        'order' => 'DESC'
-    );
-
-    return new WP_Query($args);
-}
-
-/**
- * Función para obtener alianzas
- */
-function fjp_obtener_alianzas($cantidad = -1) {
-    $args = array(
-        'post_type' => 'alianzas',
-        'posts_per_page' => $cantidad,
-        'orderby' => 'title',
-        'order' => 'ASC'
-    );
-
-    return new WP_Query($args);
-}
-
-/**
- * Función para obtener testimonios
- */
-function fjp_obtener_testimonios($cantidad = 3) {
-    $args = array(
-        'post_type' => 'testimonios',
-        'posts_per_page' => $cantidad,
-        'orderby' => 'rand'
-    );
-
-    return new WP_Query($args);
-}
-
-/**
- * Agregar soporte para imágenes en alianzas
- */
-function fjp_agregar_soporte_imagenes() {
-    add_theme_support('post-thumbnails', array('post', 'page', 'alianzas', 'testimonios'));
-
-    // Agregar tamaños de imagen personalizados
-    add_image_size('fjp-logo-alianza', 200, 100, false);
-    add_image_size('fjp-testimonio', 150, 150, true);
-    add_image_size('fjp-noticia-card', 400, 250, true);
-}
-add_action('after_setup_theme', 'fjp_agregar_soporte_imagenes');
-
-/**
- * Personalizar excerpt para noticias
- */
-function fjp_custom_excerpt($length) {
-    if (get_post_type() === 'noticias') {
-        return 20; // 20 palabras para noticias
-    }
-    return $length;
-}
-add_filter('excerpt_length', 'fjp_custom_excerpt', 999);
-
-/**
- * Agregar clases CSS personalizadas al body
- */
-function fjp_body_classes($classes) {
+    
+    // Archive classes
     if (is_post_type_archive('noticias') || is_singular('noticias')) {
-        $classes[] = 'fjp-noticias';
+        $classes[] = 'fjp-noticias-archive';
     }
-
-    if (is_page('donaciones') || is_page('donar')) {
-        $classes[] = 'fjp-donaciones';
+    
+    // Browser detection (for compatibility)
+    if (isset($_SERVER['HTTP_USER_AGENT'])) {
+        $browser = fjp_get_browser_name();
+        $classes[] = 'browser-' . $browser;
     }
-
+    
     return $classes;
 }
-add_filter('body_class', 'fjp_body_classes');
+add_filter('body_class', 'fjp_premium_body_classes');
 
 /**
- * Desactivar comentarios en ciertos post types
+ * ==============================================
+ * EXCERPT LENGTH & MORE TAG
+ * ==============================================
  */
-function fjp_desactivar_comentarios($open, $post_id) {
-    $post = get_post($post_id);
+function fjp_premium_excerpt_length($length) {
+    if (is_post_type_archive('noticias') || is_singular('noticias')) {
+        return 30;
+    }
+    return 20;
+}
+add_filter('excerpt_length', 'fjp_premium_excerpt_length', 999);
 
-    if ($post->post_type === 'voluntarios' || $post->post_type === 'alianzas') {
+function fjp_premium_excerpt_more($more) {
+    return '...';
+}
+add_filter('excerpt_more', 'fjp_premium_excerpt_more');
+
+/**
+ * ==============================================
+ * OPTIMIZE IMAGES
+ * ==============================================
+ */
+function fjp_premium_optimize_images($content) {
+    // Add loading="lazy" and decoding="async" to images
+    return preg_replace_callback('/<img([^>]+?)>/', function($matches) {
+        $img = $matches[1];
+        
+        // Add loading lazy if not present
+        if (strpos($img, 'loading=') === false) {
+            $img .= ' loading="lazy"';
+        }
+        
+        // Add decoding async if not present
+        if (strpos($img, 'decoding=') === false) {
+            $img .= ' decoding="async"';
+        }
+        
+        return '<img' . $img . '>';
+    }, $content);
+}
+add_filter('the_content', 'fjp_premium_optimize_images');
+add_filter('post_thumbnail_html', 'fjp_premium_optimize_images');
+
+/**
+ * ==============================================
+ * CUSTOM EXCERPT FOR NEWS
+ * ==============================================
+ */
+function fjp_get_excerpt($post_id = null, $length = 20) {
+    if (!$post_id) {
+        $post_id = get_the_ID();
+    }
+    
+    $excerpt = get_the_excerpt($post_id);
+    
+    if (!$excerpt) {
+        $content = get_post_field('post_content', $post_id);
+        $excerpt = wp_trim_words($content, $length);
+    }
+    
+    return $excerpt;
+}
+
+/**
+ * ==============================================
+ * UTILITY FUNCTIONS
+ * ==============================================
+ */
+
+/**
+ * Get browser name from user agent
+ */
+function fjp_get_browser_name() {
+    $user_agent = $_SERVER['HTTP_USER_AGENT'];
+    
+    if (strpos($user_agent, 'Opera') || strpos($user_agent, 'OPR/')) return 'opera';
+    if (strpos($user_agent, 'Edge')) return 'edge';
+    if (strpos($user_agent, 'Chrome')) return 'chrome';
+    if (strpos($user_agent, 'Safari')) return 'safari';
+    if (strpos($user_agent, 'Firefox')) return 'firefox';
+    if (strpos($user_agent, 'MSIE') || strpos($user_agent, 'Trident/7')) return 'ie';
+    
+    return 'unknown';
+}
+
+/**
+ * Check if current page is a specific custom post type
+ */
+function fjp_is_post_type($type) {
+    return is_singular($type) || is_post_type_archive($type) || get_post_type() === $type;
+}
+
+/**
+ * Get social sharing links
+ */
+function fjp_get_social_share_links($post_id = null) {
+    if (!$post_id) {
+        $post_id = get_the_ID();
+    }
+    
+    $url = get_permalink($post_id);
+    $title = get_the_title($post_id);
+    
+    return array(
+        'facebook' => 'https://www.facebook.com/sharer/sharer.php?u=' . urlencode($url),
+        'twitter' => 'https://twitter.com/intent/tweet?url=' . urlencode($url) . '&text=' . urlencode($title),
+        'linkedin' => 'https://www.linkedin.com/shareArticle?mini=true&url=' . urlencode($url) . '&title=' . urlencode($title),
+        'whatsapp' => 'https://api.whatsapp.com/send?text=' . urlencode($title . ' ' . $url),
+        'email' => 'mailto:?subject=' . urlencode($title) . '&body=' . urlencode($url),
+    );
+}
+
+/**
+ * Format phone number for WhatsApp
+ */
+function fjp_format_whatsapp_number($number) {
+    // Remove all non-numeric characters
+    $number = preg_replace('/[^0-9]/', '', $number);
+    
+    // Ensure it starts with country code
+    if (substr($number, 0, 1) !== '1' && strlen($number) === 10) {
+        $number = '1' . $number; // Add country code for Dominican Republic
+    }
+    
+    return $number;
+}
+
+/**
+ * Get formatted date in Spanish
+ */
+function fjp_get_formatted_date($post_id = null, $format = 'long') {
+    if (!$post_id) {
+        $post_id = get_the_ID();
+    }
+    
+    $timestamp = get_the_time('U', $post_id);
+    
+    switch ($format) {
+        case 'short':
+            return date_i18n('d/m/Y', $timestamp);
+        case 'medium':
+            return date_i18n('d M Y', $timestamp);
+        case 'long':
+        default:
+            return date_i18n('d \d\e F \d\e Y', $timestamp);
+    }
+}
+
+/**
+ * ==============================================
+ * REDIRECT EXTERNAL NEWS
+ * ==============================================
+ */
+function fjp_redirect_external_news() {
+    if (!is_singular('noticias')) {
+        return;
+    }
+    
+    global $post;
+    
+    if (function_exists('get_field')) {
+        $external_url = get_field('noticia_url_externa', $post->ID);
+        
+        if ($external_url && filter_var($external_url, FILTER_VALIDATE_URL)) {
+            wp_redirect($external_url, 301);
+            exit;
+        }
+    }
+}
+add_action('template_redirect', 'fjp_redirect_external_news');
+
+/**
+ * ==============================================
+ * DISABLE COMMENTS ON CERTAIN POST TYPES
+ * ==============================================
+ */
+function fjp_disable_comments($open, $post_id) {
+    $post_type = get_post_type($post_id);
+    $disabled_types = array('voluntarios', 'alianzas', 'page');
+    
+    if (in_array($post_type, $disabled_types)) {
         return false;
     }
-
+    
     return $open;
 }
-add_filter('comments_open', 'fjp_desactivar_comentarios', 10, 2);
+add_filter('comments_open', 'fjp_disable_comments', 10, 2);
 
 /**
- * Personalizar mensajes de administración
+ * ==============================================
+ * CUSTOM LOGIN LOGO
+ * ==============================================
  */
-function fjp_custom_admin_notices() {
-    $screen = get_current_screen();
-
-    if ($screen->post_type === 'noticias' && $screen->base === 'edit') {
-        ?>
-        <div class="notice notice-info">
-            <p><?php _e('💡 Sugerencia: Las noticias con URL externa se redireccionarán automáticamente al sitio original.', 'fjp'); ?></p>
-        </div>
-        <?php
+function fjp_login_logo() {
+    if (has_custom_logo()) {
+        $custom_logo_id = get_theme_mod('custom_logo');
+        $logo = wp_get_attachment_image_src($custom_logo_id, 'full');
+        
+        if ($logo) {
+            echo '<style type="text/css">
+                #login h1 a, .login h1 a {
+                    background-image: url(' . esc_url($logo[0]) . ');
+                    height: 80px;
+                    width: 100%;
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    padding-bottom: 30px;
+                }
+            </style>';
+        }
     }
 }
-add_action('admin_notices', 'fjp_custom_admin_notices');
+add_action('login_enqueue_scripts', 'fjp_login_logo');
+
+function fjp_login_logo_url() {
+    return home_url();
+}
+add_filter('login_headerurl', 'fjp_login_logo_url');
+
+function fjp_login_logo_url_title() {
+    return get_bloginfo('name');
+}
+add_filter('login_headertitle', 'fjp_login_logo_url_title');
 
 /**
- * Función para obtener estadísticas del sitio
+ * ==============================================
+ * THEME ACTIVATION
+ * ==============================================
  */
-function fjp_obtener_estadisticas() {
-    $stats = array(
-        'total_noticias' => wp_count_posts('noticias')->publish,
-        'total_voluntarios' => wp_count_posts('voluntarios')->publish,
-        'total_alianzas' => wp_count_posts('alianzas')->publish,
-        'total_testimonios' => wp_count_posts('testimonios')->publish,
-    );
-
-    return $stats;
+function fjp_premium_activation() {
+    // Flush rewrite rules on theme activation
+    flush_rewrite_rules();
+    
+    // Set default options
+    if (get_option('fjp_theme_activated') !== FJP_VERSION) {
+        update_option('fjp_theme_activated', FJP_VERSION);
+        update_option('fjp_activation_date', current_time('mysql'));
+    }
 }
+add_action('after_switch_theme', 'fjp_premium_activation');
 
 /**
- * Crear página de estadísticas en el admin
+ * ==============================================
+ * DEBUGGING HELPERS (Development only)
+ * ==============================================
  */
-function fjp_agregar_pagina_estadisticas() {
-    add_menu_page(
-        'Estadísticas FJP',
-        'Estadísticas FJP',
-        'manage_options',
-        'fjp-estadisticas',
-        'fjp_render_pagina_estadisticas',
-        'dashicons-chart-bar',
-        9
-    );
-}
-add_action('admin_menu', 'fjp_agregar_pagina_estadisticas');
-
-function fjp_render_pagina_estadisticas() {
-    $stats = fjp_obtener_estadisticas();
-    ?>
-    <div class="wrap">
-        <h1>Estadísticas de la Fundación Juventud Progresista</h1>
-
-        <div class="fjp-stats-container">
-            <div class="fjp-stat-card">
-                <h3>Total de Noticias</h3>
-                <p class="fjp-stat-number"><?php echo $stats['total_noticias']; ?></p>
-            </div>
-
-            <div class="fjp-stat-card">
-                <h3>Total de Voluntarios</h3>
-                <p class="fjp-stat-number"><?php echo $stats['total_voluntarios']; ?></p>
-            </div>
-
-            <div class="fjp-stat-card">
-                <h3>Total de Alianzas</h3>
-                <p class="fjp-stat-number"><?php echo $stats['total_alianzas']; ?></p>
-            </div>
-
-            <div class="fjp-stat-card">
-                <h3>Total de Testimonios</h3>
-                <p class="fjp-stat-number"><?php echo $stats['total_testimonios']; ?></p>
-            </div>
-        </div>
-
-        <style>
-        .fjp-stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+if (defined('WP_DEBUG') && WP_DEBUG) {
+    function fjp_debug_log($message, $data = null) {
+        if ($data) {
+            error_log('[FJP DEBUG] ' . $message . ': ' . print_r($data, true));
+        } else {
+            error_log('[FJP DEBUG] ' . $message);
         }
-
-        .fjp-stat-card {
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .fjp-stat-number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #0056D2;
-            margin: 10px 0;
-        }
-        </style>
-    </div>
-    <?php
+    }
 }
-
-/**
- * Agregar shortcodes personalizados
- */
-require_once FJP_THEME_DIR . '/inc/shortcodes.php';
-
-/**
- * Agregar Metabox de Layout ("Pro" Features)
- */
-require_once FJP_THEME_DIR . '/inc/custom-layout-metabox.php';
-
-/**
- * Agregar Sistema de Patrones de Bloques
- */
-require_once FJP_THEME_DIR . '/inc/patterns.php';
-
-/**
- * Agregar Configuración del Personalizador (Global Settings)
- */
-require_once FJP_THEME_DIR . '/inc/customizer.php';
-
-/**
- * Agregar Optimización de Rendimiento
- */
-require_once FJP_THEME_DIR . '/inc/performance.php';
-
-/**
- * Agregar funciones de utilidad
- */
-require_once FJP_THEME_DIR . '/functions-advanced.php';
-
-/**
- * Habilitar soporte para estilos del editor y theme.json
- */
-function fjp_setup_theme_features() {
-    add_theme_support('editor-styles');
-    add_editor_style('style.css');
-}
-add_action('after_setup_theme', 'fjp_setup_theme_features');
