@@ -317,3 +317,14 @@ function fjp_disable_astra_navigation( $post_nav ) {
     return $post_nav;
 }
 add_filter( 'astra_single_post_navigation_markup', 'fjp_disable_astra_navigation' );
+
+/**
+ * Disable default Astra title on Noticias since we use a custom Hero
+ */
+function fjp_disable_astra_title( $title_enabled ) {
+    if ( is_singular( 'noticias' ) ) {
+        return false;
+    }
+    return $title_enabled;
+}
+add_filter( 'astra_the_title_enabled', 'fjp_disable_astra_title' );

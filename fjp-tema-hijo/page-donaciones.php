@@ -26,7 +26,7 @@ $givewp_active = class_exists('Give');
     ?>
 
     <!-- Hero Section Interior -->
-    <section class="fjp-hero-interior py-5" style="background: linear-gradient(135deg, var(--fjp-secondary) 0%, var(--fjp-primary) 100%);">
+    <section class="fjp-hero-interior py-5">
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center text-white">
