@@ -6,7 +6,12 @@
  */
 
 get_header();
+?>
 
+<div id="primary" <?php astra_primary_class(); ?>>
+    <main id="main" class="site-main">
+
+<?php
 // Verificar si hay contenido en el editor de bloques
 if ( have_posts() && get_the_content() ) {
     while ( have_posts() ) {
@@ -564,5 +569,8 @@ if ( have_posts() && get_the_content() ) {
     </script>
 
     <?php } // Fin del fallback ?>
+
+    </main><!-- #main -->
+</div><!-- #primary -->
 
 <?php get_footer(); ?>

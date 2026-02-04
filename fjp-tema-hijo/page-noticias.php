@@ -50,7 +50,8 @@ $categories = get_terms(array(
 ));
 ?>
 
-<main id="primary" class="site-main">
+<div id="primary" <?php astra_primary_class(); ?>>
+    <main id="main" class="site-main">
 
     <?php
     if (have_posts()) {
@@ -221,6 +222,7 @@ $categories = get_terms(array(
         </div>
     </section>
 
-</main>
+    </main><!-- #main -->
+</div><!-- #primary -->
 
 <?php get_footer(); ?>
