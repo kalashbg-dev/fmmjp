@@ -12,7 +12,8 @@ get_header();
 $givewp_active = class_exists('Give');
 ?>
 
-<main id="primary" class="site-main">
+<div id="primary" <?php astra_primary_class(); ?>>
+    <main id="main" class="site-main">
 
     <?php
     // Comprobar si hay contenido en el editor de bloques (Gutenberg)
@@ -340,6 +341,7 @@ $givewp_active = class_exists('Give');
 
     <?php } // Fin del fallback ?>
 
-</main>
+    </main><!-- #main -->
+</div><!-- #primary -->
 
 <?php get_footer(); ?>

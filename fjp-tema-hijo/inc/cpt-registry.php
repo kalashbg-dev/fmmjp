@@ -251,28 +251,35 @@ function fjp_register_testimonios_cpt() {
 add_action('init', 'fjp_register_testimonios_cpt');
 
 /**
- * Registrar ACF para Noticias Externas
+ * Registrar ACF - Sincronización con acf-export.json
+ * Esto asegura que los campos existan incluso si el usuario no importa el JSON
  */
-function fjp_register_acf_noticias() {
+function fjp_register_acf_fields_php() {
     if (function_exists('acf_add_local_field_group')) {
+
+        // 1. Configuración de Noticias
         acf_add_local_field_group(array(
-            'key' => 'group_noticias_externas',
-            'title' => 'Información de Noticia Externa',
+            'key' => 'group_noticias_configuracion',
+            'title' => 'Configuración de Noticias',
             'fields' => array(
                 array(
+                    'key' => 'field_fecha_publicacion',
+                    'label' => 'Fecha de Publicación',
+                    'name' => 'fecha_de_publicacion',
+                    'type' => 'date_picker',
+                    'instructions' => 'Seleccione la fecha de publicación original de la noticia',
+                    'required' => 1,
+                    'display_format' => 'd/m/Y',
+                    'return_format' => 'd/m/Y',
+                    'first_day' => 1,
+                ),
+                array(
                     'key' => 'field_url_noticia',
-                    'label' => 'URL de Noticia',
+                    'label' => 'URL de la Noticia',
                     'name' => 'url_noticia',
                     'type' => 'url',
-                    'instructions' => 'URL completa de la noticia original (incluir https://)',
-                    'required' => false,
-                    'conditional_logic' => 0,
-                    'wrapper' => array(
-                        'width' => '',
-                        'class' => '',
-                        'id' => '',
-                    ),
-                    'default_value' => '',
+                    'instructions' => 'Ingrese el enlace original de la noticia (si es externa)',
+                    'required' => 0,
                     'placeholder' => 'https://ejemplo.com/noticia',
                 ),
                 array(
@@ -280,43 +287,89 @@ function fjp_register_acf_noticias() {
                     'label' => 'Fuente',
                     'name' => 'fuente_noticia',
                     'type' => 'text',
-                    'instructions' => 'Nombre del medio o fuente original de la noticia',
-                    'required' => false,
-                    'conditional_logic' => 0,
-                    'wrapper' => array(
-                        'width' => '',
-                        'class' => '',
-                        'id' => '',
-                    ),
-                    'default_value' => '',
-                    'placeholder' => 'Ej: Diario Libre, Listín Diario, etc.',
-                    'prepend' => '',
-                    'append' => '',
-                    'maxlength' => '',
+                    'instructions' => 'Nombre del medio o fuente original',
+                    'required' => 0,
+                    'placeholder' => 'Ej: Diario La Nación',
                 ),
                 array(
-                    'key' => 'field_imagen_portada',
-                    'label' => 'Imagen de Portada',
-                    'name' => 'imagen_portada',
-                    'type' => 'image',
-                    'instructions' => 'Imagen principal de la noticia (si es diferente a la destacada)',
-                    'required' => false,
-                    'conditional_logic' => 0,
-                    'wrapper' => array(
-                        'width' => '',
-                        'class' => '',
-                        'id' => '',
+                    'key' => 'field_autor_noticia',
+                    'label' => 'Autor/a de la Noticia',
+                    'name' => 'autor_de_la_noticia',
+                    'type' => 'text',
+                    'instructions' => 'Nombre del autor o autora de la noticia (si aplica)',
+                    'placeholder' => 'Ej: María González',
+                    'maxlength' => 100,
+                ),
+                array(
+                    'key' => 'field_resumen_noticia',
+                    'label' => 'Resumen de la Noticia',
+                    'name' => 'resumen_de_la_noticia',
+                    'type' => 'textarea',
+                    'instructions' => 'Breve resumen o descripción de la noticia',
+                    'maxlength' => 500,
+                    'rows' => 4,
+                ),
+                array(
+                    'key' => 'field_categoria_tematica',
+                    'label' => 'Categoría Temática',
+                    'name' => 'categoria_tematica',
+                    'type' => 'select',
+                    'instructions' => 'Seleccione la categoría temática principal de la noticia',
+                    'required' => 1,
+                    'choices' => array(
+                        'educacion' => 'Educación y Formación',
+                        'infancia' => 'Infancia y Adolescencia',
+                        'comunidad' => 'Desarrollo Comunitario',
+                        'salud' => 'Salud y Bienestar',
+                        'deportes' => 'Deportes y Recreación',
+                        'cultura' => 'Cultura y Arte',
+                        'medio-ambiente' => 'Medio Ambiente',
+                        'tecnologia' => 'Tecnología e Innovación',
+                        'derechos' => 'Derechos Humanos',
+                        'voluntariado' => 'Voluntariado y Participación',
+                        'fundacion' => 'Actividades de la Fundación',
+                        'otros' => 'Otros',
                     ),
-                    'return_format' => 'array',
-                    'preview_size' => 'medium',
-                    'library' => 'all',
-                    'min_width' => '',
-                    'min_height' => '',
-                    'min_size' => '',
-                    'max_width' => '',
-                    'max_height' => '',
-                    'max_size' => '',
-                    'mime_types' => '',
+                    'default_value' => 'infancia',
+                    'return_format' => 'value',
+                ),
+                array(
+                    'key' => 'field_tipo_noticia',
+                    'label' => 'Tipo de Noticia',
+                    'name' => 'tipo_de_noticia',
+                    'type' => 'radio',
+                    'instructions' => 'Seleccione el tipo de noticia',
+                    'required' => 1,
+                    'choices' => array(
+                        'noticia' => 'Noticia',
+                        'comunicado' => 'Comunicado de Prensa',
+                        'entrevista' => 'Entrevista',
+                        'reportaje' => 'Reportaje',
+                        'opinion' => 'Opinión',
+                        'otros' => 'Otros',
+                    ),
+                    'default_value' => 'noticia',
+                    'layout' => 'vertical',
+                    'return_format' => 'value',
+                ),
+                array(
+                    'key' => 'field_destacar_noticia',
+                    'label' => 'Destacar Noticia',
+                    'name' => 'destacar_noticia',
+                    'type' => 'true_false',
+                    'instructions' => 'Marcar como destacada para mostrar en secciones principales',
+                    'ui' => 1,
+                    'ui_on_text' => 'Sí',
+                    'ui_off_text' => 'No',
+                ),
+                array(
+                    'key' => 'field_ubicacion_geografica',
+                    'label' => 'Ubicación Geográfica',
+                    'name' => 'ubicacion_geografica',
+                    'type' => 'text',
+                    'instructions' => 'Ciudad o provincia donde ocurrió el evento',
+                    'placeholder' => 'Ej: Buenos Aires, Córdoba, etc.',
+                    'maxlength' => 100,
                 ),
             ),
             'location' => array(
@@ -335,9 +388,72 @@ function fjp_register_acf_noticias() {
             'instruction_placement' => 'label',
             'hide_on_screen' => '',
             'active' => true,
-            'description' => '',
-            'show_in_rest' => 1,
+            'description' => 'Campos para el Custom Post Type Noticias',
+        ));
+
+        // 2. Campos de Testimonios (CPT)
+        acf_add_local_field_group(array(
+            'key' => 'group_testimonios_cpt',
+            'title' => 'Campos de Testimonios (CPT)',
+            'fields' => array(
+                array(
+                    'key' => 'field_cargo_testimonio',
+                    'label' => 'Cargo / Rol',
+                    'name' => 'cargo_testimonio',
+                    'type' => 'text',
+                    'instructions' => 'Ej: Voluntaria Educativa',
+                    'required' => 0,
+                ),
+                array(
+                    'key' => 'field_organizacion_testimonio',
+                    'label' => 'Organización',
+                    'name' => 'organizacion_testimonio',
+                    'type' => 'text',
+                    'instructions' => 'Organización a la que pertenece (opcional)',
+                    'required' => 0,
+                ),
+            ),
+            'location' => array(
+                array(
+                    array(
+                        'param' => 'post_type',
+                        'operator' => '==',
+                        'value' => 'testimonios',
+                    ),
+                ),
+            ),
+            'active' => true,
+        ));
+
+        // 3. Configuración Página Voluntariado (Solo para fallback o datos específicos)
+        acf_add_local_field_group(array(
+            'key' => 'group_voluntariado_pagina',
+            'title' => 'Configuración Página Voluntariado',
+            'fields' => array(
+                array(
+                    'key' => 'field_voluntariado_hero_titulo',
+                    'label' => 'Título Hero',
+                    'name' => 'voluntariado_hero_titulo',
+                    'type' => 'text',
+                ),
+                array(
+                    'key' => 'field_voluntariado_hero_descripcion',
+                    'label' => 'Descripción Hero',
+                    'name' => 'voluntariado_hero_descripcion',
+                    'type' => 'textarea',
+                ),
+            ),
+            'location' => array(
+                array(
+                    array(
+                        'param' => 'page_template',
+                        'operator' => '==',
+                        'value' => 'page-voluntariado.php',
+                    ),
+                ),
+            ),
+            'active' => true,
         ));
     }
 }
-add_action('acf/init', 'fjp_register_acf_noticias');
+add_action('acf/init', 'fjp_register_acf_fields_php');

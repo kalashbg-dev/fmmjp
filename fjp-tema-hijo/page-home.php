@@ -9,14 +9,8 @@
 get_header();
 ?>
 
-<main id="primary" class="site-main">
-
-    <?php
-    // Asegurar compatibilidad con layouts de Astra (Full Width / Stretched)
-    // Si Astra ya envuelve el contenido, este main podría ser redundante,
-    // pero lo mantenemos para estructura semántica.
-    // La clave es que el contenido dentro de 'the_content()' pueda expandirse.
-    ?>
+<div id="primary" <?php astra_primary_class(); ?>>
+    <main id="main" class="site-main">
 
     <?php
     // Comprobar si hay contenido en el editor de bloques (Gutenberg)
@@ -222,6 +216,7 @@ get_header();
 
     <?php } // Fin del fallback ?>
 
-</main>
+    </main><!-- #main -->
+</div><!-- #primary -->
 
 <?php get_footer(); ?>
