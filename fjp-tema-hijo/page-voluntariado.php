@@ -39,34 +39,62 @@ if ( have_posts() && get_the_content() ) {
         ]
     ];
 
-    $areas_voluntariado = get_field('voluntariado_areas') ?: [
-        [
-            'titulo' => __('Acompañamiento educativo', 'fjp'),
-            'descripcion' => __('Ayudá a niños y niñas con sus tareas escolares y actividades de refuerzo.', 'fjp'),
-            'icono' => 'fas fa-graduation-cap',
-            'requisitos' => __('Secundario completo, disponibilidad horaria, vocación docente.', 'fjp')
-        ],
-        [
-            'titulo' => __('Deportes y recreación', 'fjp'),
-            'descripcion' => __('Acompañá en actividades deportivas y recreativas.', 'fjp'),
-            'icono' => 'fas fa-running',
-            'requisitos' => __('Conocimientos básicos de deportes, buena condición física.', 'fjp')
-        ],
-        [
-            'titulo' => __('Arte y cultura', 'fjp'),
-            'descripcion' => __('Colaborá en talleres de arte, música, teatro y manualidades.', 'fjp'),
-            'icono' => 'fas fa-palette',
-            'requisitos' => __('Creatividad, habilidades artísticas, entusiasmo.', 'fjp')
-        ],
-        [
-            'titulo' => __('Apoyo administrativo', 'fjp'),
-            'descripcion' => __('Ayudá con tareas administrativas y organización de eventos.', 'fjp'),
-            'icono' => 'fas fa-laptop',
-            'requisitos' => __('Conocimientos básicos de computación, organización.', 'fjp')
-        ]
-    ];
+    // Obtener áreas de voluntariado (CPT: 'areas_voluntariado' si existiera, o campos)
+    // En este caso, usamos el campo repetidor de ACF si está poblado, o fallback.
+    $areas_voluntariado = get_field('voluntariado_areas');
 
-    $testimonios = get_field('voluntariado_testimonios') ?: [
+    if (!$areas_voluntariado) {
+        $areas_voluntariado = [
+            [
+                'titulo' => __('Acompañamiento educativo', 'fjp'),
+                'descripcion' => __('Ayudá a niños y niñas con sus tareas escolares y actividades de refuerzo.', 'fjp'),
+                'icono' => 'fas fa-graduation-cap',
+                'requisitos' => __('Secundario completo, disponibilidad horaria, vocación docente.', 'fjp')
+            ],
+            [
+                'titulo' => __('Deportes y recreación', 'fjp'),
+                'descripcion' => __('Acompañá en actividades deportivas y recreativas.', 'fjp'),
+                'icono' => 'fas fa-running',
+                'requisitos' => __('Conocimientos básicos de deportes, buena condición física.', 'fjp')
+            ],
+            [
+                'titulo' => __('Arte y cultura', 'fjp'),
+                'descripcion' => __('Colaborá en talleres de arte, música, teatro y manualidades.', 'fjp'),
+                'icono' => 'fas fa-palette',
+                'requisitos' => __('Creatividad, habilidades artísticas, entusiasmo.', 'fjp')
+            ],
+            [
+                'titulo' => __('Apoyo administrativo', 'fjp'),
+                'descripcion' => __('Ayudá con tareas administrativas y organización de eventos.', 'fjp'),
+                'icono' => 'fas fa-laptop',
+                'requisitos' => __('Conocimientos básicos de computación, organización.', 'fjp')
+            ]
+        ];
+    }
+
+    // Integración de CPT Testimonios si existe
+    $testimonios = [];
+    $args_testimonios = array(
+        'post_type' => 'testimonios',
+        'posts_per_page' => 3,
+        'orderby' => 'rand'
+    );
+    $query_testimonios = new WP_Query($args_testimonios);
+
+    if ($query_testimonios->have_posts()) {
+        while ($query_testimonios->have_posts()) {
+            $query_testimonios->the_post();
+            $testimonios[] = [
+                'nombre' => get_the_title(),
+                'cargo' => get_field('cargo_testimonio'),
+                'testimonio' => get_the_excerpt(),
+                'imagen' => get_the_post_thumbnail_url(get_the_ID(), 'fjp-testimonio')
+            ];
+        }
+        wp_reset_postdata();
+    } else {
+        // Fallback array
+        $testimonios = get_field('voluntariado_testimonios') ?: [
         [
             'nombre' => 'María González',
             'cargo' => __('Voluntaria educativa', 'fjp'),
