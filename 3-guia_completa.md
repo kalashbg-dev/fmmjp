@@ -5,82 +5,95 @@
 
 ## 🎯 INTRODUCCIÓN
 
-Bienvenido a la guía oficial del sitio web de la Fundación Juventud Progresista. Este sitio utiliza una **Arquitectura Híbrida Avanzada** que combina:
+Bienvenido a la guía oficial del sitio web de la Fundación Juventud Progresista. Este sitio ha sido diseñado con una **Arquitectura Híbrida Avanzada** sobre el tema Astra, combinando flexibilidad visual con solidez técnica.
 
-1.  **Editor de Bloques (Gutenberg)**: Para editar textos, imágenes y estructura de las páginas de manera visual.
-2.  **Sistema "Pro" de Layouts**: Opciones avanzadas por página para controlar cabeceras, pies de página y anchos.
-3.  **Patrones de Bloques**: Diseños prefabricados que puedes insertar con un clic.
-4.  **Design Tokens**: Estilos globales centralizados.
+### Componentes Clave:
+1.  **Astra Customizer**: Para configurar colores globales, tipografías y el botón de WhatsApp.
+2.  **Editor de Bloques (Gutenberg)**: Para editar el contenido de las páginas.
+3.  **Hooks y Shortcodes**: Funcionalidades avanzadas inyectadas automáticamente.
 
 ---
 
 ## 📋 TABLA DE CONTENIDOS
 
-1.  [Opciones de Diseño FJP (Estilo Pro)](#1-opciones-de-diseño-fjp-estilo-pro)
-2.  [Patrones de Bloques: Diseña Rápido](#2-patrones-de-bloques-diseña-rápido)
-3.  [Arquitectura Híbrida y Fallbacks](#3-arquitectura-híbrida-y-fallbacks)
-4.  [Design Tokens (Colores y Fuentes)](#4-design-tokens-colores-y-fuentes)
-5.  [Componentes Dinámicos (Shortcodes)](#5-componentes-dinámicos-shortcodes)
+1.  [Configuración Global (Personalizador)](#1-configuración-global-personalizador)
+    *   [Colores y Estilos](#11-colores-y-estilos)
+    *   [Botón de WhatsApp](#12-botón-de-whatsapp)
+    *   [Ajustes de Layout](#13-ajustes-de-layout)
+2.  [Gestión de Contenido (Editor)](#2-gestión-de-contenido-editor)
+    *   [Patrones de Bloques](#21-patrones-de-bloques)
+    *   [Páginas Clave](#22-páginas-clave)
+3.  [Funcionalidades Avanzadas](#3-funcionalidades-avanzadas)
+    *   [Noticias (CPT)](#31-noticias-cpt)
+    *   [Donaciones (GiveWP)](#32-donaciones-givewp)
 
 ---
 
-## 1. OPCIONES DE DISEÑO FJP (ESTILO PRO)
+## 1. CONFIGURACIÓN GLOBAL (PERSONALIZADOR)
 
-Hemos desbloqueado capacidades avanzadas de personalización directamente en el editor de cada página.
+Todo lo relacionado con la apariencia global se gestiona desde **Apariencia > Personalizar**.
 
-### ⚙️ Panel "Opciones de Diseño FJP"
-Al editar cualquier página, busca en la barra lateral derecha el panel **"⚙️ Opciones de Diseño FJP"**.
+### 1.1 Colores y Estilos
+El tema hijo hereda y extiende la paleta global de Astra.
+*   Ve a **Apariencia > Personalizar > Colores Globales**.
+*   Los colores de FJP están mapeados automáticamente a esta paleta:
+    *   **Color 1 (Brand/Primary)** -> `--fjp-primary` (Botones principales, enlaces, encabezados).
+    *   **Color 2 (Secondary)** -> `--fjp-secondary` (Botones secundarios, hover).
+    *   **Color 3 (Text)** -> `--fjp-text` (Texto general).
+    *   **Color 4 (Background)** -> `--fjp-background` (Fondos).
 
-#### Funciones Disponibles:
-*   **Header Transparente**: Actívalo para que el menú se superponga a la imagen principal (ideal para la Home).
-*   **Header Pegajoso (Sticky)**: Hace que el menú te siga al hacer scroll hacia abajo.
-*   **Ocultar Título**: Elimina el título automático de la página (H1) para que puedas diseñar tu propio Hero con bloques.
-*   **Ocultar Footer**: Útil para Landing Pages donde no quieres distracciones.
+### 1.2 Botón de WhatsApp
+El botón flotante de WhatsApp es totalmente personalizable.
+1.  Ve a **Apariencia > Personalizar > FJP Ajustes Globales**.
+2.  Entra en la sección **Botón de WhatsApp**.
+3.  **Número**: Ingresa el número con código de país (ej: `+54911...`).
+4.  **Mensaje**: Escribe el mensaje predeterminado que aparecerá en el chat del usuario.
+5.  Los cambios se verán en tiempo real en la previsualización.
+
+### 1.3 Ajustes de Layout
+En el mismo panel **FJP Ajustes Globales**, puedes activar opciones como:
+*   **Header Pegajoso (Sticky)**: Para que el menú siga al usuario.
+*   **Créditos del Footer**: Personaliza el texto de copyright al pie de página.
 
 ---
 
-## 2. PATRONES DE BLOQUES: DISEÑA RÁPIDO
+## 2. GESTIÓN DE CONTENIDO (EDITOR)
 
-Ya no dependes de plantillas fijas. Hemos convertido los diseños originales en **Patrones**.
-
-### ¿Cómo usarlos?
-1.  En el editor de una página, haz clic en el botón **`+`** (arriba a la izquierda).
+### 2.1 Patrones de Bloques
+No necesitas diseñar desde cero. Usa los **Patrones FJP**.
+1.  En el editor, haz clic en el **`+`** (arriba a la izquierda).
 2.  Ve a la pestaña **Patrones**.
-3.  Selecciona la categoría **"FJP Secciones"** o **"FJP Páginas Completas"**.
-4.  Haz clic en un diseño (ej: "Hero Home", "Contadores", "Página Home Completa") y se insertará automáticamente.
-5.  **¡Edita todo!** Cambia textos, imágenes y colores directamente haciendo clic sobre ellos.
+3.  Explora las categorías para encontrar secciones pre-diseñadas (Hero, Contadores, Llamadas a la acción).
+
+### 2.2 Páginas Clave
+*   **Inicio**: Usa un patrón "Hero" con imagen de fondo y botones.
+*   **Voluntariado**: Contiene un formulario de inscripción integrado.
+*   **Donaciones**: Integra el formulario de GiveWP o botones de pago directo.
+
+**Nota**: Si borras todo el contenido de una página, el sistema mostrará automáticamente un diseño de respaldo (Fallback) seguro.
 
 ---
 
-## 3. ARQUITECTURA HÍBRIDA Y FALLBACKS
+## 3. FUNCIONALIDADES AVANZADAS
 
-El tema sigue siendo seguro ante fallos ("Safe-Fail").
+### 3.1 Noticias (CPT)
+Las noticias no son "Entradas" normales, tienen su propio apartado.
+*   Ve a **Noticias > Añadir Nueva**.
+*   Completa el título y el contenido.
+*   **Campos Personalizados (Abajo del editor)**:
+    *   **Fuente**: Medio original (si es externa).
+    *   **URL Externa**: Si llenas esto, la noticia redirigirá automáticamente al sitio original.
+    *   **Fecha**: Fecha de publicación original.
+*   La página `/noticias` se actualiza automáticamente.
 
-1.  **Si borras todo el contenido**: La página mostrará automáticamente un diseño por defecto (Fallback PHP) para que nunca se vea rota.
-2.  **Si añades un bloque**: El sistema detecta que quieres personalizar y te da control total.
-
----
-
-## 4. DESIGN TOKENS (COLORES Y FUENTES)
-
-Para cambiar la identidad visual de todo el sitio:
-1.  Ve a **Apariencia > Editor** (o abre los estilos en una página).
-2.  Haz clic en el icono **"Estilos"** (círculo mitad negro/blanco).
-3.  Edita la **Paleta de Colores**.
-    *   Los cambios se aplican instantáneamente al CSS (`style.css`) y a todos los bloques.
-
----
-
-## 5. COMPONENTES DINÁMICOS (SHORTCODES)
-
-Siguen disponibles para funcionalidades complejas:
-
-*   `[fjp_news_loop]` - Grid de noticias.
-*   `[fjp_alliances_loop]` - Carrusel de aliados.
-*   `[fjp_volunteer_form]` - Formulario de inscripción.
-*   `[fjp_donation_options]` - Tarjetas de donación.
+### 3.2 Donaciones (GiveWP)
+Si el plugin GiveWP está activo:
+*   Gestiona los formularios en **Donaciones > Todos los formularios**.
+*   Para insertar un formulario en una página, usa el bloque "Shortcode" con `[give_form id="123"]`.
 
 ---
 
 **Soporte Técnico**
-Si las opciones de diseño no aparecen, asegúrate de estar editando una "Página" y no una "Entrada", y revisa que el plugin ACF esté activo (aunque estas opciones son nativas del tema hijo).
+*   Los archivos del tema se encuentran en `wp-content/themes/fjp-tema-hijo`.
+*   La lógica principal está modularizada en la carpeta `inc/`.
+*   No edites directamente los archivos `.php` a menos que seas desarrollador. Usa el Personalizador o el Editor de Bloques.

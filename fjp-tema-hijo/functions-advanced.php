@@ -159,8 +159,9 @@ function fjp_whatsapp_flotante() {
         return;
     }
 
-    $numero_whatsapp = get_option('fjp_whatsapp_numero', '+5491134567890');
-    $mensaje_default = get_option('fjp_whatsapp_mensaje', 'Hola, quisiera obtener más información sobre la Fundación Juega y Participa');
+    // Usar get_theme_mod para recuperar valores del Customizer, con fallback a get_option o default
+    $numero_whatsapp = get_theme_mod('fjp_whatsapp_number', get_option('fjp_whatsapp_numero', '+5491134567890'));
+    $mensaje_default = get_theme_mod('fjp_whatsapp_message', get_option('fjp_whatsapp_mensaje', __('Hola, quisiera obtener más información sobre la Fundación Juega y Participa', 'fjp')));
     ?>
     <div id="whatsapp-flotante" class="whatsapp-flotante" style="display:none;">
         <a href="https://wa.me/<?php echo esc_attr(str_replace(['+', ' ', '-'], '', $numero_whatsapp)); ?>?text=<?php echo urlencode($mensaje_default); ?>"
