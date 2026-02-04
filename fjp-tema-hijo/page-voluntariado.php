@@ -95,25 +95,26 @@ if ( have_posts() && get_the_content() ) {
     } else {
         // Fallback array
         $testimonios = get_field('voluntariado_testimonios') ?: [
-        [
-            'nombre' => 'María González',
-            'cargo' => __('Voluntaria educativa', 'fjp'),
-            'testimonio' => __('Ser voluntaria me permitió descubrir una pasión por la enseñanza que no sabía que tenía. Ver el progreso de los chicos es muy gratificante.', 'fjp'),
-            'imagen' => ''
-        ],
-        [
-            'nombre' => 'Carlos Rodríguez',
-            'cargo' => __('Voluntario deportivo', 'fjp'),
-            'testimonio' => __('Compartir mi amor por el deporte con los chicos es maravilloso. Verlos disfrutar y crecer a través del juego es muy satisfactorio.', 'fjp'),
-            'imagen' => ''
-        ],
-        [
-            'nombre' => 'Ana Martínez',
-            'cargo' => __('Voluntaria artística', 'fjp'),
-            'testimonio' => __('El arte tiene un poder transformador increíble. Ver cómo los chicos se expresan y crecen a través de la creatividad es maravilloso.', 'fjp'),
-            'imagen' => ''
-        ]
-    ];
+            [
+                'nombre' => 'María González',
+                'cargo' => __('Voluntaria educativa', 'fjp'),
+                'testimonio' => __('Ser voluntaria me permitió descubrir una pasión por la enseñanza que no sabía que tenía. Ver el progreso de los chicos es muy gratificante.', 'fjp'),
+                'imagen' => ''
+            ],
+            [
+                'nombre' => 'Carlos Rodríguez',
+                'cargo' => __('Voluntario deportivo', 'fjp'),
+                'testimonio' => __('Compartir mi amor por el deporte con los chicos es maravilloso. Verlos disfrutar y crecer a través del juego es muy satisfactorio.', 'fjp'),
+                'imagen' => ''
+            ],
+            [
+                'nombre' => 'Ana Martínez',
+                'cargo' => __('Voluntaria artística', 'fjp'),
+                'testimonio' => __('El arte tiene un poder transformador increíble. Ver cómo los chicos se expresan y crecen a través de la creatividad es maravilloso.', 'fjp'),
+                'imagen' => ''
+            ]
+        ];
+    }
 
     $preguntas_frecuentes = get_field('voluntariado_faq') ?: [
         [
