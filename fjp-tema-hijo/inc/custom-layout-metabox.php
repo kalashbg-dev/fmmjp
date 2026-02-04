@@ -92,11 +92,49 @@ function fjp_save_layout_options($post_id) {
     }
 
     // Guardar campos
-    update_post_meta($post_id, '_fjp_transparent_header', isset($_POST['fjp_transparent_header']) ? '1' : '0');
+    $trans_header = isset($_POST['fjp_transparent_header']) ? '1' : '0';
+    $disable_title = isset($_POST['fjp_disable_title']) ? '1' : '0';
+    $disable_footer = isset($_POST['fjp_disable_footer']) ? '1' : '0';
+    $disable_breadcrumbs = isset($_POST['fjp_disable_breadcrumbs']) ? '1' : '0';
+
+    update_post_meta($post_id, '_fjp_transparent_header', $trans_header);
     update_post_meta($post_id, '_fjp_sticky_header', isset($_POST['fjp_sticky_header']) ? '1' : '0');
-    update_post_meta($post_id, '_fjp_disable_title', isset($_POST['fjp_disable_title']) ? '1' : '0');
-    update_post_meta($post_id, '_fjp_disable_footer', isset($_POST['fjp_disable_footer']) ? '1' : '0');
-    update_post_meta($post_id, '_fjp_disable_breadcrumbs', isset($_POST['fjp_disable_breadcrumbs']) ? '1' : '0');
+    update_post_meta($post_id, '_fjp_disable_title', $disable_title);
+    update_post_meta($post_id, '_fjp_disable_footer', $disable_footer);
+    update_post_meta($post_id, '_fjp_disable_breadcrumbs', $disable_breadcrumbs);
+
+    // Sincronización Bidireccional: Forzar compatibilidad nativa con Astra
+    // Si Astra está activo, intentamos actualizar sus propios meta keys para asegurar compatibilidad total
+
+    // 1. Título
+    if ($disable_title === '1') {
+        update_post_meta($post_id, 'site-post-title', 'disabled');
+    } else {
+        delete_post_meta($post_id, 'site-post-title'); // Restaurar default
+    }
+
+    // 2. Footer (Deshabilitar todos los widgets del footer de Astra)
+    if ($disable_footer === '1') {
+        update_post_meta($post_id, 'footer-sml-layout', 'disabled');
+        update_post_meta($post_id, 'footer-adv-display', 'disabled');
+    } else {
+        delete_post_meta($post_id, 'footer-sml-layout');
+        delete_post_meta($post_id, 'footer-adv-display');
+    }
+
+    // 3. Breadcrumbs
+    if ($disable_breadcrumbs === '1') {
+        update_post_meta($post_id, 'ast-breadcrumbs-content', 'disabled');
+    } else {
+        delete_post_meta($post_id, 'ast-breadcrumbs-content');
+    }
+
+    // 4. Header Transparente (Si Astra tiene su propio control)
+    if ($trans_header === '1') {
+        update_post_meta($post_id, 'theme-transparent-header-meta', 'enabled');
+    } else {
+        update_post_meta($post_id, 'theme-transparent-header-meta', 'default');
+    }
 }
 add_action('save_post', 'fjp_save_layout_options');
 

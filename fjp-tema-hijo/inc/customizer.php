@@ -60,8 +60,63 @@ function fjp_customize_register($wp_customize) {
         'section'     => 'fjp_footer_options',
         'type'        => 'textarea',
     ));
+
+    // 4. Sección Hooks Visuales (Advanced)
+    $wp_customize->add_section('fjp_hooks_options', array(
+        'title'       => __('Hooks Visuales (Inyecciones)', 'fjp'),
+        'description' => __('Inserta código o shortcodes en áreas estratégicas del sitio.', 'fjp'),
+        'panel'       => 'fjp_global_settings',
+    ));
+
+    // Hook: Antes del Header
+    $wp_customize->add_setting('fjp_hook_before_header', array('default' => '', 'sanitize_callback' => 'wp_kses_post'));
+    $wp_customize->add_control('fjp_hook_before_header', array(
+        'label'       => __('Antes de la Cabecera', 'fjp'),
+        'section'     => 'fjp_hooks_options',
+        'type'        => 'textarea',
+    ));
+
+    // Hook: Después del Header
+    $wp_customize->add_setting('fjp_hook_after_header', array('default' => '', 'sanitize_callback' => 'wp_kses_post'));
+    $wp_customize->add_control('fjp_hook_after_header', array(
+        'label'       => __('Después de la Cabecera', 'fjp'),
+        'section'     => 'fjp_hooks_options',
+        'type'        => 'textarea',
+    ));
+
+    // Hook: Antes del Footer
+    $wp_customize->add_setting('fjp_hook_before_footer', array('default' => '', 'sanitize_callback' => 'wp_kses_post'));
+    $wp_customize->add_control('fjp_hook_before_footer', array(
+        'label'       => __('Antes del Pie de Página', 'fjp'),
+        'section'     => 'fjp_hooks_options',
+        'type'        => 'textarea',
+    ));
 }
 add_action('customize_register', 'fjp_customize_register');
+
+/**
+ * Output Hooks Visuales
+ */
+function fjp_output_hooks() {
+    // Before Header
+    add_action('astra_header_before', function() {
+        $content = get_theme_mod('fjp_hook_before_header');
+        if ($content) echo do_shortcode($content);
+    });
+
+    // After Header
+    add_action('astra_header_after', function() {
+        $content = get_theme_mod('fjp_hook_after_header');
+        if ($content) echo do_shortcode($content);
+    });
+
+    // Before Footer
+    add_action('astra_footer_before', function() {
+        $content = get_theme_mod('fjp_hook_before_footer');
+        if ($content) echo do_shortcode($content);
+    });
+}
+add_action('wp', 'fjp_output_hooks');
 
 /**
  * Sanitizar Checkbox

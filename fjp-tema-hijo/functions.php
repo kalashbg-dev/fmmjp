@@ -736,6 +736,11 @@ require_once FJP_THEME_DIR . '/inc/patterns.php';
 require_once FJP_THEME_DIR . '/inc/customizer.php';
 
 /**
+ * Agregar Optimización de Rendimiento
+ */
+require_once FJP_THEME_DIR . '/inc/performance.php';
+
+/**
  * Agregar funciones de utilidad
  */
 require_once FJP_THEME_DIR . '/functions-advanced.php';
