@@ -72,10 +72,10 @@ $categories = get_terms(array(
                             <input type="text"
                                    name="s"
                                    class="form-control"
-                                   placeholder="Buscar noticias..."
+                                   placeholder="<?php esc_attr_e('Buscar noticias...', 'fjp'); ?>"
                                    value="<?php echo esc_attr($search_query); ?>">
                             <button class="btn btn-primary" type="submit">
-                                <i class="fas fa-search"></i> Buscar
+                                <i class="fas fa-search"></i> <?php _e('Buscar', 'fjp'); ?>
                             </button>
                         </div>
                     </form>
@@ -86,7 +86,7 @@ $categories = get_terms(array(
                             <div class="btn-group flex-wrap" role="group">
                                 <a href="<?php echo get_post_type_archive_link('noticias'); ?>"
                                    class="btn btn-outline-primary <?php echo !$current_category ? 'active' : ''; ?>">
-                                    Todas
+                                    <?php _e('Todas', 'fjp'); ?>
                                 </a>
                                 <?php foreach ($categories as $category) : ?>
                                     <a href="<?php echo get_term_link($category); ?>"
@@ -163,7 +163,7 @@ $categories = get_terms(array(
                                     <!-- Botón leer más -->
                                     <div class="mt-auto">
                                         <a href="<?php echo esc_url($permalink); ?>" <?php echo $target; ?> class="btn btn-sm btn-primary">
-                                            <?php echo $url_externa ? 'Leer noticia completa' : 'Leer más'; ?>
+                                            <?php echo $url_externa ? __('Leer noticia completa', 'fjp') : __('Leer más', 'fjp'); ?>
                                             <?php if ($url_externa) : ?>
                                                 <i class="fas fa-external-link-alt ms-1"></i>
                                             <?php endif; ?>
@@ -179,15 +179,15 @@ $categories = get_terms(array(
                 <?php if ($noticias->max_num_pages > 1) : ?>
                     <div class="row">
                         <div class="col-12">
-                            <nav class="fjp-pagination" aria-label="Paginación de noticias">
+                            <nav class="fjp-pagination" aria-label="<?php esc_attr_e('Paginación de noticias', 'fjp'); ?>">
                                 <?php
                                 echo paginate_links(array(
                                     'base' => str_replace(999999999, '%#%', esc_url(get_pagenum_link(999999999))),
                                     'format' => '?paged=%#%',
                                     'current' => max(1, $paged),
                                     'total' => $noticias->max_num_pages,
-                                    'prev_text' => '<i class="fas fa-chevron-left"></i> Anterior',
-                                    'next_text' => 'Siguiente <i class="fas fa-chevron-right"></i>',
+                                    'prev_text' => '<i class="fas fa-chevron-left"></i> ' . __('Anterior', 'fjp'),
+                                    'next_text' => __('Siguiente', 'fjp') . ' <i class="fas fa-chevron-right"></i>',
                                     'type' => 'list',
                                     'end_size' => 3,
                                     'mid_size' => 3
@@ -203,15 +203,15 @@ $categories = get_terms(array(
                     <div class="col-12 text-center">
                         <div class="fjp-no-results">
                             <i class="fas fa-search fa-4x text-muted mb-4"></i>
-                            <h3>No se encontraron noticias</h3>
+                            <h3><?php _e('No se encontraron noticias', 'fjp'); ?></h3>
                             <p class="lead">
                                 <?php echo $search_query ?
-                                    'No hay noticias que coincidan con tu búsqueda: "' . esc_html($search_query) . '"' :
-                                    'No hay noticias disponibles en este momento.'; ?>
+                                    sprintf(__('No hay noticias que coincidan con tu búsqueda: "%s"', 'fjp'), esc_html($search_query)) :
+                                    __('No hay noticias disponibles en este momento.', 'fjp'); ?>
                             </p>
                             <?php if ($search_query) : ?>
                                 <a href="<?php echo get_post_type_archive_link('noticias'); ?>" class="btn btn-primary">
-                                    Ver todas las noticias
+                                    <?php _e('Ver todas las noticias', 'fjp'); ?>
                                 </a>
                             <?php endif; ?>
                         </div>
