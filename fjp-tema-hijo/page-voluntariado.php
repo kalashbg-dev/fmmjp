@@ -17,92 +17,92 @@ if ( have_posts() && get_the_content() ) {
     // Fallback: Contenido original estático
 
     // Obtener datos de ACF si existen
-    $hero_titulo = get_field('voluntariado_hero_titulo') ?: 'Sumate como voluntario/a';
-    $hero_descripcion = get_field('voluntariado_hero_descripcion') ?: 'Formá parte de nuestro equipo de voluntarios y ayudanos a construir una comunidad más justa y solidaria.';
+    $hero_titulo = get_field('voluntariado_hero_titulo') ?: __('Sumate como voluntario/a', 'fjp');
+    $hero_descripcion = get_field('voluntariado_hero_descripcion') ?: __('Formá parte de nuestro equipo de voluntarios y ayudanos a construir una comunidad más justa y solidaria.', 'fjp');
     $hero_imagen = get_field('voluntariado_hero_imagen');
 
     $beneficios = get_field('voluntariado_beneficios') ?: [
         [
-            'titulo' => 'Desarrollo personal',
-            'descripcion' => 'Adquirí nuevas habilidades y experiencias valiosas.',
+            'titulo' => __('Desarrollo personal', 'fjp'),
+            'descripcion' => __('Adquirí nuevas habilidades y experiencias valiosas.', 'fjp'),
             'icono' => 'fas fa-user-plus'
         ],
         [
-            'titulo' => 'Networking',
-            'descripcion' => 'Conocé personas con tus mismos valores e intereses.',
+            'titulo' => __('Networking', 'fjp'),
+            'descripcion' => __('Conocé personas con tus mismos valores e intereses.', 'fjp'),
             'icono' => 'fas fa-users'
         ],
         [
-            'titulo' => 'Impacto social',
-            'descripcion' => 'Contribuí al bienestar de niños, niñas y adolescentes.',
+            'titulo' => __('Impacto social', 'fjp'),
+            'descripcion' => __('Contribuí al bienestar de niños, niñas y adolescentes.', 'fjp'),
             'icono' => 'fas fa-heart'
         ]
     ];
 
     $areas_voluntariado = get_field('voluntariado_areas') ?: [
         [
-            'titulo' => 'Acompañamiento educativo',
-            'descripcion' => 'Ayudá a niños y niñas con sus tareas escolares y actividades de refuerzo.',
+            'titulo' => __('Acompañamiento educativo', 'fjp'),
+            'descripcion' => __('Ayudá a niños y niñas con sus tareas escolares y actividades de refuerzo.', 'fjp'),
             'icono' => 'fas fa-graduation-cap',
-            'requisitos' => 'Secundario completo, disponibilidad horaria, vocación docente.'
+            'requisitos' => __('Secundario completo, disponibilidad horaria, vocación docente.', 'fjp')
         ],
         [
-            'titulo' => 'Deportes y recreación',
-            'descripcion' => 'Acompañá en actividades deportivas y recreativas.',
+            'titulo' => __('Deportes y recreación', 'fjp'),
+            'descripcion' => __('Acompañá en actividades deportivas y recreativas.', 'fjp'),
             'icono' => 'fas fa-running',
-            'requisitos' => 'Conocimientos básicos de deportes, buena condición física.'
+            'requisitos' => __('Conocimientos básicos de deportes, buena condición física.', 'fjp')
         ],
         [
-            'titulo' => 'Arte y cultura',
-            'descripcion' => 'Colaborá en talleres de arte, música, teatro y manualidades.',
+            'titulo' => __('Arte y cultura', 'fjp'),
+            'descripcion' => __('Colaborá en talleres de arte, música, teatro y manualidades.', 'fjp'),
             'icono' => 'fas fa-palette',
-            'requisitos' => 'Creatividad, habilidades artísticas, entusiasmo.'
+            'requisitos' => __('Creatividad, habilidades artísticas, entusiasmo.', 'fjp')
         ],
         [
-            'titulo' => 'Apoyo administrativo',
-            'descripcion' => 'Ayudá con tareas administrativas y organización de eventos.',
+            'titulo' => __('Apoyo administrativo', 'fjp'),
+            'descripcion' => __('Ayudá con tareas administrativas y organización de eventos.', 'fjp'),
             'icono' => 'fas fa-laptop',
-            'requisitos' => 'Conocimientos básicos de computación, organización.'
+            'requisitos' => __('Conocimientos básicos de computación, organización.', 'fjp')
         ]
     ];
 
     $testimonios = get_field('voluntariado_testimonios') ?: [
         [
             'nombre' => 'María González',
-            'cargo' => 'Voluntaria educativa',
-            'testimonio' => 'Ser voluntaria me permitió descubrir una pasión por la enseñanza que no sabía que tenía. Ver el progreso de los chicos es muy gratificante.',
+            'cargo' => __('Voluntaria educativa', 'fjp'),
+            'testimonio' => __('Ser voluntaria me permitió descubrir una pasión por la enseñanza que no sabía que tenía. Ver el progreso de los chicos es muy gratificante.', 'fjp'),
             'imagen' => ''
         ],
         [
             'nombre' => 'Carlos Rodríguez',
-            'cargo' => 'Voluntario deportivo',
-            'testimonio' => 'Compartir mi amor por el deporte con los chicos es maravilloso. Verlos disfrutar y crecer a través del juego es muy satisfactorio.',
+            'cargo' => __('Voluntario deportivo', 'fjp'),
+            'testimonio' => __('Compartir mi amor por el deporte con los chicos es maravilloso. Verlos disfrutar y crecer a través del juego es muy satisfactorio.', 'fjp'),
             'imagen' => ''
         ],
         [
             'nombre' => 'Ana Martínez',
-            'cargo' => 'Voluntaria artística',
-            'testimonio' => 'El arte tiene un poder transformador increíble. Ver cómo los chicos se expresan y crecen a través de la creatividad es maravilloso.',
+            'cargo' => __('Voluntaria artística', 'fjp'),
+            'testimonio' => __('El arte tiene un poder transformador increíble. Ver cómo los chicos se expresan y crecen a través de la creatividad es maravilloso.', 'fjp'),
             'imagen' => ''
         ]
     ];
 
     $preguntas_frecuentes = get_field('voluntariado_faq') ?: [
         [
-            'pregunta' => '¿Cuántas horas por semana debo comprometerme?',
-            'respuesta' => 'La cantidad de horas es flexible y se adapta a tu disponibilidad. Puede ser desde 2 horas semanales hasta varios días, dependiendo del área y tu tiempo disponible.'
+            'pregunta' => __('¿Cuántas horas por semana debo comprometerme?', 'fjp'),
+            'respuesta' => __('La cantidad de horas es flexible y se adapta a tu disponibilidad. Puede ser desde 2 horas semanales hasta varios días, dependiendo del área y tu tiempo disponible.', 'fjp')
         ],
         [
-            'pregunta' => '¿Necesito experiencia previa?',
-            'respuesta' => 'No necesariamente. Proporcionamos capacitación inicial y acompañamiento continuo. Lo más importante es tu actitud y disposición para ayudar.'
+            'pregunta' => __('¿Necesito experiencia previa?', 'fjp'),
+            'respuesta' => __('No necesariamente. Proporcionamos capacitación inicial y acompañamiento continuo. Lo más importante es tu actitud y disposición para ayudar.', 'fjp')
         ],
         [
-            'pregunta' => '¿Hay algún costo para ser voluntario?',
-            'respuesta' => 'No, el voluntariado es gratuito. Solo necesitamos tu compromiso y tiempo. Cubrimos los materiales y capacitación necesarios.'
+            'pregunta' => __('¿Hay algún costo para ser voluntario?', 'fjp'),
+            'respuesta' => __('No, el voluntariado es gratuito. Solo necesitamos tu compromiso y tiempo. Cubrimos los materiales y capacitación necesarios.', 'fjp')
         ],
         [
-            'pregunta' => '¿Puedo elegir el horario y día?',
-            'respuesta' => 'Sí, trabajamos juntos para encontrar un horario que se adapte tanto a tu disponibilidad como a las necesidades del programa.'
+            'pregunta' => __('¿Puedo elegir el horario y día?', 'fjp'),
+            'respuesta' => __('Sí, trabajamos juntos para encontrar un horario que se adapte tanto a tu disponibilidad como a las necesidades del programa.', 'fjp')
         ]
     ];
 
@@ -113,8 +113,8 @@ if ( have_posts() && get_the_content() ) {
     ];
 
     // Variables para el formulario (usadas en el HTML original)
-    $formulario_titulo = get_field('voluntariado_form_titulo') ?: 'Inscribite ahora';
-    $formulario_descripcion = get_field('voluntariado_form_desc') ?: 'Completá el formulario con tus datos y nos pondremos en contacto con vos a la brevedad.';
+    $formulario_titulo = get_field('voluntariado_form_titulo') ?: __('Inscribite ahora', 'fjp');
+    $formulario_descripcion = get_field('voluntariado_form_desc') ?: __('Completá el formulario con tus datos y nos pondremos en contacto con vos a la brevedad.', 'fjp');
 
     ?>
 
@@ -128,7 +128,6 @@ if ( have_posts() && get_the_content() ) {
         overflow: hidden;
     }
 
-    /* [Styles truncated for brevity in plan update, but included in full file content] */
     .voluntariado-hero::before {
         content: '';
         position: absolute;
@@ -774,12 +773,12 @@ if ( have_posts() && get_the_content() ) {
                     <h1><?php echo esc_html($hero_titulo); ?></h1>
                     <p><?php echo esc_html($hero_descripcion); ?></p>
                     <a href="#formulario" class="btn btn-primary">
-                        <i class="fas fa-hands-helping"></i> Quiero ser voluntario/a
+                        <i class="fas fa-hands-helping"></i> <?php _e('Quiero ser voluntario/a', 'fjp'); ?>
                     </a>
                 </div>
                 <div class="col-lg-5">
                     <?php if ($hero_imagen): ?>
-                    <img src="<?php echo esc_url($hero_imagen); ?>" alt="Voluntariado" class="img-fluid rounded-3 shadow-lg">
+                    <img src="<?php echo esc_url($hero_imagen); ?>" alt="<?php esc_attr_e('Voluntariado', 'fjp'); ?>" class="img-fluid rounded-3 shadow-lg">
                     <?php else: ?>
                     <div class="text-center">
                         <i class="fas fa-users" style="font-size: 200px; color: rgba(255,255,255,0.3);"></i>
@@ -793,7 +792,7 @@ if ( have_posts() && get_the_content() ) {
     <!-- Beneficios del voluntariado -->
     <section class="voluntariado-beneficios">
         <div class="container">
-            <h2>Beneficios de ser voluntario/a</h2>
+            <h2><?php _e('Beneficios de ser voluntario/a', 'fjp'); ?></h2>
             <div class="row">
                 <?php foreach ($beneficios as $beneficio): ?>
                 <div class="col-lg-4 mb-4">
@@ -813,8 +812,8 @@ if ( have_posts() && get_the_content() ) {
     <!-- Áreas de voluntariado -->
     <section class="voluntariado-areas">
         <div class="container">
-            <h2>Áreas para voluntarios/as</h2>
-            <p class="intro">Elegí el área que más se adapte a tus intereses y habilidades</p>
+            <h2><?php _e('Áreas para voluntarios/as', 'fjp'); ?></h2>
+            <p class="intro"><?php _e('Elegí el área que más se adapte a tus intereses y habilidades', 'fjp'); ?></p>
             <div class="row">
                 <?php foreach ($areas_voluntariado as $area): ?>
                 <div class="col-lg-6 mb-4">
@@ -825,7 +824,7 @@ if ( have_posts() && get_the_content() ) {
                         <h3 class="area-titulo"><?php echo esc_html($area['titulo']); ?></h3>
                         <p class="area-descripcion"><?php echo esc_html($area['descripcion']); ?></p>
                         <div class="area-requisitos">
-                            <strong>Requisitos:</strong> <?php echo esc_html($area['requisitos']); ?>
+                            <strong><?php _e('Requisitos:', 'fjp'); ?></strong> <?php echo esc_html($area['requisitos']); ?>
                         </div>
                     </div>
                 </div>
@@ -837,7 +836,7 @@ if ( have_posts() && get_the_content() ) {
     <!-- Testimonios -->
     <section class="voluntariado-testimonios">
         <div class="container">
-            <h2>Lo que dicen nuestros voluntarios/as</h2>
+            <h2><?php _e('Lo que dicen nuestros voluntarios/as', 'fjp'); ?></h2>
             <div class="row">
                 <?php foreach ($testimonios as $testimonio): ?>
                 <div class="col-lg-4 mb-4">
@@ -875,13 +874,13 @@ if ( have_posts() && get_the_content() ) {
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="nombre">Nombre completo *</label>
+                                        <label for="nombre"><?php _e('Nombre completo *', 'fjp'); ?></label>
                                         <input type="text" class="form-control" id="nombre" name="nombre" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="email">Email *</label>
+                                        <label for="email"><?php _e('Email *', 'fjp'); ?></label>
                                         <input type="email" class="form-control" id="email" name="email" required>
                                     </div>
                                 </div>
@@ -890,22 +889,22 @@ if ( have_posts() && get_the_content() ) {
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="telefono">Teléfono *</label>
+                                        <label for="telefono"><?php _e('Teléfono *', 'fjp'); ?></label>
                                         <input type="tel" class="form-control" id="telefono" name="telefono" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="edad">Edad *</label>
+                                        <label for="edad"><?php _e('Edad *', 'fjp'); ?></label>
                                         <input type="number" class="form-control" id="edad" name="edad" min="16" max="80" required>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="area">Área de interés *</label>
+                                <label for="area"><?php _e('Área de interés *', 'fjp'); ?></label>
                                 <select class="form-control" id="area" name="area" required>
-                                    <option value="">Seleccionar área</option>
+                                    <option value=""><?php _e('Seleccionar área', 'fjp'); ?></option>
                                     <?php foreach ($areas_voluntariado as $area): ?>
                                     <option value="<?php echo esc_attr(sanitize_title($area['titulo'])); ?>"><?php echo esc_html($area['titulo']); ?></option>
                                     <?php endforeach; ?>
@@ -913,43 +912,43 @@ if ( have_posts() && get_the_content() ) {
                             </div>
 
                             <div class="form-group">
-                                <label for="disponibilidad">Disponibilidad horaria *</label>
+                                <label for="disponibilidad"><?php _e('Disponibilidad horaria *', 'fjp'); ?></label>
                                 <select class="form-control" id="disponibilidad" name="disponibilidad" required>
-                                    <option value="">Seleccionar disponibilidad</option>
-                                    <option value="mananas">Mañanas</option>
-                                    <option value="tardes">Tardes</option>
-                                    <option value="fines-semana">Fines de semana</option>
-                                    <option value="tiempo-completo">Tiempo completo</option>
-                                    <option value="fines-de-mes">Fines de mes</option>
+                                    <option value=""><?php _e('Seleccionar disponibilidad', 'fjp'); ?></option>
+                                    <option value="mananas"><?php _e('Mañanas', 'fjp'); ?></option>
+                                    <option value="tardes"><?php _e('Tardes', 'fjp'); ?></option>
+                                    <option value="fines-semana"><?php _e('Fines de semana', 'fjp'); ?></option>
+                                    <option value="tiempo-completo"><?php _e('Tiempo completo', 'fjp'); ?></option>
+                                    <option value="fines-de-mes"><?php _e('Fines de mes', 'fjp'); ?></option>
                                 </select>
                             </div>
 
                             <div class="form-group">
-                                <label for="experiencia">¿Tenés experiencia previa en voluntariado?</label>
-                                <textarea class="form-control" id="experiencia" name="experiencia" rows="3" placeholder="Contanos sobre tu experiencia previa (si tenés)..."></textarea>
+                                <label for="experiencia"><?php _e('¿Tenés experiencia previa en voluntariado?', 'fjp'); ?></label>
+                                <textarea class="form-control" id="experiencia" name="experiencia" rows="3" placeholder="<?php esc_attr_e('Contanos sobre tu experiencia previa (si tenés)...', 'fjp'); ?>"></textarea>
                             </div>
 
                             <div class="form-group">
-                                <label for="motivacion">¿Qué te motiva a ser voluntario/a? *</label>
-                                <textarea class="form-control" id="motivacion" name="motivacion" rows="4" required placeholder="Contanos qué te motiva a sumarte como voluntario/a..."></textarea>
+                                <label for="motivacion"><?php _e('¿Qué te motiva a ser voluntario/a? *', 'fjp'); ?></label>
+                                <textarea class="form-control" id="motivacion" name="motivacion" rows="4" required placeholder="<?php esc_attr_e('Contanos qué te motiva a sumarte como voluntario/a...', 'fjp'); ?>"></textarea>
                             </div>
 
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="terminos" name="terminos" required>
                                 <label class="form-check-label" for="terminos">
-                                    Acepto los <a href="#" data-bs-toggle="modal" data-bs-target="#modalTerminos">términos y condiciones</a> del programa de voluntariado *
+                                    <?php printf( __('Acepto los <a href="#" data-bs-toggle="modal" data-bs-target="#modalTerminos">términos y condiciones</a> del programa de voluntariado *', 'fjp') ); ?>
                                 </label>
                             </div>
 
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="newsletter" name="newsletter">
                                 <label class="form-check-label" for="newsletter">
-                                    Deseo recibir novedades y actualizaciones por email
+                                    <?php _e('Deseo recibir novedades y actualizaciones por email', 'fjp'); ?>
                                 </label>
                             </div>
 
                             <button type="submit" class="btn btn-primary w-100">
-                                <i class="fas fa-paper-plane"></i> Enviar solicitud
+                                <i class="fas fa-paper-plane"></i> <?php _e('Enviar solicitud', 'fjp'); ?>
                             </button>
                         </form>
                     </div>
@@ -961,7 +960,7 @@ if ( have_posts() && get_the_content() ) {
     <!-- Preguntas frecuentes -->
     <section class="voluntariado-faq">
         <div class="container">
-            <h2>Preguntas frecuentes</h2>
+            <h2><?php _e('Preguntas frecuentes', 'fjp'); ?></h2>
             <div class="accordion" id="faqVoluntariado">
                 <?php foreach ($preguntas_frecuentes as $index => $faq): ?>
                 <div class="accordion-item">
@@ -983,8 +982,8 @@ if ( have_posts() && get_the_content() ) {
     <!-- Contacto -->
     <section class="voluntariado-contacto">
         <div class="container">
-            <h2><i class="fas fa-question-circle"></i> ¿Tenés más preguntas?</h2>
-            <p>No dudes en contactarnos, estamos acá para ayudarte</p>
+            <h2><i class="fas fa-question-circle"></i> <?php _e('¿Tenés más preguntas?', 'fjp'); ?></h2>
+            <p><?php _e('No dudes en contactarnos, estamos acá para ayudarte', 'fjp'); ?></p>
 
             <div class="contacto-info">
                 <div class="contacto-item">
@@ -992,7 +991,7 @@ if ( have_posts() && get_the_content() ) {
                         <i class="fas fa-envelope"></i>
                     </div>
                     <div class="contacto-texto">
-                        <div class="contacto-label">Email</div>
+                        <div class="contacto-label"><?php _e('Email', 'fjp'); ?></div>
                         <div class="contacto-valor">
                             <a href="mailto:<?php echo esc_attr($contacto_info['email']); ?>"><?php echo esc_html($contacto_info['email']); ?></a>
                         </div>
@@ -1004,7 +1003,7 @@ if ( have_posts() && get_the_content() ) {
                         <i class="fas fa-phone"></i>
                     </div>
                     <div class="contacto-texto">
-                        <div class="contacto-label">Teléfono</div>
+                        <div class="contacto-label"><?php _e('Teléfono', 'fjp'); ?></div>
                         <div class="contacto-valor">
                             <a href="tel:<?php echo esc_attr(str_replace([' ', '-'], '', $contacto_info['telefono'])); ?>"><?php echo esc_html($contacto_info['telefono']); ?></a>
                         </div>
@@ -1016,14 +1015,14 @@ if ( have_posts() && get_the_content() ) {
                         <i class="fas fa-map-marker-alt"></i>
                     </div>
                     <div class="contacto-texto">
-                        <div class="contacto-label">Dirección</div>
+                        <div class="contacto-label"><?php _e('Dirección', 'fjp'); ?></div>
                         <div class="contacto-valor"><?php echo esc_html($contacto_info['direccion']); ?></div>
                     </div>
                 </div>
             </div>
 
             <a href="mailto:<?php echo esc_attr($contacto_info['email']); ?>" class="btn btn-primary">
-                <i class="fas fa-comments"></i> Contactar al equipo de voluntariado
+                <i class="fas fa-comments"></i> <?php _e('Contactar al equipo de voluntariado', 'fjp'); ?>
             </a>
         </div>
     </section>
@@ -1033,27 +1032,27 @@ if ( have_posts() && get_the_content() ) {
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalTerminosLabel">Términos y condiciones del programa de voluntariado</h5>
+                    <h5 class="modal-title" id="modalTerminosLabel"><?php _e('Términos y condiciones del programa de voluntariado', 'fjp'); ?></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h6>1. Compromiso y responsabilidad</h6>
-                    <p>Los voluntarios se comprometen a cumplir con el horario y tareas asignadas, manteniendo un comportamiento ético y profesional.</p>
+                    <h6>1. <?php _e('Compromiso y responsabilidad', 'fjp'); ?></h6>
+                    <p><?php _e('Los voluntarios se comprometen a cumplir con el horario y tareas asignadas, manteniendo un comportamiento ético y profesional.', 'fjp'); ?></p>
 
-                    <h6>2. Confidencialidad</h6>
-                    <p>Los voluntarios deben mantener la confidencialidad de la información de los beneficiarios y la institución.</p>
+                    <h6>2. <?php _e('Confidencialidad', 'fjp'); ?></h6>
+                    <p><?php _e('Los voluntarios deben mantener la confidencialidad de la información de los beneficiarios y la institución.', 'fjp'); ?></p>
 
-                    <h6>3. Capacitación</h6>
-                    <p>Es obligatorio asistir a las capacitaciones proporcionadas por la fundación antes de iniciar las actividades.</p>
+                    <h6>3. <?php _e('Capacitación', 'fjp'); ?></h6>
+                    <p><?php _e('Es obligatorio asistir a las capacitaciones proporcionadas por la fundación antes de iniciar las actividades.', 'fjp'); ?></p>
 
-                    <h6>4. Seguridad</h6>
-                    <p>Los voluntarios deben seguir los protocolos de seguridad establecidos y reportar cualquier incidente.</p>
+                    <h6>4. <?php _e('Seguridad', 'fjp'); ?></h6>
+                    <p><?php _e('Los voluntarios deben seguir los protocolos de seguridad establecidos y reportar cualquier incidente.', 'fjp'); ?></p>
 
-                    <h6>5. Evaluación</h6>
-                    <p>La fundación realizará evaluaciones periódicas del desempeño de los voluntarios para mejorar la calidad del servicio.</p>
+                    <h6>5. <?php _e('Evaluación', 'fjp'); ?></h6>
+                    <p><?php _e('La fundación realizará evaluaciones periódicas del desempeño de los voluntarios para mejorar la calidad del servicio.', 'fjp'); ?></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?php _e('Cerrar', 'fjp'); ?></button>
                 </div>
             </div>
         </div>
@@ -1091,9 +1090,9 @@ if ( have_posts() && get_the_content() ) {
                                 <div style="font-size: 4rem; color: #2A9D8F; margin-bottom: 20px;">
                                     <i class="fas fa-check-circle"></i>
                                 </div>
-                                <h3 style="color: #264653; margin-bottom: 15px;">¡Solicitud enviada!</h3>
+                                <h3 style="color: #264653; margin-bottom: 15px;"><?php _e('¡Solicitud enviada!', 'fjp'); ?></h3>
                                 <p style="color: #6c757d; font-size: 1.1rem;">
-                                    Gracias por tu interés en ser voluntario/a. Nos pondremos en contacto contigo muy pronto.
+                                    <?php _e('Gracias por tu interés en ser voluntario/a. Nos pondremos en contacto contigo muy pronto.', 'fjp'); ?>
                                 </p>
                             </div>
                         `;
@@ -1101,12 +1100,12 @@ if ( have_posts() && get_the_content() ) {
                         // Hacer scroll al mensaje
                         container.scrollIntoView({ behavior: 'smooth' });
                     } else {
-                        alert('Hubo un error al enviar el formulario. Por favor, intentá de nuevo.');
+                        alert('<?php _e('Hubo un error al enviar el formulario. Por favor, intentá de nuevo.', 'fjp'); ?>');
                     }
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert('Hubo un error al enviar el formulario. Por favor, intentá de nuevo.');
+                    alert('<?php _e('Hubo un error al enviar el formulario. Por favor, intentá de nuevo.', 'fjp'); ?>');
                 });
             });
         }
@@ -1162,7 +1161,7 @@ if ( have_posts() && get_the_content() ) {
             edadInput.addEventListener('input', function() {
                 const edad = parseInt(this.value);
                 if (edad < 16) {
-                    this.setCustomValidity('Debes tener al menos 16 años para ser voluntario/a');
+                    this.setCustomValidity('<?php _e('Debes tener al menos 16 años para ser voluntario/a', 'fjp'); ?>');
                 } else {
                     this.setCustomValidity('');
                 }
