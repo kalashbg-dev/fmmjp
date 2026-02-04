@@ -131,7 +131,64 @@ h3 { font-size: 2rem; }
     transform: translateY(-2px);
 }
 
-/* Header personalizado */
+/* =========================================
+   HEADER STYLES (PRO FEATURES)
+   ========================================= */
+
+/* Default Astra Header adjustments */
+.site-header {
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+/* 1. Header Transparente */
+body.fjp-transparent-header .site-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: transparent;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+body.fjp-transparent-header .ast-builder-menu .menu-item > .menu-link {
+    color: var(--fjp-white);
+}
+
+body.fjp-transparent-header .site-title a,
+body.fjp-transparent-header .site-header .ast-site-identity a {
+    color: var(--fjp-white) !important;
+}
+
+/* 2. Header Sticky */
+body.fjp-sticky-header .site-header {
+    position: sticky;
+    top: 0;
+}
+
+/* Estado "Scrolled" para Sticky/Transparent */
+body.fjp-sticky-header .site-header.fjp-is-scrolled,
+body.fjp-transparent-header .site-header.fjp-is-scrolled {
+    position: fixed;
+    background: rgba(255, 255, 255, 0.98) !important;
+    box-shadow: var(--fjp-shadow-md);
+    animation: slideDown 0.3s ease;
+}
+
+body.fjp-transparent-header .site-header.fjp-is-scrolled .ast-builder-menu .menu-item > .menu-link {
+    color: var(--fjp-dark-blue);
+}
+
+body.fjp-transparent-header .site-header.fjp-is-scrolled .site-title a {
+    color: var(--fjp-primary) !important;
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
+}
+
+/* FJP Custom Header (Legacy - Optional) */
 .fjp-header {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
@@ -142,11 +199,6 @@ h3 { font-size: 2rem; }
     right: 0;
     z-index: 1000;
     transition: all 0.3s ease;
-}
-
-.fjp-header.scrolled {
-    background: rgba(255, 255, 255, 0.98);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
 }
 
 /* Hero section */

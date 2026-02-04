@@ -721,6 +721,16 @@ function fjp_render_pagina_estadisticas() {
 require_once FJP_THEME_DIR . '/inc/shortcodes.php';
 
 /**
+ * Agregar Metabox de Layout ("Pro" Features)
+ */
+require_once FJP_THEME_DIR . '/inc/custom-layout-metabox.php';
+
+/**
+ * Agregar Sistema de Patrones de Bloques
+ */
+require_once FJP_THEME_DIR . '/inc/patterns.php';
+
+/**
  * Agregar funciones de utilidad
  */
 require_once FJP_THEME_DIR . '/functions-advanced.php';
