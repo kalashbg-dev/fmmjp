@@ -382,7 +382,7 @@ function fjp_register_acf_fields_php() {
                 ),
             ),
             'menu_order' => 0,
-            'position' => 'normal',
+            'position' => 'side',
             'style' => 'default',
             'label_placement' => 'top',
             'instruction_placement' => 'label',
@@ -422,38 +422,10 @@ function fjp_register_acf_fields_php() {
                     ),
                 ),
             ),
+            'position' => 'side',
             'active' => true,
         ));
 
-        // 3. Configuración Página Voluntariado (Solo para fallback o datos específicos)
-        acf_add_local_field_group(array(
-            'key' => 'group_voluntariado_pagina',
-            'title' => 'Configuración Página Voluntariado',
-            'fields' => array(
-                array(
-                    'key' => 'field_voluntariado_hero_titulo',
-                    'label' => 'Título Hero',
-                    'name' => 'voluntariado_hero_titulo',
-                    'type' => 'text',
-                ),
-                array(
-                    'key' => 'field_voluntariado_hero_descripcion',
-                    'label' => 'Descripción Hero',
-                    'name' => 'voluntariado_hero_descripcion',
-                    'type' => 'textarea',
-                ),
-            ),
-            'location' => array(
-                array(
-                    array(
-                        'param' => 'page_template',
-                        'operator' => '==',
-                        'value' => 'page-voluntariado.php',
-                    ),
-                ),
-            ),
-            'active' => true,
-        ));
     }
 }
 add_action('acf/init', 'fjp_register_acf_fields_php');

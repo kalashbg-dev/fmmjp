@@ -1,0 +1,16 @@
+{
+    "name": "acf/fjp-news-grid",
+    "title": "FJP News Grid",
+    "description": "Displays latest news with filters.",
+    "category": "widgets",
+    "icon": "grid-view",
+    "keywords": ["news", "posts", "grid"],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "render.php"
+    },
+    "supports": {
+        "align": ["wide", "full"]
+    },
+    "style": "file:./style.css"
+}

@@ -1,0 +1,16 @@
+{
+    "name": "acf/fjp-testimonials",
+    "title": "FJP Testimonials",
+    "description": "Slider of testimonials.",
+    "category": "widgets",
+    "icon": "format-quote",
+    "keywords": ["testimonials", "slider", "quote"],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "render.php"
+    },
+    "supports": {
+        "align": ["wide", "full"]
+    },
+    "style": "file:./style.css"
+}

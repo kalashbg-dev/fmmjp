@@ -1,0 +1,16 @@
+{
+    "name": "acf/fjp-volunteer-cta",
+    "title": "FJP Volunteer CTA",
+    "description": "Call to action for volunteering.",
+    "category": "design",
+    "icon": "heart",
+    "keywords": ["cta", "volunteer", "join"],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "render.php"
+    },
+    "supports": {
+        "align": ["wide", "full"]
+    },
+    "style": "file:./style.css"
+}

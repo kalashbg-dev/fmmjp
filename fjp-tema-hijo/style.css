@@ -3,7 +3,7 @@ Theme Name: FJP - Fundación Juventud Progresista
 Description: Tema hijo de Astra para la Fundación Juventud Progresista
 Author: Equipo de Desarrollo Web FJP
 Template: astra
-Version: 1.1.0
+Version: 1.2.0
 Text Domain: fjp
 Domain Path: /languages
 */
@@ -12,51 +12,31 @@ Domain Path: /languages
    1. DESIGN TOKENS (VARIABLES)
    ========================================= */
 :root {
-    /* Mapeo de variables FJP a la Paleta Global de Astra */
-    /* Astra Global Colors: 0=Primary, 1=Secondary, 2=Heading, 3=Text, 4=Surface 1, 5=Surface 2, etc. */
+    /* Core Palette - Mapped from theme.json presets */
+    --fjp-primary: var(--wp--preset--color--fjp-primary, #F2385A);
+    --fjp-secondary: var(--wp--preset--color--fjp-secondary, #D95F76);
+    --fjp-teal: var(--wp--preset--color--fjp-teal, #5BD9D9);
+    --fjp-green: var(--wp--preset--color--fjp-green, #56BF66);
 
-    --fjp-primary: var(--ast-global-color-0);
-    --fjp-secondary: var(--ast-global-color-1);
-
-    /* Si Astra no tiene definidos más colores en la paleta global básica (solo tiene hasta el 8),
-       podemos usar algunos específicos o mantener los nuestros si no hay equivalencia directa.
-       Pero idealmente, intentamos mapear a lo que Astra provee si el usuario quiere personalizar todo.
-
-       Por ahora, mantenemos los hardcoded que no tienen equivalente directo en la paleta de 9 colores,
-       pero Primary, Secondary, Text y Heading SÍ se mapean.
-    */
-
-    --fjp-text: var(--ast-global-color-3);
-    /* --fjp-heading: var(--ast-global-color-2); */ /* Usado en selectores directos */
-
-    --fjp-background: var(--ast-global-color-4); /* Usualmente el fondo del sitio o surface */
-    --fjp-white: #FFFFFF; /* Astra suele usar global-color-8 como blanco/base, pero mejor asegurar */
-
-    /* Colores extra que Astra Customizer podría no cubrir por defecto en la paleta básica */
-    --fjp-accent: var(--wp--preset--color--fjp-accent, #E63946);
-    --fjp-teal: var(--wp--preset--color--fjp-teal, #2A9D8F);
-    --fjp-dark-blue: var(--wp--preset--color--fjp-dark-blue, #264653);
-    --fjp-yellow: var(--wp--preset--color--fjp-yellow, #E9C46A);
-    --fjp-orange: var(--wp--preset--color--fjp-orange, #F4A261);
-
-    --fjp-light-gray: var(--wp--preset--color--fjp-light-gray, #f8f9fa);
-    --fjp-gray: var(--wp--preset--color--fjp-gray, #e9ecef);
+    --fjp-text: var(--wp--preset--color--fjp-text, #333333);
+    --fjp-background: var(--wp--preset--color--fjp-background, #F2F2F2);
+    --fjp-white: var(--wp--preset--color--fjp-white, #FFFFFF);
     --fjp-dark-gray: var(--wp--preset--color--fjp-dark-gray, #6c757d);
 
-    /* Gradients (Updated to use mapped variables) */
+    /* Mapeo legacy para compatibilidad */
+    --fjp-accent: var(--fjp-primary);
+    --fjp-dark-blue: var(--fjp-text); /* Reemplazamos el azul oscuro por el texto estándar o gris oscuro */
+    --fjp-yellow: var(--fjp-teal);
+    --fjp-orange: var(--fjp-secondary);
+
+    /* Gradients */
     --fjp-gradient: linear-gradient(135deg, var(--fjp-primary) 0%, var(--fjp-secondary) 100%);
+    --fjp-gradient-teal: linear-gradient(135deg, var(--fjp-teal) 0%, var(--fjp-green) 100%);
+    --fjp-gradient-gold: linear-gradient(135deg, var(--fjp-secondary) 0%, var(--fjp-primary) 100%); /* Reemplazado por tonos rojos */
 
-    /* Estos gradients usan colores hardcoded arriba, si el usuario cambia Primary/Secondary en Astra,
-       --fjp-gradient cambiará. Los otros gradients usan teal/dark-blue que no son parte de la paleta base de 9 colores de Astra.
-       Si se quisiera que TODO cambie, habría que mapear --fjp-teal a --ast-global-color-4, etc. pero eso puede romper la semántica.
-    */
-    --fjp-gradient-teal: linear-gradient(135deg, var(--fjp-teal) 0%, var(--fjp-dark-blue) 100%);
-    --fjp-gradient-dark: linear-gradient(135deg, var(--fjp-dark-blue) 0%, var(--fjp-teal) 100%);
-    --fjp-gradient-gold: linear-gradient(135deg, var(--fjp-yellow) 0%, var(--fjp-orange) 100%);
-
-    /* Typography - Inherit from Astra */
-    --fjp-font-heading: inherit; /* Dejar que Astra maneje esto */
-    --fjp-font-body: inherit;
+    /* Typography */
+    --fjp-font-heading: var(--wp--preset--font-family--heading, 'Montserrat', sans-serif);
+    --fjp-font-body: var(--wp--preset--font-family--body, 'Inter', sans-serif);
 
     /* Spacing */
     --fjp-spacing-xs: 10px;
@@ -76,36 +56,35 @@ Domain Path: /languages
     --fjp-radius-pill: 50px;
 
     /* Shadows */
-    --fjp-shadow-sm: 0 2px 20px rgba(0, 0, 0, 0.1);
-    --fjp-shadow-md: 0 4px 15px rgba(0, 0, 0, 0.1); /* Neutral shadow to avoid color clash */
+    --fjp-shadow-sm: 0 2px 20px rgba(0, 0, 0, 0.05);
+    --fjp-shadow-md: 0 4px 15px rgba(0, 0, 0, 0.08);
     --fjp-shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.1);
-    --fjp-shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.15);
+    --fjp-shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.12);
 }
-
-/* Tipografías - Eliminamos import para usar las de Astra Customizer */
-/* @import url('...'); */
 
 /* =========================================
    2. BASE STYLES
    ========================================= */
 body {
-    /* Font family inherited from Astra */
+    font-family: var(--fjp-font-body);
     color: var(--fjp-text);
+    background-color: var(--fjp-background);
 }
 
 h1, h2, h3, h4, h5, h6 {
-    /* Font family inherited from Astra */
-    color: var(--ast-global-color-2); /* Astra Heading Color */
+    font-family: var(--fjp-font-heading);
+    color: var(--fjp-primary); /* Use primary for headings by default in this premium feel */
+    font-weight: 700;
 }
 
 /* =========================================
    3. COMPONENTS
    ========================================= */
 
-/* Botones personalizados FJP - Updated to match Astra Buttons */
+/* Botones personalizados FJP */
 .btn-fjp-primary {
     background: var(--fjp-primary);
-    color: var(--fjp-white) !important; /* Force white text on primary button */
+    color: var(--fjp-white) !important;
     border: none;
     padding: 12px var(--fjp-spacing-md);
     border-radius: var(--fjp-radius-pill);
@@ -117,16 +96,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-fjp-primary:hover {
-    background: var(--fjp-secondary); /* Hover effect using secondary color */
+    background: var(--fjp-secondary);
     transform: translateY(-2px);
     color: var(--fjp-white) !important;
+    box-shadow: var(--fjp-shadow-lg);
 }
 
 .btn-fjp-secondary {
-    background: var(--fjp-secondary);
-    color: var(--fjp-white) !important;
-    border: none;
-    padding: 12px var(--fjp-spacing-md);
+    background: var(--fjp-white);
+    color: var(--fjp-primary) !important;
+    border: 2px solid var(--fjp-primary);
+    padding: 10px var(--fjp-spacing-md); /* Reduced padding to account for border */
     border-radius: var(--fjp-radius-pill);
     font-weight: 600;
     text-decoration: none;
@@ -136,261 +116,94 @@ h1, h2, h3, h4, h5, h6 {
 
 .btn-fjp-secondary:hover {
     background: var(--fjp-primary);
-    transform: translateY(-2px);
     color: var(--fjp-white) !important;
+    transform: translateY(-2px);
+}
+
+/* Cards - Premium Style */
+.fjp-card {
+    background: var(--fjp-white);
+    border-radius: var(--fjp-radius-lg);
+    box-shadow: var(--fjp-shadow-md);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(0,0,0,0.02);
+    overflow: hidden;
+}
+
+.fjp-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--fjp-shadow-xl);
 }
 
 /* =========================================
    HEADER STYLES (PRO FEATURES)
    ========================================= */
 
-/* Default Astra Header adjustments */
 .site-header {
     transition: all 0.3s ease;
     z-index: 999;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
-/* 1. Header Transparente */
-body.fjp-transparent-header .site-header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: transparent;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-body.fjp-transparent-header .ast-builder-menu .menu-item > .menu-link {
-    color: var(--fjp-white);
-}
-
-body.fjp-transparent-header .site-title a,
-body.fjp-transparent-header .site-header .ast-site-identity a {
-    color: var(--fjp-white) !important;
-}
-
-/* 2. Header Sticky */
+/* Sticky Header */
 body.fjp-sticky-header .site-header {
     position: sticky;
     top: 0;
 }
 
-/* Estado "Scrolled" para Sticky/Transparent */
-body.fjp-sticky-header .site-header.fjp-is-scrolled,
-body.fjp-transparent-header .site-header.fjp-is-scrolled {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+body.fjp-sticky-header .site-header.fjp-is-scrolled {
     background: rgba(255, 255, 255, 0.98) !important;
     box-shadow: var(--fjp-shadow-md);
-    animation: slideDown 0.3s ease;
-}
-
-body.fjp-transparent-header .site-header.fjp-is-scrolled .ast-builder-menu .menu-item > .menu-link {
-    color: var(--fjp-primary);
-}
-
-body.fjp-transparent-header .site-header.fjp-is-scrolled .site-title a {
-    color: var(--fjp-primary) !important;
-}
-
-@keyframes slideDown {
-    from { transform: translateY(-100%); }
-    to { transform: translateY(0); }
+    backdrop-filter: blur(10px);
 }
 
 /* =========================================
-   PAGE STYLES (Moved from inline PHP)
+   BLOCK PATTERN SUPPORT STYLES
    ========================================= */
 
-/* Voluntariado Hero */
-.voluntariado-hero {
-    background: var(--fjp-gradient-teal); /* Can be customized to var(--fjp-gradient) if preferred */
-    color: var(--fjp-white);
-    padding: 120px 0 80px;
+/* Hero Sections */
+.fjp-hero-section {
     position: relative;
     overflow: hidden;
+    padding: var(--fjp-spacing-xl) 0;
 }
 
-.voluntariado-hero::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-.voluntariado-hero .container { position: relative; z-index: 2; }
-
-.voluntariado-hero h1 {
-    font-size: 3.5rem;
-    font-weight: 700;
-    margin-bottom: 25px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    color: var(--fjp-white); /* Override default heading color for dark bg */
-}
-
-.voluntariado-hero p {
-    font-size: 1.3rem;
-    line-height: 1.7;
-    margin-bottom: 40px;
-    max-width: 700px;
-}
-
-/* Voluntariado Sections */
-.voluntariado-beneficios {
-    padding: 100px 0;
-    background: var(--fjp-light-gray);
-}
-
-.voluntariado-beneficios h2,
-.voluntariado-areas h2,
-.voluntariado-formulario h2,
-.voluntariado-faq h2 {
+/* Icon Boxes */
+.fjp-icon-box {
     text-align: center;
-    color: var(--fjp-dark-blue);
-    font-size: 2.8rem;
-    font-weight: 700;
-    margin-bottom: 60px;
-}
-
-.beneficio-card, .area-card, .testimonio-card {
-    border-radius: 20px;
-    padding: 40px 30px;
-    text-align: center;
-    transition: all 0.3s ease;
+    padding: var(--fjp-spacing-md);
+    background: var(--fjp-white);
+    border-radius: var(--fjp-radius-md);
     height: 100%;
+    box-shadow: var(--fjp-shadow-sm);
+    transition: all 0.3s ease;
 }
 
-.beneficio-card {
-    background: var(--fjp-white);
-    box-shadow: var(--fjp-shadow-lg);
-    border: 2px solid transparent;
-}
-
-.beneficio-card:hover {
-    transform: translateY(-10px);
-    box-shadow: var(--fjp-shadow-xl);
-    border-color: var(--fjp-teal);
-}
-
-.beneficio-icono {
-    background: var(--fjp-gradient-teal);
-    color: var(--fjp-white);
-    width: 80px; height: 80px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 25px;
-    font-size: 2rem;
-    box-shadow: var(--fjp-shadow-md);
-}
-
-.area-card {
-    background: var(--fjp-light-gray);
-    border: 2px solid transparent;
-    position: relative;
-    overflow: hidden;
-}
-
-.area-card:hover {
+.fjp-icon-box:hover {
     transform: translateY(-5px);
-    box-shadow: var(--fjp-shadow-lg);
-    border-color: var(--fjp-teal);
-    background: var(--fjp-white);
-}
-
-.area-icono {
-    background: var(--fjp-gradient-gold);
-    color: var(--fjp-white);
-    width: 90px; height: 90px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 25px;
-    font-size: 2.2rem;
     box-shadow: var(--fjp-shadow-md);
 }
 
-.area-requisitos {
-    background: rgba(42, 157, 143, 0.1); /* Uses Teal with opacity */
-    color: var(--fjp-teal);
-    padding: 15px;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 500;
-    margin-top: 20px;
-}
-
-/* Animations (from Voluntariado) */
-@keyframes slideInUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.voluntariado-beneficios .row > div,
-.voluntariado-areas .row > div,
-.voluntariado-testimonios .row > div {
-    animation: slideInUp 0.6s ease forwards;
-}
-
-/* Contacto & General */
-.voluntariado-contacto {
-    padding: 100px 0;
-    background: var(--fjp-gradient-teal);
-    color: var(--fjp-white);
-    text-align: center;
-}
-
-.voluntariado-contacto h2 { color: var(--fjp-white); }
-.contacto-valor a { color: var(--fjp-white); }
-.contacto-valor a:hover { color: var(--fjp-yellow); }
-
-/* FJP Hero (General) */
-.fjp-hero {
+.fjp-icon-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
     background: var(--fjp-gradient);
     color: var(--fjp-white);
-    padding: 120px 0 var(--fjp-spacing-xxl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--fjp-spacing-sm);
+    font-size: 2rem;
 }
-
-/* FJP Counter */
-.fjp-counter {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-/* FJP Card */
-.fjp-card {
-    background: var(--fjp-white);
-    box-shadow: var(--fjp-shadow-lg);
-}
-
-/* FJP Form */
-.fjp-form .form-control:focus {
-    border-color: var(--fjp-primary);
-}
-
-/* FJP Timeline */
-.fjp-timeline::before { background: var(--fjp-primary); }
-.fjp-timeline-date { background: var(--fjp-primary); color: var(--fjp-white); }
 
 /* Footer */
-.fjp-footer {
-    background: var(--ast-global-color-3); /* Mapped to Text/Dark color usually */
+.site-footer {
+    background: #222; /* Fallback if not set via Customizer */
     color: var(--fjp-white);
 }
 
-/* WhatsApp Floating */
-.whatsapp-flotante {
-    position: fixed; bottom: 30px; right: 30px; z-index: 9999;
-    animation: whatsapp-entrada 0.5s ease-out;
-}
-.whatsapp-btn {
-    background: #25D366; /* WhatsApp Brand Color */
-    color: var(--fjp-white);
-}
-.whatsapp-btn:hover { background: #128C7E; }
-
-/* Utilidades */
+/* Utilities */
 .text-gradient {
     background: var(--fjp-gradient);
     -webkit-background-clip: text;
@@ -398,14 +211,71 @@ body.fjp-transparent-header .site-header.fjp-is-scrolled .site-title a {
     background-clip: text;
 }
 
-/* Block Support */
 .has-fjp-primary-color { color: var(--fjp-primary) !important; }
 .has-fjp-secondary-color { color: var(--fjp-secondary) !important; }
+.has-fjp-teal-color { color: var(--fjp-teal) !important; }
+.has-fjp-green-color { color: var(--fjp-green) !important; }
+
 .has-fjp-primary-background-color { background-color: var(--fjp-primary) !important; }
 .has-fjp-secondary-background-color { background-color: var(--fjp-secondary) !important; }
+.has-fjp-teal-background-color { background-color: var(--fjp-teal) !important; }
+.has-fjp-green-background-color { background-color: var(--fjp-green) !important; }
 
-/* Media Queries */
+/* Responsive */
 @media (max-width: 768px) {
-    .fjp-timeline::before { left: 20px; }
-    .fjp-timeline-item { width: calc(100% - 50px); left: 50px !important; text-align: left !important; }
+    :root {
+        --fjp-spacing-xxl: 50px;
+    }
+}
+
+/* =========================================
+   LEGACY COMPONENT SUPPORT (Shortcodes)
+   ========================================= */
+
+/* FJP Form */
+.fjp-form .form-control:focus {
+    border-color: var(--fjp-primary);
+}
+
+.voluntariado-formulario {
+    padding: 60px 0;
+    background: var(--fjp-white);
+}
+
+.formulario-container {
+    background: #fff;
+    padding: 40px;
+    border-radius: var(--fjp-radius-lg);
+    box-shadow: var(--fjp-shadow-lg);
+}
+
+/* FJP Counter */
+.fjp-counter-section {
+    padding: 60px 0;
+}
+
+.fjp-counter {
+    padding: 30px;
+    background: var(--fjp-white);
+    border-radius: var(--fjp-radius-md);
+    box-shadow: var(--fjp-shadow-sm);
+    transition: transform 0.3s ease;
+}
+
+.fjp-counter:hover {
+    transform: translateY(-5px);
+}
+
+.fjp-counter-number {
+    display: block;
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--fjp-primary);
+    margin-bottom: 10px;
+}
+
+.fjp-counter-label {
+    font-size: 1.1rem;
+    color: var(--fjp-text);
+    font-weight: 500;
 }
