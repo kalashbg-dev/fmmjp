@@ -279,3 +279,98 @@ body.fjp-sticky-header .site-header.fjp-is-scrolled {
     color: var(--fjp-text);
     font-weight: 500;
 }
+
+/* =========================================
+   SIDEBAR STYLES (Modular)
+   ========================================= */
+.sidebar-widget {
+    margin-bottom: 40px;
+    background: #fff;
+    padding: 30px;
+    border-radius: var(--fjp-radius-md);
+    box-shadow: var(--fjp-shadow-sm);
+}
+
+.widget-title {
+    font-size: 1.25rem;
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--fjp-light-gray);
+    padding-bottom: 10px;
+    position: relative;
+}
+
+.widget-title::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background: var(--fjp-primary);
+}
+
+/* Category List */
+.fjp-cat-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.fjp-cat-list li {
+    margin-bottom: 15px;
+}
+
+.fjp-cat-list a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--fjp-text);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.fjp-cat-list a:hover {
+    color: var(--fjp-primary);
+}
+
+.fjp-cat-list .term-count {
+    background: var(--fjp-light-gray);
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: var(--fjp-dark-gray);
+}
+
+/* Mini News List */
+.fjp-mini-item {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.fjp-mini-img img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: var(--fjp-radius-sm);
+}
+
+.fjp-mini-content h4 {
+    font-size: 0.95rem;
+    margin: 0 0 5px;
+    line-height: 1.4;
+}
+
+.fjp-mini-content h4 a {
+    color: var(--fjp-text);
+    text-decoration: none;
+}
+
+.fjp-mini-content h4 a:hover {
+    color: var(--fjp-primary);
+}
+
+.fjp-mini-content .date {
+    font-size: 0.8rem;
+    color: #999;
+}

@@ -31,9 +31,6 @@ function fjp_enqueue_scripts() {
     wp_enqueue_script('fjp-main', FJP_THEME_URI . '/js/main.js', array('jquery'), FJP_VERSION, true);
 
     // Cargar scripts condicionalmente
-    if ( is_front_page() || is_home() ) {
-        wp_enqueue_script('fjp-counter', FJP_THEME_URI . '/js/counter.js', array('jquery'), FJP_VERSION, true);
-    }
 
     if ( is_singular('noticias') || is_post_type_archive('noticias') ) {
         wp_enqueue_script('fjp-news', FJP_THEME_URI . '/js/news.js', array('jquery'), FJP_VERSION, true);
