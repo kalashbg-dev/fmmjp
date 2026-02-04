@@ -23,37 +23,35 @@ add_filter('the_generator', '__return_empty_string');
 define('DISALLOW_FILE_EDIT', true);
 
 /**
- * Limitar intentos de login fallidos
+ * Limitar intentos de login fallidos (Optimizado con Transients)
  */
 function fjp_limit_login_attempts() {
     $max_attempts = 5;
     $lockout_time = 15 * 60; // 15 minutos
 
-    if (!session_id()) {
-        session_start();
-    }
-
     $user_ip = $_SERVER['REMOTE_ADDR'];
-    $attempt_key = 'login_attempts_' . $user_ip;
-    $lockout_key = 'login_lockout_' . $user_ip;
+    // Sanitizar IP para usar como key
+    $ip_hash = md5($user_ip);
+    $attempt_key = 'fjp_login_attempts_' . $ip_hash;
+    $lockout_key = 'fjp_login_lockout_' . $ip_hash;
 
     // Verificar si está en período de bloqueo
-    if (isset($_SESSION[$lockout_key]) && $_SESSION[$lockout_key] > time()) {
-        $time_remaining = ceil(($_SESSION[$lockout_key] - time()) / 60);
+    $lockout = get_transient($lockout_key);
+    if ($lockout) {
+        $time_remaining = ceil(($lockout - time()) / 60);
         wp_die('Demasiados intentos fallidos. Por favor, inténtalo de nuevo en ' . $time_remaining . ' minutos.');
     }
 
     // Si el login falla, incrementar contador
     add_action('wp_login_failed', function() use ($attempt_key, $lockout_key, $max_attempts, $lockout_time) {
-        if (!isset($_SESSION[$attempt_key])) {
-            $_SESSION[$attempt_key] = 0;
-        }
+        $attempts = (int) get_transient($attempt_key);
+        $attempts++;
 
-        $_SESSION[$attempt_key]++;
+        set_transient($attempt_key, $attempts, 3600); // Guardar intentos por 1 hora
 
-        if ($_SESSION[$attempt_key] >= $max_attempts) {
-            $_SESSION[$lockout_key] = time() + $lockout_time;
-            $_SESSION[$attempt_key] = 0;
+        if ($attempts >= $max_attempts) {
+            set_transient($lockout_key, time() + $lockout_time, $lockout_time);
+            delete_transient($attempt_key);
         }
     });
 }
@@ -154,7 +152,7 @@ function fjp_detectar_idioma_y_redirigir() {
 add_action('init', 'fjp_detectar_idioma_y_redirigir');
 
 /**
- * Botón flotante de WhatsApp con animaciones
+ * Botón flotante de WhatsApp con animaciones (CSS movido a style.css)
  */
 function fjp_whatsapp_flotante() {
     if (is_admin()) {
@@ -164,7 +162,7 @@ function fjp_whatsapp_flotante() {
     $numero_whatsapp = get_option('fjp_whatsapp_numero', '+5491134567890');
     $mensaje_default = get_option('fjp_whatsapp_mensaje', 'Hola, quisiera obtener más información sobre la Fundación Juega y Participa');
     ?>
-    <div id="whatsapp-flotante" class="whatsapp-flotante">
+    <div id="whatsapp-flotante" class="whatsapp-flotante" style="display:none;">
         <a href="https://wa.me/<?php echo esc_attr(str_replace(['+', ' ', '-'], '', $numero_whatsapp)); ?>?text=<?php echo urlencode($mensaje_default); ?>"
            target="_blank"
            rel="noopener noreferrer"
@@ -175,7 +173,6 @@ function fjp_whatsapp_flotante() {
         </a>
     </div>
 
-
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         var whatsappBtn = document.querySelector('.whatsapp-btn');
@@ -183,27 +180,18 @@ function fjp_whatsapp_flotante() {
 
         // Mostrar después de 3 segundos
         setTimeout(function() {
-            whatsappFlotante.style.display = 'block';
+            if(whatsappFlotante) whatsappFlotante.style.display = 'block';
         }, 3000);
 
         // Añadir efecto de pulso cada 10 segundos
         setInterval(function() {
-            whatsappBtn.style.animation = 'pulse 2s infinite';
-            setTimeout(function() {
-                whatsappBtn.style.animation = 'none';
-            }, 2000);
-        }, 10000);
-
-        // Añadir animación de pulse
-        var style = document.createElement('style');
-        style.textContent = `
-            @keyframes pulse {
-                0% { transform: scale(1); }
-                50% { transform: scale(1.05); }
-                100% { transform: scale(1); }
+            if(whatsappBtn) {
+                whatsappBtn.style.animation = 'pulse 2s infinite';
+                setTimeout(function() {
+                    whatsappBtn.style.animation = 'none';
+                }, 2000);
             }
-        `;
-        document.head.appendChild(style);
+        }, 10000);
     });
     </script>
     <?php
@@ -414,7 +402,7 @@ add_action('pre_get_posts', 'fjp_ordenar_columnas_noticias');
 // ===== FUNCIONES DE BACKUP Y MANTENIMIENTO =====
 
 /**
- * Crear backup de la base de datos
+ * Crear backup de la base de datos (Protegido)
  */
 function fjp_crear_backup() {
     global $wpdb;
@@ -422,42 +410,50 @@ function fjp_crear_backup() {
     $backup_dir = WP_CONTENT_DIR . '/backups-fjp/';
     if (!file_exists($backup_dir)) {
         mkdir($backup_dir, 0755, true);
+
+        // Crear .htaccess para proteger directorio
+        $htaccess_content = "Order Deny,Allow\nDeny from all";
+        file_put_contents($backup_dir . '.htaccess', $htaccess_content);
+
+        // Crear index.php vacío para evitar directory listing
+        file_put_contents($backup_dir . 'index.php', '<?php // Silence is golden.');
     }
 
     $fecha = date('Y-m-d_H-i-s');
     $backup_file = $backup_dir . 'backup_' . $fecha . '.sql';
 
-    $tables = [];
-    $result = $wpdb->get_results("SHOW TABLES", ARRAY_N);
+    // Si mysqldump está disponible, usarlo (más rápido y seguro)
+    $db_name = DB_NAME;
+    $db_user = DB_USER;
+    $db_pass = DB_PASSWORD;
+    $db_host = DB_HOST;
 
-    foreach ($result as $row) {
-        $tables[] = $row[0];
-    }
+    $command = "mysqldump --opt -h $db_host -u $db_user -p$db_pass $db_name > $backup_file";
+    system($command, $output);
 
-    $sql = "-- Backup FJP " . date('Y-m-d H:i:s') . "\n\n";
+    // Fallback PHP si mysqldump falla o no está permitido
+    if (!file_exists($backup_file) || filesize($backup_file) == 0) {
+        // (Lógica PHP anterior como fallback)
+        $tables = [];
+        $result = $wpdb->get_results("SHOW TABLES", ARRAY_N);
+        foreach ($result as $row) { $tables[] = $row[0]; }
 
-    foreach ($tables as $table) {
-        $result = $wpdb->get_results("SELECT * FROM $table", ARRAY_A);
-        $sql .= "DROP TABLE IF EXISTS $table;\n";
-
-        $create_table = $wpdb->get_row("SHOW CREATE TABLE $table", ARRAY_N);
-        $sql .= $create_table[1] . ";\n\n";
-
-        foreach ($result as $row) {
-            $sql .= "INSERT INTO $table VALUES(";
-            $values = [];
-            foreach ($row as $value) {
-                $values[] = "'" . esc_sql($value) . "'";
+        $sql = "-- Backup FJP PHP Fallback " . date('Y-m-d H:i:s') . "\n\n";
+        foreach ($tables as $table) {
+            $result = $wpdb->get_results("SELECT * FROM $table", ARRAY_A);
+            $sql .= "DROP TABLE IF EXISTS $table;\n";
+            $create_table = $wpdb->get_row("SHOW CREATE TABLE $table", ARRAY_N);
+            $sql .= $create_table[1] . ";\n\n";
+            foreach ($result as $row) {
+                $sql .= "INSERT INTO $table VALUES(";
+                $values = [];
+                foreach ($row as $value) { $values[] = "'" . esc_sql($value) . "'"; }
+                $sql .= implode(',', $values) . ");\n";
             }
-            $sql .= implode(',', $values) . ");\n";
+            $sql .= "\n";
         }
-        $sql .= "\n";
+        file_put_contents($backup_file, $sql);
     }
-
-    file_put_contents($backup_file, $sql);
-
-    // Subir a Google Drive (requiere configuración adicional)
-    // fjp_subir_a_google_drive($backup_file);
 
     return $backup_file;
 }
@@ -575,39 +571,6 @@ if (!wp_next_scheduled('fjp_optimizacion_semanal')) {
     wp_schedule_event(time(), 'weekly', 'fjp_optimizacion_semanal');
 }
 add_action('fjp_optimizacion_semanal', 'fjp_optimizar_bd');
-
-// ===== FUNCIONES DE SEGURIDAD ADICIONALES =====
-
-/**
- * Cambiar prefijo de las tablas de WordPress (solo ejecutar una vez)
- */
-function fjp_cambiar_prefijo_tablas() {
-    // Esta función debe ejecutarse con EXTREMO CUIDADO
-    // y solo una vez durante la instalación
-    // Se recomienda hacer backup antes
-
-    // Código comentado por seguridad
-    // Descomentar solo si es necesario y con backup previo
-    /*
-    global $wpdb;
-    $old_prefix = 'wp_';
-    $new_prefix = 'fjp_';
-
-    $tables = $wpdb->get_results("SHOW TABLES LIKE '{$old_prefix}%'", ARRAY_N);
-
-    foreach ($tables as $table) {
-        $new_table = str_replace($old_prefix, $new_prefix, $table[0]);
-        $wpdb->query("RENAME TABLE {$table[0]} TO {$new_table}");
-    }
-
-    // Actualizar opciones
-    $wpdb->query("UPDATE {$new_prefix}options SET option_name = REPLACE(option_name, '{$old_prefix}', '{$new_prefix}')");
-    $wpdb->query("UPDATE {$new_prefix}usermeta SET meta_key = REPLACE(meta_key, '{$old_prefix}', '{$new_prefix}')");
-    */
-}
-
-// Se ha eliminado la función fjp_proteger_sql_injection por problemas de seguridad y compatibilidad.
-// WordPress ya maneja la sanitización de inputs a través de sus APIs (prepare, sanitize_*, etc).
 
 // ===== FUNCIONES DE RENDIMIENTO PARA PÁGINAS ESPECÍFICAS =====
 

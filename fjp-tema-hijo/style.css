@@ -12,24 +12,24 @@ Domain Path: /languages
    1. DESIGN TOKENS (VARIABLES)
    ========================================= */
 :root {
-    /* Colors - Brand */
-    --fjp-primary: #0056D2;
-    --fjp-secondary: #28A745;
-    --fjp-accent: #E63946;
+    /* Colors - Brand (Linked to theme.json presets) */
+    --fjp-primary: var(--wp--preset--color--fjp-primary, #0056D2);
+    --fjp-secondary: var(--wp--preset--color--fjp-secondary, #28A745);
+    --fjp-accent: var(--wp--preset--color--fjp-accent, #E63946);
 
     /* Colors - Extended Palette */
-    --fjp-teal: #2A9D8F;
-    --fjp-dark-blue: #264653;
-    --fjp-yellow: #E9C46A;
-    --fjp-orange: #F4A261;
+    --fjp-teal: var(--wp--preset--color--fjp-teal, #2A9D8F);
+    --fjp-dark-blue: var(--wp--preset--color--fjp-dark-blue, #264653);
+    --fjp-yellow: var(--wp--preset--color--fjp-yellow, #E9C46A);
+    --fjp-orange: var(--wp--preset--color--fjp-orange, #F4A261);
 
     /* Colors - Neutrals */
-    --fjp-text: #333333;
-    --fjp-background: #FFFFFF;
-    --fjp-light-gray: #f8f9fa;
-    --fjp-gray: #e9ecef;
-    --fjp-dark-gray: #6c757d;
-    --fjp-white: #FFFFFF;
+    --fjp-text: var(--wp--preset--color--fjp-text, #333333);
+    --fjp-background: var(--wp--preset--color--fjp-white, #FFFFFF);
+    --fjp-light-gray: var(--wp--preset--color--fjp-light-gray, #f8f9fa);
+    --fjp-gray: var(--wp--preset--color--fjp-gray, #e9ecef);
+    --fjp-dark-gray: var(--wp--preset--color--fjp-dark-gray, #6c757d);
+    --fjp-white: var(--wp--preset--color--fjp-white, #FFFFFF);
 
     /* Gradients */
     --fjp-gradient: linear-gradient(135deg, var(--fjp-primary) 0%, var(--fjp-secondary) 100%);
@@ -403,6 +403,12 @@ h3 { font-size: 2rem; }
     }
 }
 
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
 @media (max-width: 768px) {
     .whatsapp-flotante {
         bottom: 20px;
@@ -482,7 +488,28 @@ h3 { font-size: 2rem; }
 
 /* Sobreescribir estilos de Astra */
 .ast-container {
-    max-width: 1200px !important;
+    max-width: var(--wp--style--global--content-size, 1200px);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Permitir ancho completo en contenedores cuando se selecciona "Full Width" */
+.ast-page-builder-template .site-content > .ast-container {
+    max-width: 100%;
+    padding: 0;
+}
+
+.alignfull {
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    max-width: 100vw;
+    width: 100vw;
+}
+
+.alignwide {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: var(--wp--style--global--wide-size, 1400px);
 }
 
 .ast-single-post .entry-header {
@@ -1540,52 +1567,6 @@ textarea.form-control {
 
 .contacto-valor a:hover {
     color: var(--fjp-yellow);
-}
-
-/* Animaciones */
-@keyframes slideInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.voluntariado-beneficios .row > div,
-.voluntariado-areas .row > div,
-.voluntariado-testimonios .row > div {
-    animation: slideInUp 0.6s ease forwards;
-}
-
-.voluntariado-beneficios .row > div:nth-child(2) {
-    animation-delay: 0.1s;
-}
-
-.voluntariado-beneficios .row > div:nth-child(3) {
-    animation-delay: 0.2s;
-}
-
-.voluntariado-areas .row > div:nth-child(2) {
-    animation-delay: 0.1s;
-}
-
-.voluntariado-areas .row > div:nth-child(3) {
-    animation-delay: 0.2s;
-}
-
-.voluntariado-areas .row > div:nth-child(4) {
-    animation-delay: 0.3s;
-}
-
-.voluntariado-testimonios .row > div:nth-child(2) {
-    animation-delay: 0.1s;
-}
-
-.voluntariado-testimonios .row > div:nth-child(3) {
-    animation-delay: 0.2s;
 }
 
 /* =========================================

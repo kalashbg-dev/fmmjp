@@ -12,6 +12,13 @@ get_header();
 <main id="primary" class="site-main">
 
     <?php
+    // Asegurar compatibilidad con layouts de Astra (Full Width / Stretched)
+    // Si Astra ya envuelve el contenido, este main podría ser redundante,
+    // pero lo mantenemos para estructura semántica.
+    // La clave es que el contenido dentro de 'the_content()' pueda expandirse.
+    ?>
+
+    <?php
     // Comprobar si hay contenido en el editor de bloques (Gutenberg)
     if ( have_posts() && get_the_content() ) {
         while ( have_posts() ) {

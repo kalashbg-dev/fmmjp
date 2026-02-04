@@ -16,8 +16,8 @@ Bienvenido a la guía oficial del sitio web de la Fundación Juventud Progresist
 ## 📋 TABLA DE CONTENIDOS
 
 1.  [Arquitectura Híbrida: ¿Cómo funciona?](#1-arquitectura-híbrida-cómo-funciona)
-2.  [Design Tokens (Variables CSS)](#2-design-tokens-variables-css)
-3.  [Gestión de Contenido (Páginas y Bloques)](#3-gestión-de-contenido-páginas-y-bloques)
+2.  [Gestión de Diseño y Estilos (Design Tokens)](#2-gestión-de-diseño-y-estilos-design-tokens)
+3.  [Gestión de Contenido y Layouts](#3-gestión-de-contenido-y-layouts)
 4.  [Componentes Dinámicos (Shortcodes)](#4-componentes-dinámicos-shortcodes)
 5.  [Configuración de Noticias](#5-configuración-de-noticias)
 6.  [Sistema de Donaciones](#6-sistema-de-donaciones)
@@ -35,100 +35,85 @@ Cada página principal (`Home`, `Quiénes Somos`, `Donaciones`, `Voluntariado`) 
 1.  **Verificación**: El sistema revisa si has añadido algún bloque en el editor de la página.
 2.  **Si HAY Bloques**: Se muestra **TU** contenido personalizado. Tienes control total del diseño.
 3.  **Si NO HAY Bloques (o están vacíos)**: Se muestra automáticamente el **Contenido Original Estático**.
-    *   *Ejemplo:* Si creas una página nueva con la plantilla "Home" y la dejas vacía, aparecerá automáticamente el Hero, Misión, Contadores y Noticias por defecto.
-
-Esto garantiza que el sitio nunca se vea "roto" o vacío, incluso si borras accidentalmente el contenido del editor.
 
 ---
 
-## 2. DESIGN TOKENS (VARIABLES CSS)
+## 2. GESTIÓN DE DISEÑO Y ESTILOS (DESIGN TOKENS)
 
-Hemos abstraído los estilos visuales en **Variables CSS** (Custom Properties) para facilitar cambios globales instantáneos. Estas variables se encuentran en `:root` del archivo `style.css`.
+Hemos centralizado la identidad visual en **Design Tokens**. Esto significa que los colores y fuentes están definidos en un solo lugar y se sincronizan entre el Editor y el Frontend.
 
-### Colores Principales
+### 🎨 ¿Dónde editar los Colores y Fuentes?
+**IMPORTANTE:** Al ser un tema híbrido moderno, la configuración de estilos NO está en "Apariencia > Personalizar" (Customizer clásico), sino en los **Estilos Globales**.
+
+1.  Ve a **Apariencia > Editor** (si está disponible) o abre cualquier página en el editor de bloques.
+2.  Haz clic en el icono **"Estilos"** (círculo mitad negro/blanco) en la esquina superior derecha.
+3.  Aquí verás la paleta de colores oficial (Azul Primario, Verde Secundario, etc.).
+4.  **Si cambias un color aquí**, se actualizará automáticamente en:
+    *   Todos los bloques del sitio.
+    *   El código CSS personalizado (`style.css`), gracias a la vinculación de variables.
+
+### Variables CSS (Para Desarrolladores)
+Estas variables están en `style.css` y están vinculadas a `theme.json`:
+
 | Variable CSS | Descripción | Valor por Defecto |
 | :--- | :--- | :--- |
-| `--fjp-primary` | Azul Institucional (Marca) | `#0056D2` |
-| `--fjp-secondary` | Verde Esperanza (Acción) | `#28A745` |
-| `--fjp-accent` | Rojo (Atención/Urgencia) | `#E63946` |
-| `--fjp-teal` | Verde Azulado (Decorativo) | `#2A9D8F` |
-| `--fjp-dark-blue` | Azul Oscuro (Textos/Fondos) | `#264653` |
-| `--fjp-yellow` | Amarillo (Resaltado) | `#E9C46A` |
-
-### Tipografía
-| Variable CSS | Uso | Fuente |
-| :--- | :--- | :--- |
-| `--fjp-font-heading` | Títulos (H1-H6) | `'Montserrat', sans-serif` |
-| `--fjp-font-body` | Párrafos y Textos | `'Inter', sans-serif` |
-
-### Espaciado y Bordes
-| Variable CSS | Uso |
-| :--- | :--- |
-| `--fjp-spacing-md` | Espaciado medio (30px) |
-| `--fjp-spacing-xl` | Espaciado grande (60px) |
-| `--fjp-radius-md` | Borde redondeado tarjetas (15px) |
-| `--fjp-radius-pill` | Borde botones (50px) |
-
-> **Para Desarrolladores:** Usa siempre `var(--fjp-variable)` en tu CSS en lugar de valores hexadecimales fijos.
+| `--fjp-primary` | Azul Institucional | `var(--wp--preset--color--fjp-primary)` |
+| `--fjp-secondary` | Verde Esperanza | `var(--wp--preset--color--fjp-secondary)` |
 
 ---
 
-## 3. GESTIÓN DE CONTENIDO (PÁGINAS Y BLOQUES)
+## 3. GESTIÓN DE CONTENIDO Y LAYOUTS
 
-### Edición con Bloques (Recomendado)
-Para personalizar una página:
-1.  Ve a **Páginas** y selecciona la que deseas editar.
-2.  Usa el editor para añadir bloques de **Encabezado**, **Párrafo**, **Imagen**, **Columnas**, etc.
-3.  Al guardar, este contenido reemplazará al diseño por defecto.
+### Control de Ancho (Boxed vs Full Width)
+El tema ahora respeta completamente las configuraciones de ancho del editor de bloques.
+
+1.  **Ancho Completo (Full Width):**
+    *   Para crear secciones que ocupen el 100% de la pantalla (de borde a borde), usa bloques de grupo o "Cover" y selecciona la alineación **"Ancho Completo"** en la barra de herramientas del bloque.
+    *   El contenedor principal se expandirá automáticamente.
+
+2.  **Ancho de Caja (Boxed):**
+    *   Si usas la alineación **"Ancho Amplio"** o ninguna alineación, el contenido se mantendrá centrado dentro del ancho máximo definido (1200px por defecto).
 
 ### Restaurar el Diseño Original
 Si quieres volver al diseño original (Fallback):
 1.  Abre la página en el editor.
 2.  **Borra todos los bloques** hasta que el editor esté completamente vacío.
 3.  Actualiza la página.
-4.  El sistema detectará que está vacía y volverá a cargar la plantilla PHP original.
 
-> **💡 Tip:** Consulta el archivo `5-guia-composicion-bloques.md` para ver patrones de bloques pre-diseñados que puedes copiar y pegar para recrear secciones específicas manualmente.
+> **💡 Tip:** Consulta el archivo `5-guia-composicion-bloques.md` para ver patrones de bloques pre-diseñados.
 
 ---
 
 ## 4. COMPONENTES DINÁMICOS (SHORTCODES)
 
-Para insertar funcionalidades complejas dentro de tu contenido de bloques, usa el bloque "Shortcode" con estos códigos:
+Para insertar funcionalidades complejas, usa el bloque "Shortcode":
 
 ### 📰 Noticias
-Muestra una cuadrícula con las últimas noticias.
 ```
 [fjp_news_loop posts="3" title="Últimas Noticias"]
 ```
 
 ### 🤝 Alianzas
-Muestra los logos de aliados en carrusel/grid.
 ```
 [fjp_alliances_loop posts="6"]
 ```
 
 ### 💬 Testimonios
-Muestra testimonios aleatorios.
 ```
 [fjp_testimonials_loop]
 ```
-*Específico para voluntariado:* `[fjp_volunteer_testimonials]`
 
 ### 📊 Contadores de Impacto
-Estadísticas animadas.
 ```
 [fjp_contador_impacto libras="56966" voluntarios="1341" provincias="32"]
 ```
 
 ### ❤️ Opciones de Donación
-Tarjetas de donación (Única, Mensual, Especie).
 ```
 [fjp_donation_options]
 ```
 
 ### 📝 Formulario de Voluntariado
-Formulario de inscripción completo.
 ```
 [fjp_volunteer_form]
 ```
@@ -139,34 +124,20 @@ Formulario de inscripción completo.
 
 El sistema de noticias es híbrido:
 1.  **Contenido**: Usa el editor de bloques para escribir la noticia.
-2.  **Estructura**: La plantilla `page-noticias.php` añade automáticamente la barra de búsqueda, filtros por categoría y la cuadrícula de noticias debajo de tu contenido introductorio.
+2.  **Estructura**: La plantilla `page-noticias.php` añade automáticamente la barra de búsqueda y filtros.
 
 **Para añadir una noticia:**
 1.  Ve a **Noticias > Añadir nueva**.
-2.  Escribe el título y contenido.
-3.  Sube una **Imagen Destacada**.
-4.  (Opcional) Rellena los campos ACF: *Fuente*, *URL Externa*.
+2.  Sube una **Imagen Destacada**.
+3.  (Opcional) Rellena los campos ACF: *Fuente*, *URL Externa*.
 
 ---
 
 ## 6. SISTEMA DE DONACIONES
 
-Integración nativa con **GiveWP**.
-- Si el plugin está activo, los botones "Donar" abren el formulario.
-- Si no, se muestran métodos alternativos (PayPal, Transferencia) configurados en la plantilla.
-
----
-
-## 7. PERSONALIZACIÓN VISUAL
-
-Puedes ajustar la apariencia global desde **Apariencia > Editor** (Full Site Editing) gracias al archivo `theme.json`, o modificando las variables CSS en `style.css`.
-
-### Archivos Importantes:
--   `GUIA-INSTALACION-HOSTINGER-importante.md`: (Si disponible) Contiene instrucciones específicas de despliegue.
--   `4-revision-codigo-adaptaciones`: Registro de cambios técnicos.
--   `5-guia-composicion-bloques.md`: Catálogo de patrones de bloques.
+Integración nativa con **GiveWP**. Si el plugin no está activo, se muestran métodos alternativos configurados en la plantilla.
 
 ---
 
 **Soporte Técnico**
-Si encuentras problemas de visualización ("página en blanco"), asegúrate de que el editor de bloques tenga contenido válido o esté completamente vacío para activar el modo Fallback.
+Si los cambios de estilo no se reflejan, asegúrate de haber borrado la caché del navegador y de que el archivo `theme.json` sea válido.
