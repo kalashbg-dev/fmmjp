@@ -5,140 +5,168 @@
 
 ## 🎯 INTRODUCCIÓN
 
-Bienvenido a la guía oficial del sitio web de la Fundación Juventud Progresista. Este sitio utiliza una **Arquitectura Híbrida** moderna que combina:
+Bienvenido a la guía oficial del sitio web de la Fundación Juventud Progresista. Este sitio utiliza una **Arquitectura Híbrida Avanzada** que combina lo mejor de dos mundos:
 
-1.  **Editor de Bloques (Gutenberg)**: Para editar textos, imágenes y estructura de las páginas de manera visual.
-2.  **Componentes Dinámicos (Shortcodes)**: Para secciones automáticas como Noticias, Alianzas y Donaciones.
-3.  **Editor del Sitio (Global Styles)**: Un sistema de diseño centralizado para mantener la coherencia visual desde el admin.
+1.  **Editor de Bloques (Gutenberg)**: Para editar textos, imágenes y estructura de las páginas de manera visual y flexible.
+2.  **Plantillas Inteligentes con Fallback**: Si no añades contenido en el editor, el sitio mostrará automáticamente un diseño profesional predefinido (contenido original).
+3.  **Design Tokens (Variables CSS)**: Un sistema centralizado para controlar la identidad visual (colores, tipografías, espaciados) de forma global.
 
 ---
 
 ## 📋 TABLA DE CONTENIDOS
 
-1.  [Instalación del Tema](#1-instalación-del-tema)
-2.  [Gestión de Contenido (Páginas)](#2-gestión-de-contenido-páginas)
-3.  [Componentes Dinámicos (Shortcodes)](#3-componentes-dinámicos-shortcodes)
-4.  [Configuración de Noticias](#4-configuración-de-noticias)
-5.  [Sistema de Donaciones](#5-sistema-de-donaciones)
-6.  [Personalización Visual (Global Styles)](#6-personalización-visual-global-styles)
+1.  [Arquitectura Híbrida: ¿Cómo funciona?](#1-arquitectura-híbrida-cómo-funciona)
+2.  [Design Tokens (Variables CSS)](#2-design-tokens-variables-css)
+3.  [Gestión de Contenido (Páginas y Bloques)](#3-gestión-de-contenido-páginas-y-bloques)
+4.  [Componentes Dinámicos (Shortcodes)](#4-componentes-dinámicos-shortcodes)
+5.  [Configuración de Noticias](#5-configuración-de-noticias)
+6.  [Sistema de Donaciones](#6-sistema-de-donaciones)
+7.  [Personalización Visual](#7-personalización-visual)
 
 ---
 
-## 1. INSTALACIÓN DEL TEMA
+## 1. ARQUITECTURA HÍBRIDA: ¿CÓMO FUNCIONA?
 
-### Requisitos Previos
-- WordPress 6.0 o superior
-- PHP 8.0 o superior
-- Plugin **Advanced Custom Fields** (Gratuito)
-- Plugin **GiveWP** (Gratuito - Opcional para donaciones)
+El tema `fjp-tema-hijo` ha sido refactorizado para ser **"Block-Ready"** (listo para bloques) pero **"Safe-Fail"** (seguro ante fallos).
 
-### Pasos
-1.  Sube la carpeta `fjp-tema-hijo` a `/wp-content/themes/`.
-2.  Activa el tema "FJP - Fundación Juventud Progresista" desde Apariencia > Temas.
-3.  Instala los plugins requeridos.
-4.  Importa la configuración de campos desde `acf-export.json` en ACF > Herramientas > Importar.
+### Lógica de Visualización (Fallback)
+Cada página principal (`Home`, `Quiénes Somos`, `Donaciones`, `Voluntariado`) sigue esta lógica inteligente:
+
+1.  **Verificación**: El sistema revisa si has añadido algún bloque en el editor de la página.
+2.  **Si HAY Bloques**: Se muestra **TU** contenido personalizado. Tienes control total del diseño.
+3.  **Si NO HAY Bloques (o están vacíos)**: Se muestra automáticamente el **Contenido Original Estático**.
+    *   *Ejemplo:* Si creas una página nueva con la plantilla "Home" y la dejas vacía, aparecerá automáticamente el Hero, Misión, Contadores y Noticias por defecto.
+
+Esto garantiza que el sitio nunca se vea "roto" o vacío, incluso si borras accidentalmente el contenido del editor.
 
 ---
 
-## 2. GESTIÓN DE CONTENIDO (PÁGINAS)
+## 2. DESIGN TOKENS (VARIABLES CSS)
 
-Las páginas principales (`Home`, `Quiénes Somos`, `Donaciones`, `Voluntariado`) son **contenedores dinámicos**. Esto significa que puedes borrar y reescribir todo su contenido visualmente.
+Hemos abstraído los estilos visuales en **Variables CSS** (Custom Properties) para facilitar cambios globales instantáneos. Estas variables se encuentran en `:root` del archivo `style.css`.
 
-### Cómo editar una página:
+### Colores Principales
+| Variable CSS | Descripción | Valor por Defecto |
+| :--- | :--- | :--- |
+| `--fjp-primary` | Azul Institucional (Marca) | `#0056D2` |
+| `--fjp-secondary` | Verde Esperanza (Acción) | `#28A745` |
+| `--fjp-accent` | Rojo (Atención/Urgencia) | `#E63946` |
+| `--fjp-teal` | Verde Azulado (Decorativo) | `#2A9D8F` |
+| `--fjp-dark-blue` | Azul Oscuro (Textos/Fondos) | `#264653` |
+| `--fjp-yellow` | Amarillo (Resaltado) | `#E9C46A` |
+
+### Tipografía
+| Variable CSS | Uso | Fuente |
+| :--- | :--- | :--- |
+| `--fjp-font-heading` | Títulos (H1-H6) | `'Montserrat', sans-serif` |
+| `--fjp-font-body` | Párrafos y Textos | `'Inter', sans-serif` |
+
+### Espaciado y Bordes
+| Variable CSS | Uso |
+| :--- | :--- |
+| `--fjp-spacing-md` | Espaciado medio (30px) |
+| `--fjp-spacing-xl` | Espaciado grande (60px) |
+| `--fjp-radius-md` | Borde redondeado tarjetas (15px) |
+| `--fjp-radius-pill` | Borde botones (50px) |
+
+> **Para Desarrolladores:** Usa siempre `var(--fjp-variable)` en tu CSS en lugar de valores hexadecimales fijos.
+
+---
+
+## 3. GESTIÓN DE CONTENIDO (PÁGINAS Y BLOQUES)
+
+### Edición con Bloques (Recomendado)
+Para personalizar una página:
 1.  Ve a **Páginas** y selecciona la que deseas editar.
-2.  Usa el editor para añadir:
-    -   **Encabezados y Párrafos**: Para el texto narrativo.
-    -   **Imágenes y Fondos**: Para las secciones visuales (Hero).
-    -   **Columnas**: Para organizar el contenido.
-3.  Para insertar funcionalidades especiales (como el listado de noticias), usa los **Shortcodes** (ver sección 3).
+2.  Usa el editor para añadir bloques de **Encabezado**, **Párrafo**, **Imagen**, **Columnas**, etc.
+3.  Al guardar, este contenido reemplazará al diseño por defecto.
 
-> **💡 Tip:** Consulta el archivo `5-guia-composicion-bloques.md` para ver el código base de cada página y copiarlo si necesitas restaurar el diseño original.
+### Restaurar el Diseño Original
+Si quieres volver al diseño original (Fallback):
+1.  Abre la página en el editor.
+2.  **Borra todos los bloques** hasta que el editor esté completamente vacío.
+3.  Actualiza la página.
+4.  El sistema detectará que está vacía y volverá a cargar la plantilla PHP original.
+
+> **💡 Tip:** Consulta el archivo `5-guia-composicion-bloques.md` para ver patrones de bloques pre-diseñados que puedes copiar y pegar para recrear secciones específicas manualmente.
 
 ---
 
-## 3. COMPONENTES DINÁMICOS (SHORTCODES)
+## 4. COMPONENTES DINÁMICOS (SHORTCODES)
 
-Copia y pega estos códigos breves (shortcodes) dentro de un bloque "Shortcode" en el editor para mostrar secciones automáticas.
+Para insertar funcionalidades complejas dentro de tu contenido de bloques, usa el bloque "Shortcode" con estos códigos:
 
 ### 📰 Noticias
-Muestra una cuadrícula con las últimas noticias publicadas.
+Muestra una cuadrícula con las últimas noticias.
 ```
 [fjp_news_loop posts="3" title="Últimas Noticias"]
 ```
 
 ### 🤝 Alianzas
-Muestra los logos de las organizaciones aliadas.
+Muestra los logos de aliados en carrusel/grid.
 ```
 [fjp_alliances_loop posts="6"]
 ```
 
 ### 💬 Testimonios
-Muestra testimonios cargados en el sistema.
+Muestra testimonios aleatorios.
 ```
 [fjp_testimonials_loop]
 ```
-*Para la página de voluntariado (testimonios específicos):*
-```
-[fjp_volunteer_testimonials]
-```
+*Específico para voluntariado:* `[fjp_volunteer_testimonials]`
 
 ### 📊 Contadores de Impacto
-Muestra las estadísticas animadas.
+Estadísticas animadas.
 ```
 [fjp_contador_impacto libras="56966" voluntarios="1341" provincias="32"]
 ```
 
 ### ❤️ Opciones de Donación
-Muestra las tarjetas con opciones para donar.
+Tarjetas de donación (Única, Mensual, Especie).
 ```
 [fjp_donation_options]
 ```
 
 ### 📝 Formulario de Voluntariado
-Muestra el formulario de inscripción.
+Formulario de inscripción completo.
 ```
 [fjp_volunteer_form]
 ```
 
 ---
 
-## 4. CONFIGURACIÓN DE NOTICIAS
+## 5. CONFIGURACIÓN DE NOTICIAS
 
-Para agregar una noticia nueva:
+El sistema de noticias es híbrido:
+1.  **Contenido**: Usa el editor de bloques para escribir la noticia.
+2.  **Estructura**: La plantilla `page-noticias.php` añade automáticamente la barra de búsqueda, filtros por categoría y la cuadrícula de noticias debajo de tu contenido introductorio.
+
+**Para añadir una noticia:**
 1.  Ve a **Noticias > Añadir nueva**.
-2.  Escribe el título y el contenido principal.
-3.  Sube una **Imagen Destacada** (columna derecha).
-4.  Completa los **Campos Personalizados** (debajo del editor):
-    -   *Fecha de Publicación*
-    -   *Fuente / Autor*
-    -   *URL Externa* (si la noticia es de otro sitio)
-    -   *Categoría Temática*
+2.  Escribe el título y contenido.
+3.  Sube una **Imagen Destacada**.
+4.  (Opcional) Rellena los campos ACF: *Fuente*, *URL Externa*.
 
 ---
 
-## 5. SISTEMA DE DONACIONES
+## 6. SISTEMA DE DONACIONES
 
-El tema soporta **GiveWP** para procesar donaciones.
-- Si GiveWP está activo, los botones de donación abrirán el formulario automático.
-- Si no está activo, se mostrarán enlaces alternativos (PayPal/Transferencia) configurados en el shortcode.
+Integración nativa con **GiveWP**.
+- Si el plugin está activo, los botones "Donar" abren el formulario.
+- Si no, se muestran métodos alternativos (PayPal, Transferencia) configurados en la plantilla.
 
 ---
 
-## 6. PERSONALIZACIÓN VISUAL (GLOBAL STYLES)
+## 7. PERSONALIZACIÓN VISUAL
 
-Gracias a la integración con `theme.json`, puedes personalizar la identidad visual del sitio directamente desde el panel de administración, sin tocar código CSS.
+Puedes ajustar la apariencia global desde **Apariencia > Editor** (Full Site Editing) gracias al archivo `theme.json`, o modificando las variables CSS en `style.css`.
 
-### Cómo cambiar colores y fuentes:
-1.  Ve a **Apariencia > Editor**.
-2.  Haz clic en el icono de **Estilos** (círculo mitad negro/blanco) en la esquina superior derecha.
-3.  Desde allí podrás editar:
-    -   **Paleta de Colores**: Cambia el "Azul Primario", "Verde Secundario", etc. Esto actualizará automáticamente todos los botones, fondos y textos que usen estos colores.
-    -   **Tipografía**: Cambia la fuente de los Encabezados (Montserrat) o del Cuerpo (Inter), así como sus tamaños base.
-    -   **Diseño**: Ajusta el ancho del contenido o el espaciado entre bloques.
-
-> **Nota:** Estos cambios anularán los valores por defecto definidos en el tema, dándote control total sobre la estética.
+### Archivos Importantes:
+-   `GUIA-INSTALACION-HOSTINGER-importante.md`: (Si disponible) Contiene instrucciones específicas de despliegue.
+-   `4-revision-codigo-adaptaciones`: Registro de cambios técnicos.
+-   `5-guia-composicion-bloques.md`: Catálogo de patrones de bloques.
 
 ---
 
 **Soporte Técnico**
-Si encuentras problemas, revisa que los plugins estén activos y que los campos de ACF se hayan importado correctamente.
+Si encuentras problemas de visualización ("página en blanco"), asegúrate de que el editor de bloques tenga contenido válido o esté completamente vacío para activar el modo Fallback.
