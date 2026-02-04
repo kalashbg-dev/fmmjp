@@ -34,6 +34,7 @@ function fjp_render_layout_metabox($post) {
     $sticky_header = get_post_meta($post->ID, '_fjp_sticky_header', true);
     $disable_title = get_post_meta($post->ID, '_fjp_disable_title', true);
     $disable_footer = get_post_meta($post->ID, '_fjp_disable_footer', true);
+    $disable_breadcrumbs = get_post_meta($post->ID, '_fjp_disable_breadcrumbs', true);
 
     // Nonce para seguridad
     wp_nonce_field('fjp_layout_nonce', 'fjp_layout_nonce_field');
@@ -56,6 +57,11 @@ function fjp_render_layout_metabox($post) {
         <label style="display:block; margin-bottom:10px;">
             <input type="checkbox" name="fjp_disable_title" value="1" <?php checked($disable_title, '1'); ?>>
             Ocultar Título de Página
+        </label>
+
+        <label style="display:block; margin-bottom:10px;">
+            <input type="checkbox" name="fjp_disable_breadcrumbs" value="1" <?php checked($disable_breadcrumbs, '1'); ?>>
+            Ocultar Migas de Pan (Breadcrumbs)
         </label>
 
         <hr>
@@ -90,55 +96,114 @@ function fjp_save_layout_options($post_id) {
     update_post_meta($post_id, '_fjp_sticky_header', isset($_POST['fjp_sticky_header']) ? '1' : '0');
     update_post_meta($post_id, '_fjp_disable_title', isset($_POST['fjp_disable_title']) ? '1' : '0');
     update_post_meta($post_id, '_fjp_disable_footer', isset($_POST['fjp_disable_footer']) ? '1' : '0');
+    update_post_meta($post_id, '_fjp_disable_breadcrumbs', isset($_POST['fjp_disable_breadcrumbs']) ? '1' : '0');
 }
 add_action('save_post', 'fjp_save_layout_options');
 
 /**
- * Aplicar clases al Body según opciones
+ * Integración Profunda con Hooks de Astra
  */
+
+// 1. Aplicar clases al Body (Compatibilidad CSS)
 function fjp_apply_layout_body_classes($classes) {
-    if (is_page()) {
+    if (is_page() || is_singular()) {
         global $post;
         if (!isset($post->ID)) return $classes;
 
         // Header Transparente
         if (get_post_meta($post->ID, '_fjp_transparent_header', true) === '1') {
             $classes[] = 'fjp-transparent-header';
+            $classes[] = 'ast-header-break-point'; // Forzar comportamiento responsivo
         }
 
         // Header Sticky
         if (get_post_meta($post->ID, '_fjp_sticky_header', true) === '1') {
             $classes[] = 'fjp-sticky-header';
         }
-
-        // Ocultar Título (Astra usa ast-no-title, pero añadimos el nuestro por si acaso)
-        if (get_post_meta($post->ID, '_fjp_disable_title', true) === '1') {
-            $classes[] = 'fjp-no-title';
-            // Inyectar compatibilidad nativa con Astra
-            add_filter('astra_the_title_enabled', '__return_false');
-        }
-
-        // Ocultar Footer
-        if (get_post_meta($post->ID, '_fjp_disable_footer', true) === '1') {
-            $classes[] = 'fjp-no-footer';
-        }
     }
     return $classes;
 }
 add_filter('body_class', 'fjp_apply_layout_body_classes');
 
+// 2. Desactivar Título (Nativo Astra)
+function fjp_astra_disable_title($enabled) {
+    if (is_page() || is_singular()) {
+        global $post;
+        if (get_post_meta($post->ID, '_fjp_disable_title', true) === '1') {
+            return false;
+        }
+    }
+    return $enabled;
+}
+add_filter('astra_the_title_enabled', 'fjp_astra_disable_title');
+
+// 3. Desactivar Footer (Nativo Astra)
+function fjp_astra_disable_footer() {
+    if (is_page() || is_singular()) {
+        global $post;
+        if (get_post_meta($post->ID, '_fjp_disable_footer', true) === '1') {
+            // Elimina los hooks del footer de Astra
+            remove_action( 'astra_footer', 'astra_footer_markup' );
+        }
+    }
+}
+add_action('wp', 'fjp_astra_disable_footer');
+
+// 4. Desactivar Breadcrumbs (Nativo Astra - si el hook existe)
+function fjp_astra_disable_breadcrumbs() {
+    if (is_page() || is_singular()) {
+        global $post;
+        if (get_post_meta($post->ID, '_fjp_disable_breadcrumbs', true) === '1') {
+            add_filter('astra_breadcrumb_enabled', '__return_false');
+        }
+    }
+}
+add_action('wp', 'fjp_astra_disable_breadcrumbs');
+
 /**
- * Lógica CSS para ocultar elementos si se seleccionó
+ * Lógica CSS para Header Transparente (Overlay)
  */
 function fjp_layout_css_output() {
-    if (is_page()) {
+    if (is_page() || is_singular()) {
         global $post;
         if (!isset($post->ID)) return;
 
         $css = '';
 
-        if (get_post_meta($post->ID, '_fjp_disable_footer', true) === '1') {
-            $css .= '.site-footer { display: none !important; }';
+        // Header Transparente
+        if (get_post_meta($post->ID, '_fjp_transparent_header', true) === '1') {
+            $css .= '
+                .fjp-transparent-header .site-header {
+                    position: absolute;
+                    width: 100%;
+                    left: 0;
+                    top: 0;
+                    background: transparent;
+                    border-bottom: 1px solid rgba(255,255,255,0.1);
+                    z-index: 99;
+                }
+                .fjp-transparent-header .main-header-bar {
+                    background: transparent;
+                    border: none;
+                }
+                .fjp-transparent-header .ast-builder-menu .menu-item > .menu-link {
+                    color: #fff;
+                }
+                .fjp-transparent-header .site-title a,
+                .fjp-transparent-header .ast-site-identity a {
+                    color: #fff !important;
+                }
+            ';
+        }
+
+        // Sticky Header
+        if (get_post_meta($post->ID, '_fjp_sticky_header', true) === '1') {
+            $css .= '
+                .fjp-sticky-header .site-header {
+                    position: sticky;
+                    top: 0;
+                }
+            ';
         }
 
         if (!empty($css)) {

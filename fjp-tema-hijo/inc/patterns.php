@@ -38,7 +38,8 @@ function fjp_register_patterns() {
             'description' => 'Sección principal con imagen de fondo y llamada a la acción.',
             'categories'  => array('fjp-secciones', 'header'),
             'content'     => '<!-- wp:cover {"url":"https://via.placeholder.com/1920x800","dimRatio":50,"overlayColor":"fjp-primary","align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|huge","bottom":"var:preset|spacing|huge"}}}} -->
-<div class="wp-block-cover alignfull has-fjp-primary-background-color-has-background-dim-50 has-background-dim" style="padding-top:var(--wp--preset--spacing--huge);padding-bottom:var(--wp--preset--spacing--huge)"><img class="wp-block-cover__image-background" alt="" src="https://via.placeholder.com/1920x800" data-object-fit="cover"/><div class="wp-block-cover__inner-container"><!-- wp:heading {"textAlign":"center","level":1,"style":{"typography":{"fontSize":"3.5rem"}},"textColor":"fjp-white"} -->
+<div class="wp-block-cover alignfull has-fjp-primary-background-color-has-background-dim-50 has-background-dim" style="padding-top:var(--wp--preset--spacing--huge);padding-bottom:var(--wp--preset--spacing--huge)"><img class="wp-block-cover__image-background" alt="" src="https://via.placeholder.com/1920x800" data-object-fit="cover"/><div class="wp-block-cover__inner-container"><!-- wp:group {"layout":{"type":"constrained"}} -->
+<div class="wp-block-group"><!-- wp:heading {"textAlign":"center","level":1,"style":{"typography":{"fontSize":"3.5rem"}},"textColor":"fjp-white"} -->
 <h1 class="wp-block-heading has-text-align-center has-fjp-white-color has-text-color" style="font-size:3.5rem">Juntos construyendo un futuro mejor</h1>
 <!-- /wp:heading -->
 
@@ -51,10 +52,11 @@ function fjp_register_patterns() {
 <div class="wp-block-button"><a class="wp-block-button__link has-fjp-secondary-background-color has-background wp-element-button" style="border-radius:50px">Donar Ahora</a></div>
 <!-- /wp:button -->
 
-<!-- wp:button {"style":{"border":{"radius":"50px"}},"className":"is-style-outline"} -->
-<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" style="border-radius:50px">Ser Voluntario</a></div>
+<!-- wp:button {"style":{"border":{"radius":"50px"}},"className":"is-style-outline","textColor":"fjp-white"} -->
+<div class="wp-block-button is-style-outline"><a class="wp-block-button__link has-fjp-white-color has-text-color wp-element-button" style="border-radius:50px">Ser Voluntario</a></div>
 <!-- /wp:button --></div>
-<!-- /wp:buttons --></div></div>
+<!-- /wp:buttons --></div>
+<!-- /wp:group --></div></div>
 <!-- /wp:cover -->',
         )
     );

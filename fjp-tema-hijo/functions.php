@@ -731,6 +731,11 @@ require_once FJP_THEME_DIR . '/inc/custom-layout-metabox.php';
 require_once FJP_THEME_DIR . '/inc/patterns.php';
 
 /**
+ * Agregar Configuración del Personalizador (Global Settings)
+ */
+require_once FJP_THEME_DIR . '/inc/customizer.php';
+
+/**
  * Agregar funciones de utilidad
  */
 require_once FJP_THEME_DIR . '/functions-advanced.php';
