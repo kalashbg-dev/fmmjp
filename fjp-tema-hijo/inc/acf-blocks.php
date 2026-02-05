@@ -19,9 +19,10 @@ function fjp_register_acf_blocks() {
 	}
 
 	// Register Blocks
-	register_block_type( FJP_THEME_DIR . '/blocks/fjp-hero' );
-	register_block_type( FJP_THEME_DIR . '/blocks/fjp-news-grid' );
-	register_block_type( FJP_THEME_DIR . '/blocks/fjp-testimonials' );
-	register_block_type( FJP_THEME_DIR . '/blocks/fjp-volunteer-cta' );
+	// We point directly to the block.json file to ensure WP finds it correctly in all environments
+	register_block_type( FJP_THEME_DIR . '/blocks/fjp-hero/block.json' );
+	register_block_type( FJP_THEME_DIR . '/blocks/fjp-news-grid/block.json' );
+	register_block_type( FJP_THEME_DIR . '/blocks/fjp-testimonials/block.json' );
+	register_block_type( FJP_THEME_DIR . '/blocks/fjp-volunteer-cta/block.json' );
 }
 add_action( 'init', 'fjp_register_acf_blocks' );
