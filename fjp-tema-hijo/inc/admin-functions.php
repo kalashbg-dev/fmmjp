@@ -187,6 +187,30 @@ function fjp_render_pagina_estadisticas() {
 }
 
 /**
+ * Configurar ACF JSON Auto-Sync
+ *
+ * Permite guardar y cargar configuraciones de ACF desde archivos JSON locales
+ * para facilitar la portabilidad y el control de versiones.
+ */
+function fjp_acf_json_save_point( $path ) {
+    // Actualizar ruta de guardado
+    $path = FJP_THEME_DIR . '/acf-json';
+    return $path;
+}
+add_filter( 'acf/settings/save_json', 'fjp_acf_json_save_point' );
+
+function fjp_acf_json_load_point( $paths ) {
+    // Eliminar ruta original (opcional)
+    unset($paths[0]);
+
+    // Agregar nueva ruta de carga
+    $paths[] = FJP_THEME_DIR . '/acf-json';
+
+    return $paths;
+}
+add_filter( 'acf/settings/load_json', 'fjp_acf_json_load_point' );
+
+/**
  * Helper functions needed by admin (if any)
  */
 function fjp_obtener_noticias_destacadas($cantidad = 3) {
