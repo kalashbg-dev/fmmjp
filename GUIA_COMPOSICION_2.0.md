@@ -1,234 +1,193 @@
-# Guía de Construcción Manual - Fundación Juventud Progresista
+# Guía de Construcción Manual (Modo Avanzado)
 
-Esta guía está diseñada para construir el sitio sección por sección utilizando **Bloques de Código** (HTML y Shortcodes). Esto le permite tener control total sobre el diseño.
+Esta guía proporciona el código fuente para construir las páginas del sitio utilizando **Bloques Nativos de Gutenberg y Astra**. Esto garantiza máxima compatibilidad, velocidad y facilidad de edición visual.
 
-## 0. Instalación y Estructura
-
-El tema hijo FJP está diseñado para ser ligero y modular.
-
-### Estructura de Carpetas
-Al instalar el tema (archivo `.zip`), encontrará estas carpetas clave:
-*   `/inc/`: Contiene toda la lógica PHP (Shortcodes, CPTs, Configuración). **No borrar**.
-*   `/blocks/`: Contiene los archivos de registro de los Bloques ACF. **No borrar**.
-*   `/acf-json/`: Carpeta donde se guardan automáticamente las configuraciones de los campos ACF. Esto permite que los campos aparezcan en el administrador sin necesidad de configurarlos manualmente. Si mueve el tema a otro sitio, asegúrese de incluir esta carpeta.
-
-### Instalación
-1.  Comprima la carpeta `fjp-tema-hijo` en un archivo `.zip`.
-2.  En WordPress, vaya a Apariencia > Temas > Añadir nuevo > Subir tema.
-3.  Suba el `.zip` y active el tema.
-4.  Asegúrese de que el plugin **Advanced Custom Fields (ACF)** esté instalado y activo.
+## Instrucciones de Uso
+1.  Abra el editor de la página (ej: Inicio).
+2.  Haga clic en los tres puntos verticales (arriba derecha) > **Editor de código**.
+3.  Copie el bloque de código deseado de abajo y péguelo en el editor.
+4.  Salga del editor de código para ver y personalizar el diseño visualmente.
 
 ---
 
-## 1. Instrucciones de Construcción
+## 1. CSS de Animaciones y Efectos (Copiar en Personalizar)
 
-1.  Cree una nueva página en WordPress.
-2.  Seleccione la plantilla **"FJP - Ancho Completo (Canvas)"** en los atributos de página.
-3.  Para insertar cada sección, agregue un bloque **"HTML Personalizado"** (o "Custom HTML") y pegue el código correspondiente de las secciones abajo.
+Para que los bloques tengan movimiento y estilos especiales, vaya a **Apariencia > Personalizar > CSS Adicional** y pegue este código. No contiene colores fijos, por lo que responderá a la paleta que elija en el personalizador.
+
+```css
+/* Animación de entrada suave */
+.fjp-animate-fadein {
+    animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Efecto Hover en Columnas/Tarjetas */
+.fjp-hover-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.fjp-hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+}
+
+/* Texto con Gradiente (Usa colores globales) */
+.fjp-text-gradient {
+    background: linear-gradient(135deg, var(--wp--preset--color--primary), var(--wp--preset--color--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+```
 
 ---
 
-## 2. Página de Inicio (Home)
+## 2. Bloques de Página: Inicio (Home)
 
-### Sección A: Hero (Portada)
+### Sección A: Hero (Portada Astra)
 ```html
-<div class="fjp-hero-section alignfull" style="background-image: url('https://via.placeholder.com/1920x800'); background-size: cover; background-position: center; position: relative; height: 600px; display: flex; align-items: center;">
-    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(242, 56, 90, 0.8);"></div> <!-- Overlay Primario -->
-    <div class="container" style="position: relative; z-index: 2; color: white; text-align: center;">
-        <h1 style="font-size: 3.5rem; font-weight: 700; margin-bottom: 20px;">Juntos construyendo un futuro mejor</h1>
-        <p style="font-size: 1.5rem; margin-bottom: 40px; max-width: 800px; margin-left: auto; margin-right: auto;">La Fundación Juventud Progresista trabaja incansablemente para el desarrollo sostenible de nuestra comunidad.</p>
-        <div>
-            <a href="#donar" class="btn btn-light rounded-pill px-5 py-3 fw-bold me-3" style="color: #F2385A; text-decoration: none;">Donar Ahora</a>
-            <a href="/voluntariado" class="btn btn-outline-light rounded-pill px-5 py-3 fw-bold" style="text-decoration: none;">Ser Voluntario</a>
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"}}},"backgroundColor":"ast-global-color-4","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignfull has-ast-global-color-4-background-color has-background" style="padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)">
+    <!-- wp:cover {"url":"https://via.placeholder.com/1920x800","dimRatio":60,"overlayColor":"ast-global-color-0","align":"full","layout":{"type":"constrained"}} -->
+    <div class="wp-block-cover alignfull">
+        <span aria-hidden="true" class="wp-block-cover__background has-ast-global-color-0-background-color has-background-dim-60 has-background-dim"></span>
+        <img class="wp-block-cover__image-background" src="https://via.placeholder.com/1920x800" alt="Fondo Hero" data-object-fit="cover"/>
+        <div class="wp-block-cover__inner-container">
+            <!-- wp:heading {"textAlign":"center","level":1,"style":{"typography":{"fontSize":"3.5rem"}},"textColor":"white","className":"fjp-animate-fadein"} -->
+            <h1 class="wp-block-heading has-text-align-center fjp-animate-fadein has-white-color has-text-color" style="font-size:3.5rem">Juntos construyendo un futuro mejor</h1>
+            <!-- /wp:heading -->
+
+            <!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"1.2rem"}},"textColor":"white"} -->
+            <p class="has-text-align-center has-white-color has-text-color" style="font-size:1.2rem">La Fundación Juventud Progresista trabaja incansablemente para el desarrollo sostenible.</p>
+            <!-- /wp:paragraph -->
+
+            <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
+            <div class="wp-block-buttons">
+                <!-- wp:button {"backgroundColor":"primary","style":{"border":{"radius":"50px"}},"className":"is-style-fill"} -->
+                <div class="wp-block-button is-style-fill"><a class="wp-block-button__link has-primary-background-color has-background wp-element-button" style="border-radius:50px">Donar Ahora</a></div>
+                <!-- /wp:button -->
+
+                <!-- wp:button {"style":{"border":{"radius":"50px","width":"2px"}},"className":"is-style-outline","textColor":"white"} -->
+                <div class="wp-block-button is-style-outline"><a class="wp-block-button__link has-white-color has-text-color wp-element-button" style="border-radius:50px;border-width:2px">Ser Voluntario</a></div>
+                <!-- /wp:button -->
+            </div>
+            <!-- /wp:buttons -->
         </div>
     </div>
+    <!-- /wp:cover -->
 </div>
+<!-- /wp:group -->
 ```
 
-### Sección B: Contador de Impacto
+### Sección B: Contadores (Integrado con Shortcode)
 ```html
-<div class="alignfull has-fjp-background-background-color" style="padding: 60px 0;">
-    [fjp_contador_impacto libras="56966" voluntarios="1341" provincias="22"]
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"60px","bottom":"60px"}}},"backgroundColor":"white","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignfull has-white-background-color has-background" style="padding-top:60px;padding-bottom:60px">
+    <!-- wp:shortcode -->
+    [fjp_contador_impacto libras="50000" voluntarios="1200" provincias="15"]
+    <!-- /wp:shortcode -->
 </div>
+<!-- /wp:group -->
 ```
 
-### Sección C: Misión
+### Sección C: Misión (Columnas Astra)
 ```html
-<div class="container" style="padding: 80px 0;">
-    <div class="row align-items-center">
-        <div class="col-md-6 mb-4 mb-md-0">
-            <img src="https://via.placeholder.com/800x600" alt="Nuestra Misión" class="img-fluid rounded-3 shadow">
+<!-- wp:group {"align":"wide","style":{"spacing":{"padding":{"top":"80px","bottom":"80px"}}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignwide" style="padding-top:80px;padding-bottom:80px">
+    <!-- wp:columns {"align":"wide","style":{"spacing":{"blockGap":{"top":"2rem","left":"2rem"}}}} -->
+    <div class="wp-block-columns alignwide">
+        <!-- wp:column {"verticalAlignment":"center"} -->
+        <div class="wp-block-column is-vertically-aligned-center">
+            <!-- wp:image {"sizeSlug":"large","linkDestination":"none","className":"is-style-default rounded shadow"} -->
+            <figure class="wp-block-image size-large is-style-default rounded shadow"><img src="https://via.placeholder.com/800x600" alt=""/></figure>
+            <!-- /wp:image -->
         </div>
-        <div class="col-md-6 ps-md-5">
-            <h2 class="text-gradient mb-4">Nuestra Misión</h2>
-            <p class="lead mb-4">Somos una organización sin fines de lucro dedicada a empoderar a la juventud y fomentar el desarrollo integral de las comunidades más vulnerables.</p>
-            <a href="/quienes-somos" class="btn-fjp-primary">Leer más sobre nosotros</a>
+        <!-- /wp:column -->
+
+        <!-- wp:column {"verticalAlignment":"center"} -->
+        <div class="wp-block-column is-vertically-aligned-center">
+            <!-- wp:heading {"className":"fjp-text-gradient"} -->
+            <h2 class="wp-block-heading fjp-text-gradient">Nuestra Misión</h2>
+            <!-- /wp:heading -->
+            <!-- wp:paragraph -->
+            <p>Somos una organización sin fines de lucro dedicada a empoderar a la juventud y fomentar el desarrollo integral de las comunidades más vulnerables.</p>
+            <!-- /wp:paragraph -->
+            <!-- wp:buttons -->
+            <div class="wp-block-buttons">
+                <!-- wp:button {"backgroundColor":"primary","style":{"border":{"radius":"50px"}}} -->
+                <div class="wp-block-button"><a class="wp-block-button__link has-primary-background-color has-background wp-element-button" style="border-radius:50px">Leer Más</a></div>
+                <!-- /wp:button -->
+            </div>
+            <!-- /wp:buttons -->
         </div>
+        <!-- /wp:column -->
     </div>
+    <!-- /wp:columns -->
 </div>
-```
-
-### Sección D: Noticias Destacadas
-```html
-<div class="alignfull" style="padding: 60px 0; background: #fff;">
-    [fjp_news_loop posts="3" title="Últimas Noticias"]
-</div>
-```
-
-### Sección E: Testimonios y CTA
-```html
-[fjp_testimonials_loop posts="3" title="Testimonios"]
-
-<div class="container my-5">
-    <div class="fjp-volunteer-cta p-5 text-center text-white rounded-3" style="background: linear-gradient(135deg, #5BD9D9 0%, #56BF66 100%);">
-        <h2 class="text-white mb-3">¿Listo para hacer la diferencia?</h2>
-        <p class="lead mb-4">Únete a nuestro equipo de voluntarios y sé parte del cambio.</p>
-        <a href="/voluntariado" class="btn btn-light rounded-pill px-5 py-3 fw-bold" style="color: #56BF66; text-decoration: none;">Inscríbete Hoy</a>
-    </div>
-</div>
+<!-- /wp:group -->
 ```
 
 ---
 
 ## 3. Página de Voluntariado
 
-### Sección A: Hero Voluntariado
+### Sección A: Beneficios (Grid de Tarjetas)
 ```html
-<div class="fjp-hero-section alignfull" style="background-image: url('https://via.placeholder.com/1920x600'); background-size: cover; background-position: center; position: relative; height: 500px; display: flex; align-items: center;">
-    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(91, 217, 217, 0.9);"></div> <!-- Overlay Teal -->
-    <div class="container" style="position: relative; z-index: 2; color: white; text-align: center;">
-        <h1 style="font-size: 3rem; font-weight: 700; margin-bottom: 20px;">Únete al Voluntariado</h1>
-        <p style="font-size: 1.3rem; margin-bottom: 30px;">Tu tiempo y talento pueden transformar vidas.</p>
-        <a href="#formulario" class="btn btn-light rounded-pill px-4 py-3 fw-bold" style="color: #2A9D8F; text-decoration: none;">Inscribirme al Formulario</a>
+<!-- wp:group {"align":"wide","style":{"spacing":{"padding":{"top":"60px","bottom":"60px"}}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignwide" style="padding-top:60px;padding-bottom:60px">
+    <!-- wp:heading {"textAlign":"center","style":{"spacing":{"margin":{"bottom":"40px"}}}} -->
+    <h2 class="wp-block-heading has-text-align-center" style="margin-bottom:40px">Beneficios de ser Voluntario</h2>
+    <!-- /wp:heading -->
+
+    <!-- wp:columns {"style":{"spacing":{"blockGap":"2rem"}}} -->
+    <div class="wp-block-columns">
+        <!-- wp:column {"className":"fjp-hover-card has-white-background-color has-background","style":{"border":{"radius":"15px"},"spacing":{"padding":{"top":"30px","right":"30px","bottom":"30px","left":"30px"}}}} -->
+        <div class="wp-block-column fjp-hover-card has-white-background-color has-background" style="border-radius:15px;padding-top:30px;padding-right:30px;padding-bottom:30px;padding-left:30px">
+            <!-- wp:heading {"level":4,"textAlign":"center","textColor":"primary"} -->
+            <h4 class="wp-block-heading has-text-align-center has-primary-color has-text-color">Desarrollo Personal</h4>
+            <!-- /wp:heading -->
+            <!-- wp:paragraph {"align":"center"} -->
+            <p class="has-text-align-center">Adquiere nuevas habilidades para tu futuro.</p>
+            <!-- /wp:paragraph -->
+        </div>
+        <!-- /wp:column -->
+
+        <!-- wp:column {"className":"fjp-hover-card has-white-background-color has-background","style":{"border":{"radius":"15px"},"spacing":{"padding":{"top":"30px","right":"30px","bottom":"30px","left":"30px"}}}} -->
+        <div class="wp-block-column fjp-hover-card has-white-background-color has-background" style="border-radius:15px;padding-top:30px;padding-right:30px;padding-bottom:30px;padding-left:30px">
+            <!-- wp:heading {"level":4,"textAlign":"center","textColor":"secondary"} -->
+            <h4 class="wp-block-heading has-text-align-center has-secondary-color has-text-color">Impacto Social</h4>
+            <!-- /wp:heading -->
+            <!-- wp:paragraph {"align":"center"} -->
+            <p class="has-text-align-center">Ayuda a construir una mejor sociedad.</p>
+            <!-- /wp:paragraph -->
+        </div>
+        <!-- /wp:column -->
+
+        <!-- wp:column {"className":"fjp-hover-card has-white-background-color has-background","style":{"border":{"radius":"15px"},"spacing":{"padding":{"top":"30px","right":"30px","bottom":"30px","left":"30px"}}}} -->
+        <div class="wp-block-column fjp-hover-card has-white-background-color has-background" style="border-radius:15px;padding-top:30px;padding-right:30px;padding-bottom:30px;padding-left:30px">
+            <!-- wp:heading {"level":4,"textAlign":"center","textColor":"primary"} -->
+            <h4 class="wp-block-heading has-text-align-center has-primary-color has-text-color">Networking</h4>
+            <!-- /wp:heading -->
+            <!-- wp:paragraph {"align":"center"} -->
+            <p class="has-text-align-center">Conecta con personas con tus mismos valores.</p>
+            <!-- /wp:paragraph -->
+        </div>
+        <!-- /wp:column -->
     </div>
+    <!-- /wp:columns -->
 </div>
+<!-- /wp:group -->
 ```
 
-### Sección B: Beneficios
+### Sección B: Formulario (Fondo Gris)
 ```html
-<div class="container py-5">
-    <h2 class="text-center mb-5">Beneficios de ser Voluntario</h2>
-    <div class="row">
-        <div class="col-md-4 mb-4">
-            <div class="fjp-card p-4 text-center h-100">
-                <i class="fas fa-user-graduate fa-3x mb-3 text-primary"></i>
-                <h4>Desarrollo Personal</h4>
-                <p>Adquiere nuevas habilidades valiosas.</p>
-            </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="fjp-card p-4 text-center h-100">
-                <i class="fas fa-hands-helping fa-3x mb-3 text-success"></i>
-                <h4>Impacto Social</h4>
-                <p>Contribuye al bienestar de tu comunidad.</p>
-            </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="fjp-card p-4 text-center h-100">
-                <i class="fas fa-users fa-3x mb-3 text-info"></i>
-                <h4>Networking</h4>
-                <p>Conecta con personas apasionadas.</p>
-            </div>
-        </div>
-    </div>
-</div>
-```
-
-### Sección C: Testimonios de Voluntarios
-```html
-[fjp_volunteer_testimonials]
-```
-
-### Sección D: Formulario de Inscripción
-```html
-<div class="alignfull bg-light py-5">
+<!-- wp:group {"align":"full","backgroundColor":"ast-global-color-5","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignfull has-ast-global-color-5-background-color has-background">
+    <!-- wp:shortcode -->
     [fjp_volunteer_form]
+    <!-- /wp:shortcode -->
 </div>
+<!-- /wp:group -->
 ```
-
----
-
-## 4. Página Quiénes Somos
-
-### Sección A: Historia y Valores
-```html
-<div class="container py-5">
-    <h1 class="text-center mb-5 text-gradient">Nuestra Historia</h1>
-    <div class="row align-items-center mb-5">
-        <div class="col-md-6">
-            <p>Fundada en 2010, la FJP nació del deseo de un grupo de jóvenes líderes...</p>
-            <p>Desde entonces, hemos impactado a más de 10,000 vidas.</p>
-        </div>
-        <div class="col-md-6">
-            <img src="https://via.placeholder.com/600x400" class="img-fluid rounded shadow" alt="Historia">
-        </div>
-    </div>
-</div>
-
-<div class="alignfull py-5" style="background-color: var(--fjp-primary); color: white;">
-    <div class="container">
-        <h2 class="text-center text-white mb-5">Nuestros Valores</h2>
-        <div class="row text-center">
-            <div class="col-md-4">
-                <i class="fas fa-heart fa-3x mb-3"></i>
-                <h4 class="text-white">Solidaridad</h4>
-            </div>
-            <div class="col-md-4">
-                <i class="fas fa-balance-scale fa-3x mb-3"></i>
-                <h4 class="text-white">Integridad</h4>
-            </div>
-            <div class="col-md-4">
-                <i class="fas fa-fire fa-3x mb-3"></i>
-                <h4 class="text-white">Pasión</h4>
-            </div>
-        </div>
-    </div>
-</div>
-```
-
-### Sección B: Alianzas
-```html
-[fjp_alliances_loop title="Nuestros Aliados"]
-```
-
----
-
-## 5. Página Donaciones
-
-### Sección A: Opciones de Donación
-```html
-<div class="container py-5">
-    <h1 class="text-center mb-4">Apoya nuestra causa</h1>
-    <p class="text-center lead mb-5">Cada aporte cuenta para seguir construyendo oportunidades.</p>
-
-    [fjp_donation_options]
-</div>
-```
-
----
-
-## 6. Página Noticias
-
-### Sección A: Listado Completo
-```html
-<div class="container py-5">
-    <h1 class="text-center mb-5">Noticias y Actualidad</h1>
-
-    <!-- Muestra 9 noticias paginadas -->
-    [fjp_news_loop posts="9" title=""]
-</div>
-```
-
----
-
-## Listado de Shortcodes Disponibles
-
-Puede usar estos códigos cortos en cualquier parte del sitio:
-
-*   `[fjp_volunteer_form]`: Muestra el formulario de inscripción completo.
-*   `[fjp_news_loop posts="3"]`: Muestra una grilla de noticias (puede cambiar el número).
-*   `[fjp_testimonials_loop]`: Muestra testimonios generales.
-*   `[fjp_volunteer_testimonials]`: Muestra testimonios específicos de voluntarios.
-*   `[fjp_alliances_loop]`: Muestra el carrusel/grilla de aliados.
-*   `[fjp_contador_impacto]`: Muestra los números animados (Libras, Voluntarios, etc.).
-*   `[fjp_donation_options]`: Muestra las tarjetas de opciones de donación.
