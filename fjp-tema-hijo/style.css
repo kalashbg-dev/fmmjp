@@ -12,365 +12,112 @@ Domain Path: /languages
    1. DESIGN TOKENS (VARIABLES)
    ========================================= */
 :root {
-    /* Core Palette - Mapped from theme.json presets */
-    --fjp-primary: var(--wp--preset--color--fjp-primary, #F2385A);
-    --fjp-secondary: var(--wp--preset--color--fjp-secondary, #D95F76);
-    --fjp-teal: var(--wp--preset--color--fjp-teal, #5BD9D9);
-    --fjp-green: var(--wp--preset--color--fjp-green, #56BF66);
-
-    --fjp-text: var(--wp--preset--color--fjp-text, #333333);
-    --fjp-background: var(--wp--preset--color--fjp-background, #F2F2F2);
-    --fjp-white: var(--wp--preset--color--fjp-white, #FFFFFF);
-    --fjp-dark-gray: var(--wp--preset--color--fjp-dark-gray, #6c757d);
-
-    /* Mapeo legacy para compatibilidad */
-    --fjp-accent: var(--fjp-primary);
-    --fjp-dark-blue: var(--fjp-text); /* Reemplazamos el azul oscuro por el texto estándar o gris oscuro */
-    --fjp-yellow: var(--fjp-teal);
-    --fjp-orange: var(--fjp-secondary);
+    /* Use Astra/WordPress Global Color Variables for easy customization in Editor */
+    --fjp-primary: var(--wp--preset--color--primary, #F2385A);
+    --fjp-secondary: var(--wp--preset--color--secondary, #D95F76);
+    --fjp-teal: var(--wp--preset--color--cyan-bluish-gray, #5BD9D9); /* Default fallback mapped to 'cyan-bluish-gray' or similar standard slug */
+    --fjp-green: var(--wp--preset--color--vivid-green-cyan, #56BF66);
+    --fjp-text: var(--wp--preset--color--black, #333333);
+    --fjp-background: var(--wp--preset--color--white, #F2F2F2);
+    --fjp-white: #ffffff;
 
     /* Gradients */
     --fjp-gradient: linear-gradient(135deg, var(--fjp-primary) 0%, var(--fjp-secondary) 100%);
     --fjp-gradient-teal: linear-gradient(135deg, var(--fjp-teal) 0%, var(--fjp-green) 100%);
-    --fjp-gradient-gold: linear-gradient(135deg, var(--fjp-secondary) 0%, var(--fjp-primary) 100%); /* Reemplazado por tonos rojos */
 
-    /* Typography */
-    --fjp-font-heading: var(--wp--preset--font-family--heading, 'Montserrat', sans-serif);
-    --fjp-font-body: var(--wp--preset--font-family--body, 'Inter', sans-serif);
-
-    /* Spacing */
-    --fjp-spacing-xs: 10px;
-    --fjp-spacing-sm: 20px;
-    --fjp-spacing-md: 30px;
-    --fjp-spacing-lg: 40px;
-    --fjp-spacing-xl: 60px;
-    --fjp-spacing-xxl: 80px;
-    --fjp-spacing-huge: 100px;
-
-    /* Border Radius */
-    --fjp-radius-xs: 5px;
-    --fjp-radius-sm: 10px;
+    /* Spacing & Radius */
     --fjp-radius-md: 15px;
     --fjp-radius-lg: 20px;
-    --fjp-radius-xl: 30px;
     --fjp-radius-pill: 50px;
 
     /* Shadows */
-    --fjp-shadow-sm: 0 2px 20px rgba(0, 0, 0, 0.05);
     --fjp-shadow-md: 0 4px 15px rgba(0, 0, 0, 0.08);
     --fjp-shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.1);
-    --fjp-shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.12);
 }
 
 /* =========================================
-   2. BASE STYLES
+   2. CORE STYLES (Overrides)
    ========================================= */
 body {
-    font-family: var(--fjp-font-body);
-    color: var(--fjp-text);
     background-color: var(--fjp-background);
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: var(--fjp-font-heading);
-    color: var(--fjp-primary); /* Use primary for headings by default in this premium feel */
-    font-weight: 700;
-}
-
-/* =========================================
-   3. COMPONENTS
-   ========================================= */
-
-/* Botones personalizados FJP */
+/* Buttons - Inherit global color but enforce shape */
 .btn-fjp-primary {
     background: var(--fjp-primary);
     color: var(--fjp-white) !important;
-    border: none;
-    padding: 12px var(--fjp-spacing-md);
     border-radius: var(--fjp-radius-pill);
-    font-weight: 600;
-    text-decoration: none;
-    display: inline-block;
+    padding: 12px 30px;
+    border: none;
     transition: all 0.3s ease;
-    box-shadow: var(--fjp-shadow-md);
 }
 
 .btn-fjp-primary:hover {
-    background: var(--fjp-secondary);
     transform: translateY(-2px);
-    color: var(--fjp-white) !important;
-    box-shadow: var(--fjp-shadow-lg);
-}
-
-.btn-fjp-secondary {
-    background: var(--fjp-white);
-    color: var(--fjp-primary) !important;
-    border: 2px solid var(--fjp-primary);
-    padding: 10px var(--fjp-spacing-md); /* Reduced padding to account for border */
-    border-radius: var(--fjp-radius-pill);
-    font-weight: 600;
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.3s ease;
-}
-
-.btn-fjp-secondary:hover {
-    background: var(--fjp-primary);
-    color: var(--fjp-white) !important;
-    transform: translateY(-2px);
-}
-
-/* Cards - Premium Style */
-.fjp-card {
-    background: var(--fjp-white);
-    border-radius: var(--fjp-radius-lg);
     box-shadow: var(--fjp-shadow-md);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid rgba(0,0,0,0.02);
-    overflow: hidden;
-}
-
-.fjp-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--fjp-shadow-xl);
+    opacity: 0.9;
 }
 
 /* =========================================
-   HEADER STYLES (PRO FEATURES)
+   3. SHORTCODE COMPONENTS
    ========================================= */
 
-.site-header {
-    transition: all 0.3s ease;
-    z-index: 999;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-}
-
-/* Sticky Header */
-body.fjp-sticky-header .site-header {
-    position: sticky;
-    top: 0;
-}
-
-body.fjp-sticky-header .site-header.fjp-is-scrolled {
-    background: rgba(255, 255, 255, 0.98) !important;
-    box-shadow: var(--fjp-shadow-md);
-    backdrop-filter: blur(10px);
-}
-
-/* =========================================
-   BLOCK PATTERN SUPPORT STYLES
-   ========================================= */
-
-/* Hero Sections */
-.fjp-hero-section {
-    position: relative;
-    overflow: hidden;
-    padding: var(--fjp-spacing-xl) 0;
-}
-
-/* Icon Boxes */
-.fjp-icon-box {
-    text-align: center;
-    padding: var(--fjp-spacing-md);
-    background: var(--fjp-white);
-    border-radius: var(--fjp-radius-md);
-    height: 100%;
-    box-shadow: var(--fjp-shadow-sm);
-    transition: all 0.3s ease;
-}
-
-.fjp-icon-box:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--fjp-shadow-md);
-}
-
-.fjp-icon-circle {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: var(--fjp-gradient);
-    color: var(--fjp-white);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto var(--fjp-spacing-sm);
-    font-size: 2rem;
-}
-
-/* Footer */
-.site-footer {
-    background: #222; /* Fallback if not set via Customizer */
-    color: var(--fjp-white);
-}
-
-/* Utilities */
-.text-gradient {
-    background: var(--fjp-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.has-fjp-primary-color { color: var(--fjp-primary) !important; }
-.has-fjp-secondary-color { color: var(--fjp-secondary) !important; }
-.has-fjp-teal-color { color: var(--fjp-teal) !important; }
-.has-fjp-green-color { color: var(--fjp-green) !important; }
-
-.has-fjp-primary-background-color { background-color: var(--fjp-primary) !important; }
-.has-fjp-secondary-background-color { background-color: var(--fjp-secondary) !important; }
-.has-fjp-teal-background-color { background-color: var(--fjp-teal) !important; }
-.has-fjp-green-background-color { background-color: var(--fjp-green) !important; }
-
-/* Responsive */
-@media (max-width: 768px) {
-    :root {
-        --fjp-spacing-xxl: 50px;
-    }
-}
-
-/* =========================================
-   LEGACY COMPONENT SUPPORT (Shortcodes)
-   ========================================= */
-
-/* FJP Form */
-.fjp-form .form-control:focus {
-    border-color: var(--fjp-primary);
-}
-
+/* Volunteer Form */
 .voluntariado-formulario {
     padding: 60px 0;
-    background: var(--fjp-white);
 }
-
 .formulario-container {
-    background: #fff;
+    background: var(--fjp-white);
     padding: 40px;
     border-radius: var(--fjp-radius-lg);
     box-shadow: var(--fjp-shadow-lg);
 }
 
-/* FJP Counter */
+/* Counters */
 .fjp-counter-section {
     padding: 60px 0;
 }
-
 .fjp-counter {
     padding: 30px;
     background: var(--fjp-white);
     border-radius: var(--fjp-radius-md);
-    box-shadow: var(--fjp-shadow-sm);
+    box-shadow: var(--fjp-shadow-md);
     transition: transform 0.3s ease;
 }
-
 .fjp-counter:hover {
     transform: translateY(-5px);
 }
-
 .fjp-counter-number {
     display: block;
     font-size: 3rem;
     font-weight: 800;
     color: var(--fjp-primary);
-    margin-bottom: 10px;
 }
 
-.fjp-counter-label {
-    font-size: 1.1rem;
-    color: var(--fjp-text);
-    font-weight: 500;
-}
-
-/* =========================================
-   SIDEBAR STYLES (Modular)
-   ========================================= */
-.sidebar-widget {
-    margin-bottom: 40px;
-    background: #fff;
-    padding: 30px;
+/* Cards (Generic) */
+.fjp-card {
+    background: var(--fjp-white);
     border-radius: var(--fjp-radius-md);
-    box-shadow: var(--fjp-shadow-sm);
+    box-shadow: var(--fjp-shadow-md);
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+.fjp-card:hover {
+    transform: translateY(-5px);
 }
 
-.widget-title {
-    font-size: 1.25rem;
-    margin-bottom: 25px;
-    border-bottom: 2px solid var(--fjp-light-gray);
-    padding-bottom: 10px;
-    position: relative;
-}
-
-.widget-title::after {
-    content: '';
+/* Header Utilities */
+.fjp-transparent-header .site-header {
     position: absolute;
-    bottom: -2px;
+    width: 100%;
     left: 0;
-    width: 50px;
-    height: 2px;
-    background: var(--fjp-primary);
+    top: 0;
+    background: transparent;
+    z-index: 99;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-/* Category List */
-.fjp-cat-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.fjp-cat-list li {
-    margin-bottom: 15px;
-}
-
-.fjp-cat-list a {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: var(--fjp-text);
-    text-decoration: none;
-    transition: color 0.3s;
-}
-
-.fjp-cat-list a:hover {
-    color: var(--fjp-primary);
-}
-
-.fjp-cat-list .term-count {
-    background: var(--fjp-light-gray);
-    padding: 2px 10px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    color: var(--fjp-dark-gray);
-}
-
-/* Mini News List */
-.fjp-mini-item {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-.fjp-mini-img img {
-    width: 70px;
-    height: 70px;
-    object-fit: cover;
-    border-radius: var(--fjp-radius-sm);
-}
-
-.fjp-mini-content h4 {
-    font-size: 0.95rem;
-    margin: 0 0 5px;
-    line-height: 1.4;
-}
-
-.fjp-mini-content h4 a {
-    color: var(--fjp-text);
-    text-decoration: none;
-}
-
-.fjp-mini-content h4 a:hover {
-    color: var(--fjp-primary);
-}
-
-.fjp-mini-content .date {
-    font-size: 0.8rem;
-    color: #999;
+.fjp-sticky-header .site-header {
+    position: sticky;
+    top: 0;
 }
