@@ -36,7 +36,7 @@ function fjp_register_patterns() {
             'title'       => __('Home - Layout Completo', 'fjp'),
             'description' => 'Estructura completa para la página de inicio.',
             'categories'  => array('fjp-pages'),
-            'content'     => '
+            'content'     => <<<HTML
 <!-- wp:acf/fjp-hero {"name":"acf/fjp-hero","data":{"title":"Juntos construyendo un futuro mejor","_title":"field_hero_title","description":"La Fundación Juventud Progresista trabaja incansablemente para el desarrollo sostenible de nuestra comunidad.","_description":"field_hero_description","overlay_color":"fjp-primary","_overlay_color":"field_hero_overlay_color","buttons":2,"_buttons":"field_hero_buttons","buttons_0_label":"Donar Ahora","_buttons_0_label":"field_hero_btn_label","buttons_0_url":"#donar","_buttons_0_url":"field_hero_btn_url","buttons_0_style":"primary","_buttons_0_style":"field_hero_btn_style","buttons_1_label":"Ser Voluntario","_buttons_1_label":"field_hero_btn_label","buttons_1_url":"/voluntariado","_buttons_1_url":"field_hero_btn_url","buttons_1_style":"secondary","_buttons_1_style":"field_hero_btn_style"},"align":"full","mode":"preview"} /-->
 
 <!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|xl","bottom":"var:preset|spacing|xl"}}},"backgroundColor":"fjp-background","layout":{"type":"constrained"}} -->
@@ -90,7 +90,8 @@ function fjp_register_patterns() {
 <!-- wp:acf/fjp-testimonials {"name":"acf/fjp-testimonials","align":"full","mode":"preview"} /-->
 
 <!-- wp:acf/fjp-volunteer-cta {"name":"acf/fjp-volunteer-cta","data":{"title":"¿Listo para hacer la diferencia?","_title":"field_cta_title","text":"Únete a nuestro equipo de voluntarios y sé parte del cambio.","_text":"field_cta_text","button_label":"Inscríbete Hoy","_button_label":"field_cta_btn_label","button_url":"/voluntariado","_button_url":"field_cta_btn_url"},"align":"wide","mode":"preview"} /-->
-            ',
+HTML
+,
         )
     );
 
@@ -101,7 +102,7 @@ function fjp_register_patterns() {
             'title'       => __('Voluntariado - Layout Completo', 'fjp'),
             'description' => 'Estructura para la página de voluntarios.',
             'categories'  => array('fjp-pages'),
-            'content'     => '
+            'content'     => <<<HTML
 <!-- wp:acf/fjp-hero {"name":"acf/fjp-hero","data":{"title":"Únete al Voluntariado","_title":"field_hero_title","description":"Tu tiempo y talento pueden transformar vidas. Súmate a nuestra causa.","_description":"field_hero_description","overlay_color":"fjp-teal","_overlay_color":"field_hero_overlay_color","buttons":1,"_buttons":"field_hero_buttons","buttons_0_label":"Inscribirme","_buttons_0_label":"field_hero_btn_label","buttons_0_url":"#formulario","_buttons_0_url":"field_hero_btn_url","buttons_0_style":"primary","_buttons_0_style":"field_hero_btn_style"},"align":"full","mode":"preview"} /-->
 
 <!-- wp:group {"align":"wide","style":{"spacing":{"padding":{"top":"var:preset|spacing|xl","bottom":"var:preset|spacing|xl"}}}} -->
@@ -162,7 +163,8 @@ function fjp_register_patterns() {
     <!-- /wp:shortcode -->
 </div>
 <!-- /wp:group -->
-            ',
+HTML
+,
         )
     );
 }

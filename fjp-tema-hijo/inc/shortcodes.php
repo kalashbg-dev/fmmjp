@@ -482,8 +482,89 @@ function fjp_procesar_formulario_voluntariado() {
         wp_send_json_error('Nonce inválido');
     }
 
-    // Aquí se procesaría el formulario (guardar en BD, enviar email, etc.)
-    // Por ahora, simulamos éxito
+    // Sanitizar campos
+    $nombre = sanitize_text_field($_POST['nombre'] ?? '');
+    $email = sanitize_email($_POST['email'] ?? '');
+    $telefono = sanitize_text_field($_POST['telefono'] ?? '');
+    $edad = intval($_POST['edad'] ?? 0);
+    $area = sanitize_text_field($_POST['area'] ?? '');
+    $disponibilidad = sanitize_text_field($_POST['disponibilidad'] ?? '');
+    $experiencia = sanitize_textarea_field($_POST['experiencia'] ?? '');
+    $motivacion = sanitize_textarea_field($_POST['motivacion'] ?? '');
+
+    if (empty($nombre) || empty($email) || empty($telefono) || empty($edad)) {
+        wp_send_json_error('Por favor complete todos los campos obligatorios.');
+    }
+
+    // 1. Guardar en CPT "voluntarios"
+    $post_data = array(
+        'post_title'    => 'Voluntario: ' . $nombre,
+        'post_status'   => 'private', // Privado para proteger datos
+        'post_type'     => 'voluntarios',
+        'post_content'  => $motivacion, // Guardar motivación en el contenido
+    );
+
+    $post_id = wp_insert_post($post_data);
+
+    if (is_wp_error($post_id)) {
+        wp_send_json_error('Error al guardar la solicitud. Intente nuevamente.');
+    }
+
+    // Guardar meta data (compatible con ACF si se registra después)
+    update_post_meta($post_id, 'voluntario_email', $email);
+    update_post_meta($post_id, 'voluntario_telefono', $telefono);
+    update_post_meta($post_id, 'voluntario_edad', $edad);
+    update_post_meta($post_id, 'voluntario_area', $area);
+    update_post_meta($post_id, 'voluntario_disponibilidad', $disponibilidad);
+    update_post_meta($post_id, 'voluntario_experiencia', $experiencia);
+
+    // 2. Enviar Correo al Voluntario
+    $subject = '¡Gracias por querer ser parte de FJP!';
+    $headers = array('Content-Type: text/html; charset=UTF-8');
+
+    $message = '
+    <html>
+    <head>
+        <style>
+            body { font-family: Arial, sans-serif; color: #333; line-height: 1.6; }
+            .container { max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px; }
+            .header { background-color: #F2385A; color: white; padding: 20px; text-align: center; border-radius: 10px 10px 0 0; }
+            .content { padding: 20px; }
+            .footer { font-size: 12px; color: #777; text-align: center; margin-top: 20px; border-top: 1px solid #eee; padding-top: 20px; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>¡Solicitud Recibida!</h1>
+            </div>
+            <div class="content">
+                <p>Hola <strong>' . esc_html($nombre) . '</strong>,</p>
+                <p>Hemos recibido tu solicitud para unirte al equipo de voluntarios de la <strong>Fundación Juventud Progresista</strong>.</p>
+                <p>Nuestro equipo revisará tu perfil y nos pondremos en contacto contigo pronto para coordinar una entrevista o reunión de bienvenida.</p>
+                <p><strong>Tus datos:</strong></p>
+                <ul>
+                    <li><strong>Área de interés:</strong> ' . esc_html(ucfirst($area)) . '</li>
+                    <li><strong>Disponibilidad:</strong> ' . esc_html(ucfirst($disponibilidad)) . '</li>
+                </ul>
+                <p>Gracias por tu compromiso con el cambio social.</p>
+            </div>
+            <div class="footer">
+                <p>&copy; ' . date('Y') . ' Fundación Juventud Progresista.</p>
+            </div>
+        </div>
+    </body>
+    </html>
+    ';
+
+    wp_mail($email, $subject, $message, $headers);
+
+    // 3. Enviar Correo al Admin
+    $admin_email = get_option('admin_email');
+    $admin_subject = 'Nueva solicitud de voluntariado: ' . $nombre;
+    $admin_message = "Nuevo voluntario registrado:\n\nNombre: $nombre\nEmail: $email\nTeléfono: $telefono\nÁrea: $area\n\nRevisar en el panel de administración.";
+
+    wp_mail($admin_email, $admin_subject, $admin_message);
 
     wp_send_json_success('Formulario recibido correctamente');
 }
