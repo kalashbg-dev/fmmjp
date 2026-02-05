@@ -90,11 +90,6 @@ if (file_exists(FJP_THEME_DIR . '/inc/custom-layout-metabox.php')) {
     require_once FJP_THEME_DIR . '/inc/custom-layout-metabox.php';
 }
 
-// Sistema de Patrones de Bloques
-if (file_exists(FJP_THEME_DIR . '/inc/patterns.php')) {
-    require_once FJP_THEME_DIR . '/inc/patterns.php';
-}
-
 // Configuración del Personalizador
 if (file_exists(FJP_THEME_DIR . '/inc/customizer.php')) {
     require_once FJP_THEME_DIR . '/inc/customizer.php';
