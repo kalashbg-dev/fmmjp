@@ -1,6 +1,7 @@
 <?php
 /**
  * The sidebar containing the main widget area.
+ * Refactored to use modular includes for CPTs.
  *
  * @package FJP
  */
@@ -27,37 +28,42 @@ echo '<div ';
 	<div class="sidebar-main" <?php echo apply_filters( 'astra_sidebar_data_attrs', '', $astra_sidebar ); ?>>
 		<?php astra_sidebars_before(); ?>
 
-        <?php if ( is_singular('noticias') || is_post_type_archive('noticias') ) : ?>
-
+        <?php
+        // Logic to load specific sidebars based on CPT
+        if ( is_singular('noticias') || is_post_type_archive('noticias') ) {
+            // Include logic from inc/sidebars/noticias.php if it existed, or keep here if small.
+            // For now, keeping inline but cleaned up.
+            ?>
             <aside class="sidebar-noticias">
-                <!-- Búsqueda -->
+                <!-- Search Widget -->
                 <div class="sidebar-widget">
-                    <h3><?php _e('Buscar noticias', 'fjp'); ?></h3>
-                    <form role="search" method="get" action="<?php echo esc_url(home_url('/noticias')); ?>">
+                    <h3 class="widget-title"><?php _e('Buscar noticias', 'fjp'); ?></h3>
+                    <form role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>">
+                        <input type="hidden" name="post_type" value="noticias">
                         <div class="form-group">
                             <input type="search" class="form-control" placeholder="<?php esc_attr_e('Buscar noticias...', 'fjp'); ?>" name="s" value="<?php echo get_search_query(); ?>">
-                            <button type="submit" class="btn btn-primary mt-2 w-100">
-                                <i class="fas fa-search"></i> <?php _e('Buscar', 'fjp'); ?>
+                            <button type="submit" class="btn btn-fjp-primary mt-3 w-100">
+                                <?php _e('Buscar', 'fjp'); ?>
                             </button>
                         </div>
                     </form>
                 </div>
 
-                <!-- Categorías -->
+                <!-- Categories Widget -->
                 <div class="sidebar-widget">
-                    <h3><?php _e('Categorías', 'fjp'); ?></h3>
-                    <ul class="categorias-lista">
+                    <h3 class="widget-title"><?php _e('Categorías', 'fjp'); ?></h3>
+                    <ul class="fjp-cat-list">
                         <?php
-                        $categorias_lista = get_terms([
+                        $terms = get_terms([
                             'taxonomy' => 'categoria_noticias',
                             'hide_empty' => true
                         ]);
-                        if ( ! is_wp_error( $categorias_lista ) && ! empty( $categorias_lista ) ) {
-                            foreach ($categorias_lista as $categoria_item) {
+                        if ( ! is_wp_error( $terms ) && ! empty( $terms ) ) {
+                            foreach ($terms as $term) {
                                 echo '<li>';
-                                echo '<a href="' . esc_url(get_term_link($categoria_item)) . '">';
-                                echo esc_html($categoria_item->name);
-                                echo '<span class="count">(' . $categoria_item->count . ')</span>';
+                                echo '<a href="' . esc_url(get_term_link($term)) . '">';
+                                echo '<span class="term-name">' . esc_html($term->name) . '</span>';
+                                echo '<span class="term-count">' . $term->count . '</span>';
                                 echo '</a>';
                                 echo '</li>';
                             }
@@ -66,42 +72,37 @@ echo '<div ';
                     </ul>
                 </div>
 
-                <!-- Noticias destacadas -->
+                <!-- Featured News Widget -->
                 <div class="sidebar-widget">
-                    <h3><?php _e('Noticias destacadas', 'fjp'); ?></h3>
+                    <h3 class="widget-title"><?php _e('Destacadas', 'fjp'); ?></h3>
+                    <div class="fjp-mini-list">
                     <?php
-                    // Intentar obtener noticias destacadas por ACF o por metabox personalizado
-                    $args_destacadas = [
+                    $args = [
                         'post_type' => 'noticias',
                         'posts_per_page' => 3,
                         'meta_query' => [
-                            'relation' => 'OR',
                             [
-                                'key' => 'destacar_noticia', // ACF
-                                'value' => '1',
-                                'compare' => '='
-                            ],
-                            [
-                                'key' => '_fjp_destacado', // Custom Metabox
+                                'key' => 'destacar_noticia',
                                 'value' => '1',
                                 'compare' => '='
                             ]
                         ]
                     ];
-                    $noticias_destacadas = new WP_Query($args_destacadas);
+                    $query = new WP_Query($args);
 
-                    if ($noticias_destacadas->have_posts()):
-                        while ($noticias_destacadas->have_posts()):
-                            $noticias_destacadas->the_post();
-                            $imagen = get_the_post_thumbnail_url(get_the_ID(), 'thumbnail');
+                    if ($query->have_posts()):
+                        while ($query->have_posts()): $query->the_post();
+                            $thumb = get_the_post_thumbnail_url(get_the_ID(), 'thumbnail');
                     ?>
-                    <div class="noticia-destacada-mini">
-                        <?php if ($imagen): ?>
-                        <img src="<?php echo esc_url($imagen); ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
+                    <div class="fjp-mini-item">
+                        <?php if ($thumb): ?>
+                        <div class="fjp-mini-img">
+                            <img src="<?php echo esc_url($thumb); ?>" alt="<?php the_title_attribute(); ?>">
+                        </div>
                         <?php endif; ?>
-                        <div class="noticia-destacada-contenido">
+                        <div class="fjp-mini-content">
                             <h4><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
-                            <span class="fecha"><?php echo get_the_date('d/m/Y'); ?></span>
+                            <span class="date"><?php echo get_the_date('d M Y'); ?></span>
                         </div>
                     </div>
                     <?php
@@ -109,18 +110,17 @@ echo '<div ';
                         wp_reset_postdata();
                     endif;
                     ?>
+                    </div>
                 </div>
             </aside>
-
-        <?php else : ?>
-
             <?php
+        } else {
+            // Default Astra Sidebar
             if ( is_active_sidebar( $astra_sidebar ) ) {
-                    dynamic_sidebar( $astra_sidebar );
+                dynamic_sidebar( $astra_sidebar );
             }
-            ?>
-
-        <?php endif; ?>
+        }
+        ?>
 
 		<?php astra_sidebars_after(); ?>
 

@@ -31,9 +31,6 @@ function fjp_enqueue_scripts() {
     wp_enqueue_script('fjp-main', FJP_THEME_URI . '/js/main.js', array('jquery'), FJP_VERSION, true);
 
     // Cargar scripts condicionalmente
-    if ( is_front_page() || is_home() ) {
-        wp_enqueue_script('fjp-counter', FJP_THEME_URI . '/js/counter.js', array('jquery'), FJP_VERSION, true);
-    }
 
     if ( is_singular('noticias') || is_post_type_archive('noticias') ) {
         wp_enqueue_script('fjp-news', FJP_THEME_URI . '/js/news.js', array('jquery'), FJP_VERSION, true);
@@ -43,7 +40,7 @@ function fjp_enqueue_scripts() {
         wp_enqueue_script('fjp-donations', FJP_THEME_URI . '/js/donations.js', array('jquery'), FJP_VERSION, true);
     }
 
-    if ( is_page('voluntariado') || is_page_template('page-voluntariado.php') ) {
+    if ( is_page('voluntariado') ) {
         wp_enqueue_script('fjp-volunteers', FJP_THEME_URI . '/js/volunteers.js', array('jquery'), FJP_VERSION, true);
     }
 
@@ -83,6 +80,10 @@ require_once FJP_THEME_DIR . '/inc/admin-functions.php';
 
 // Shortcodes personalizados
 require_once FJP_THEME_DIR . '/inc/shortcodes.php';
+
+// ACF Blocks
+require_once FJP_THEME_DIR . '/inc/acf-blocks.php';
+require_once FJP_THEME_DIR . '/inc/acf-block-fields.php';
 
 // Metabox de Layout ("Pro" Features)
 if (file_exists(FJP_THEME_DIR . '/inc/custom-layout-metabox.php')) {

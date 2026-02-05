@@ -8,80 +8,55 @@
             "palette": [
                 {
                     "slug": "fjp-primary",
-                    "color": "#0056D2",
-                    "name": "Azul Primario"
+                    "color": "#F2385A",
+                    "name": "FJP Primario (Rosa)"
                 },
                 {
                     "slug": "fjp-secondary",
-                    "color": "#28A745",
-                    "name": "Verde Secundario"
-                },
-                {
-                    "slug": "fjp-accent",
-                    "color": "#E63946",
-                    "name": "Rojo Acento"
+                    "color": "#D95F76",
+                    "name": "FJP Secundario (Rosa Suave)"
                 },
                 {
                     "slug": "fjp-teal",
-                    "color": "#2A9D8F",
-                    "name": "Turquesa"
+                    "color": "#5BD9D9",
+                    "name": "FJP Turquesa"
                 },
                 {
-                    "slug": "fjp-dark-blue",
-                    "color": "#264653",
-                    "name": "Azul Oscuro"
+                    "slug": "fjp-green",
+                    "color": "#56BF66",
+                    "name": "FJP Verde"
                 },
                 {
-                    "slug": "fjp-yellow",
-                    "color": "#E9C46A",
-                    "name": "Amarillo"
-                },
-                {
-                    "slug": "fjp-orange",
-                    "color": "#F4A261",
-                    "name": "Naranja"
+                    "slug": "fjp-background",
+                    "color": "#F2F2F2",
+                    "name": "FJP Fondo"
                 },
                 {
                     "slug": "fjp-text",
                     "color": "#333333",
-                    "name": "Texto Principal"
-                },
-                {
-                    "slug": "fjp-light-gray",
-                    "color": "#f8f9fa",
-                    "name": "Gris Claro"
-                },
-                {
-                    "slug": "fjp-gray",
-                    "color": "#e9ecef",
-                    "name": "Gris Medio"
-                },
-                {
-                    "slug": "fjp-dark-gray",
-                    "color": "#6c757d",
-                    "name": "Gris Oscuro"
+                    "name": "FJP Texto"
                 },
                 {
                     "slug": "fjp-white",
                     "color": "#FFFFFF",
                     "name": "Blanco"
+                },
+                {
+                    "slug": "fjp-dark-gray",
+                    "color": "#6c757d",
+                    "name": "Gris Oscuro"
                 }
             ],
             "gradients": [
                 {
-                    "slug": "fjp-gradient-brand",
+                    "slug": "fjp-gradient-primary",
                     "gradient": "linear-gradient(135deg, var(--wp--preset--color--fjp-primary) 0%, var(--wp--preset--color--fjp-secondary) 100%)",
-                    "name": "Gradiente Marca"
+                    "name": "Gradiente Primario"
                 },
                 {
                     "slug": "fjp-gradient-teal",
-                    "gradient": "linear-gradient(135deg, var(--wp--preset--color--fjp-teal) 0%, var(--wp--preset--color--fjp-dark-blue) 100%)",
+                    "gradient": "linear-gradient(135deg, var(--wp--preset--color--fjp-teal) 0%, #2A9D8F 100%)",
                     "name": "Gradiente Turquesa"
-                },
-                {
-                    "slug": "fjp-gradient-gold",
-                    "gradient": "linear-gradient(135deg, var(--wp--preset--color--fjp-yellow) 0%, var(--wp--preset--color--fjp-orange) 100%)",
-                    "name": "Gradiente Dorado"
                 }
             ]
         },

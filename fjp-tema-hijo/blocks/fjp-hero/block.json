@@ -1,0 +1,17 @@
+{
+    "name": "acf/fjp-hero",
+    "title": "FJP Hero",
+    "description": "A premium hero section with background image and CTA.",
+    "category": "design",
+    "icon": "cover-image",
+    "keywords": ["hero", "banner", "fjp"],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "render.php"
+    },
+    "supports": {
+        "align": ["full", "wide"],
+        "mode": false
+    },
+    "style": "file:./style.css"
+}
