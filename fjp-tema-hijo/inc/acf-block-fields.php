@@ -200,4 +200,129 @@ function fjp_register_block_fields() {
 		),
 	) );
 
+    // 5. CPT Voluntarios Data (Read-only view for admins)
+    acf_add_local_field_group( array(
+        'key' => 'group_voluntarios_data',
+        'title' => 'Datos del Voluntario',
+        'fields' => array(
+            array(
+                'key' => 'field_voluntario_email',
+                'label' => 'Email',
+                'name' => 'voluntario_email',
+                'type' => 'email',
+                'readonly' => 1,
+            ),
+            array(
+                'key' => 'field_voluntario_telefono',
+                'label' => 'Teléfono',
+                'name' => 'voluntario_telefono',
+                'type' => 'text',
+                'readonly' => 1,
+            ),
+            array(
+                'key' => 'field_voluntario_edad',
+                'label' => 'Edad',
+                'name' => 'voluntario_edad',
+                'type' => 'number',
+                'readonly' => 1,
+            ),
+            array(
+                'key' => 'field_voluntario_area',
+                'label' => 'Área de Interés',
+                'name' => 'voluntario_area',
+                'type' => 'text',
+                'readonly' => 1,
+            ),
+            array(
+                'key' => 'field_voluntario_disponibilidad',
+                'label' => 'Disponibilidad',
+                'name' => 'voluntario_disponibilidad',
+                'type' => 'text',
+                'readonly' => 1,
+            ),
+            array(
+                'key' => 'field_voluntario_experiencia',
+                'label' => 'Experiencia',
+                'name' => 'voluntario_experiencia',
+                'type' => 'textarea',
+                'readonly' => 1,
+            ),
+        ),
+        'location' => array(
+            array(
+                array(
+                    'param' => 'post_type',
+                    'operator' => '==',
+                    'value' => 'voluntarios',
+                ),
+            ),
+        ),
+    ));
+
+    // 6. Page Configuration: Volunteer Page
+    acf_add_local_field_group( array(
+        'key' => 'group_page_voluntariado',
+        'title' => 'Configuración Página Voluntariado',
+        'fields' => array(
+            array(
+                'key' => 'field_voluntariado_areas',
+                'label' => 'Áreas de Voluntariado',
+                'name' => 'voluntariado_areas',
+                'type' => 'repeater',
+                'instructions' => 'Áreas disponibles para mostrar en el formulario',
+                'sub_fields' => array(
+                    array(
+                        'key' => 'field_voluntariado_area_titulo',
+                        'label' => 'Título',
+                        'name' => 'titulo',
+                        'type' => 'text',
+                    ),
+                ),
+            ),
+            array(
+                'key' => 'field_voluntariado_testimonios',
+                'label' => 'Testimonios de Voluntarios',
+                'name' => 'voluntariado_testimonios',
+                'type' => 'repeater',
+                'instructions' => 'Testimonios específicos para esta sección',
+                'sub_fields' => array(
+                    array(
+                        'key' => 'field_vt_nombre',
+                        'label' => 'Nombre',
+                        'name' => 'nombre',
+                        'type' => 'text',
+                    ),
+                    array(
+                        'key' => 'field_vt_cargo',
+                        'label' => 'Cargo/Rol',
+                        'name' => 'cargo',
+                        'type' => 'text',
+                    ),
+                    array(
+                        'key' => 'field_vt_testimonio',
+                        'label' => 'Testimonio',
+                        'name' => 'testimonio',
+                        'type' => 'textarea',
+                    ),
+                    array(
+                        'key' => 'field_vt_imagen',
+                        'label' => 'Imagen',
+                        'name' => 'imagen',
+                        'type' => 'image',
+                        'return_format' => 'url',
+                    ),
+                ),
+            ),
+        ),
+        'location' => array(
+            array(
+                array(
+                    'param' => 'post_type',
+                    'operator' => '==',
+                    'value' => 'page',
+                ),
+            ),
+        ),
+    ));
+
 }
