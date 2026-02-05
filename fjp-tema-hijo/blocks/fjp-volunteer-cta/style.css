@@ -1,0 +1,46 @@
+.fjp-volunteer-cta {
+    background: var(--fjp-gradient-teal, linear-gradient(135deg, #5BD9D9 0%, #56BF66 100%));
+    padding: 80px 0;
+    color: #fff;
+    text-align: center;
+    border-radius: 20px;
+    margin: 40px 0;
+}
+
+.fjp-cta-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.fjp-cta-title {
+    color: #fff !important;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.fjp-cta-text {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    line-height: 1.6;
+}
+
+.fjp-cta-btn {
+    background: #fff;
+    color: var(--fjp-green, #56BF66) !important;
+    padding: 15px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    display: inline-block;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.fjp-cta-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    color: var(--fjp-primary, #F2385A) !important;
+}

@@ -3,7 +3,7 @@ Theme Name: FJP - Fundación Juventud Progresista
 Description: Tema hijo de Astra para la Fundación Juventud Progresista
 Author: Equipo de Desarrollo Web FJP
 Template: astra
-Version: 1.1.0
+Version: 1.2.0
 Text Domain: fjp
 Domain Path: /languages
 */
@@ -12,34 +12,31 @@ Domain Path: /languages
    1. DESIGN TOKENS (VARIABLES)
    ========================================= */
 :root {
-    /* Colors - Brand (Linked to theme.json presets) */
-    --fjp-primary: var(--wp--preset--color--fjp-primary, #0056D2);
-    --fjp-secondary: var(--wp--preset--color--fjp-secondary, #28A745);
-    --fjp-accent: var(--wp--preset--color--fjp-accent, #E63946);
+    /* Core Palette - Mapped from theme.json presets */
+    --fjp-primary: var(--wp--preset--color--fjp-primary, #F2385A);
+    --fjp-secondary: var(--wp--preset--color--fjp-secondary, #D95F76);
+    --fjp-teal: var(--wp--preset--color--fjp-teal, #5BD9D9);
+    --fjp-green: var(--wp--preset--color--fjp-green, #56BF66);
 
-    /* Colors - Extended Palette */
-    --fjp-teal: var(--wp--preset--color--fjp-teal, #2A9D8F);
-    --fjp-dark-blue: var(--wp--preset--color--fjp-dark-blue, #264653);
-    --fjp-yellow: var(--wp--preset--color--fjp-yellow, #E9C46A);
-    --fjp-orange: var(--wp--preset--color--fjp-orange, #F4A261);
-
-    /* Colors - Neutrals */
     --fjp-text: var(--wp--preset--color--fjp-text, #333333);
-    --fjp-background: var(--wp--preset--color--fjp-white, #FFFFFF);
-    --fjp-light-gray: var(--wp--preset--color--fjp-light-gray, #f8f9fa);
-    --fjp-gray: var(--wp--preset--color--fjp-gray, #e9ecef);
-    --fjp-dark-gray: var(--wp--preset--color--fjp-dark-gray, #6c757d);
+    --fjp-background: var(--wp--preset--color--fjp-background, #F2F2F2);
     --fjp-white: var(--wp--preset--color--fjp-white, #FFFFFF);
+    --fjp-dark-gray: var(--wp--preset--color--fjp-dark-gray, #6c757d);
+
+    /* Mapeo legacy para compatibilidad */
+    --fjp-accent: var(--fjp-primary);
+    --fjp-dark-blue: var(--fjp-text); /* Reemplazamos el azul oscuro por el texto estándar o gris oscuro */
+    --fjp-yellow: var(--fjp-teal);
+    --fjp-orange: var(--fjp-secondary);
 
     /* Gradients */
     --fjp-gradient: linear-gradient(135deg, var(--fjp-primary) 0%, var(--fjp-secondary) 100%);
-    --fjp-gradient-teal: linear-gradient(135deg, var(--fjp-teal) 0%, var(--fjp-dark-blue) 100%);
-    --fjp-gradient-dark: linear-gradient(135deg, var(--fjp-dark-blue) 0%, var(--fjp-teal) 100%);
-    --fjp-gradient-gold: linear-gradient(135deg, var(--fjp-yellow) 0%, var(--fjp-orange) 100%);
+    --fjp-gradient-teal: linear-gradient(135deg, var(--fjp-teal) 0%, var(--fjp-green) 100%);
+    --fjp-gradient-gold: linear-gradient(135deg, var(--fjp-secondary) 0%, var(--fjp-primary) 100%); /* Reemplazado por tonos rojos */
 
     /* Typography */
-    --fjp-font-heading: 'Montserrat', sans-serif;
-    --fjp-font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --fjp-font-heading: var(--wp--preset--font-family--heading, 'Montserrat', sans-serif);
+    --fjp-font-body: var(--wp--preset--font-family--body, 'Inter', sans-serif);
 
     /* Spacing */
     --fjp-spacing-xs: 10px;
@@ -59,14 +56,11 @@ Domain Path: /languages
     --fjp-radius-pill: 50px;
 
     /* Shadows */
-    --fjp-shadow-sm: 0 2px 20px rgba(0, 0, 0, 0.1);
-    --fjp-shadow-md: 0 4px 15px rgba(0, 86, 210, 0.3);
+    --fjp-shadow-sm: 0 2px 20px rgba(0, 0, 0, 0.05);
+    --fjp-shadow-md: 0 4px 15px rgba(0, 0, 0, 0.08);
     --fjp-shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.1);
-    --fjp-shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.15);
+    --fjp-shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.12);
 }
-
-/* Tipografías */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
 
 /* =========================================
    2. BASE STYLES
@@ -74,21 +68,14 @@ Domain Path: /languages
 body {
     font-family: var(--fjp-font-body);
     color: var(--fjp-text);
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--fjp-background);
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--fjp-font-heading);
+    color: var(--fjp-primary); /* Use primary for headings by default in this premium feel */
     font-weight: 700;
-    color: var(--fjp-primary);
-    margin-bottom: 1rem;
 }
-
-h1 { font-size: 3rem; }
-h2 { font-size: 2.5rem; }
-h3 { font-size: 2rem; }
 
 /* =========================================
    3. COMPONENTS
@@ -109,16 +96,17 @@ h3 { font-size: 2rem; }
 }
 
 .btn-fjp-primary:hover {
-    background: #0047b3; /* Consider adding variable for hover state */
+    background: var(--fjp-secondary);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 86, 210, 0.4);
+    color: var(--fjp-white) !important;
+    box-shadow: var(--fjp-shadow-lg);
 }
 
 .btn-fjp-secondary {
-    background: var(--fjp-secondary);
-    color: var(--fjp-white) !important;
-    border: none;
-    padding: 12px var(--fjp-spacing-md);
+    background: var(--fjp-white);
+    color: var(--fjp-primary) !important;
+    border: 2px solid var(--fjp-primary);
+    padding: 10px var(--fjp-spacing-md); /* Reduced padding to account for border */
     border-radius: var(--fjp-radius-pill);
     font-weight: 600;
     text-decoration: none;
@@ -127,402 +115,95 @@ h3 { font-size: 2rem; }
 }
 
 .btn-fjp-secondary:hover {
-    background: #218838;
+    background: var(--fjp-primary);
+    color: var(--fjp-white) !important;
     transform: translateY(-2px);
+}
+
+/* Cards - Premium Style */
+.fjp-card {
+    background: var(--fjp-white);
+    border-radius: var(--fjp-radius-lg);
+    box-shadow: var(--fjp-shadow-md);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(0,0,0,0.02);
+    overflow: hidden;
+}
+
+.fjp-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--fjp-shadow-xl);
 }
 
 /* =========================================
    HEADER STYLES (PRO FEATURES)
    ========================================= */
 
-/* Default Astra Header adjustments */
 .site-header {
     transition: all 0.3s ease;
     z-index: 999;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
-/* 1. Header Transparente */
-body.fjp-transparent-header .site-header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: transparent;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-body.fjp-transparent-header .ast-builder-menu .menu-item > .menu-link {
-    color: var(--fjp-white);
-}
-
-body.fjp-transparent-header .site-title a,
-body.fjp-transparent-header .site-header .ast-site-identity a {
-    color: var(--fjp-white) !important;
-}
-
-/* 2. Header Sticky */
+/* Sticky Header */
 body.fjp-sticky-header .site-header {
     position: sticky;
     top: 0;
 }
 
-/* Estado "Scrolled" para Sticky/Transparent */
-body.fjp-sticky-header .site-header.fjp-is-scrolled,
-body.fjp-transparent-header .site-header.fjp-is-scrolled {
-    position: fixed;
+body.fjp-sticky-header .site-header.fjp-is-scrolled {
     background: rgba(255, 255, 255, 0.98) !important;
     box-shadow: var(--fjp-shadow-md);
-    animation: slideDown 0.3s ease;
-}
-
-body.fjp-transparent-header .site-header.fjp-is-scrolled .ast-builder-menu .menu-item > .menu-link {
-    color: var(--fjp-dark-blue);
-}
-
-body.fjp-transparent-header .site-header.fjp-is-scrolled .site-title a {
-    color: var(--fjp-primary) !important;
-}
-
-@keyframes slideDown {
-    from { transform: translateY(-100%); }
-    to { transform: translateY(0); }
-}
-
-/* FJP Custom Header (Legacy - Optional) */
-.fjp-header {
-    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
-    box-shadow: var(--fjp-shadow-sm);
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    transition: all 0.3s ease;
 }
 
-/* Hero section */
-.fjp-hero {
-    background: var(--fjp-gradient);
-    color: var(--fjp-white);
-    padding: 120px 0 var(--fjp-spacing-xxl);
+/* =========================================
+   BLOCK PATTERN SUPPORT STYLES
+   ========================================= */
+
+/* Hero Sections */
+.fjp-hero-section {
     position: relative;
     overflow: hidden;
+    padding: var(--fjp-spacing-xl) 0;
 }
 
-.fjp-hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-    opacity: 0.3;
-}
-
-.fjp-hero h1 {
-    color: var(--fjp-white);
-    font-size: 3.5rem;
-    font-weight: 800;
-    margin-bottom: 1.5rem;
-}
-
-.fjp-hero .lead {
-    font-size: 1.3rem;
-    margin-bottom: 2rem;
-    opacity: 0.9;
-}
-
-/* Contadores de impacto */
-.fjp-counter {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: var(--fjp-radius-md);
-    padding: var(--fjp-spacing-md) var(--fjp-spacing-sm);
+/* Icon Boxes */
+.fjp-icon-box {
     text-align: center;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: var(--fjp-spacing-md);
+    background: var(--fjp-white);
+    border-radius: var(--fjp-radius-md);
+    height: 100%;
+    box-shadow: var(--fjp-shadow-sm);
     transition: all 0.3s ease;
 }
 
-.fjp-counter:hover {
+.fjp-icon-box:hover {
     transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.15);
+    box-shadow: var(--fjp-shadow-md);
 }
 
-.fjp-counter-number {
-    font-size: 3rem;
-    font-weight: 800;
-    color: var(--fjp-white);
-    display: block;
-    margin-bottom: var(--fjp-spacing-xs);
-}
-
-.fjp-counter-label {
-    font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.9);
-    font-weight: 500;
-}
-
-/* Secciones */
-.fjp-section {
-    padding: var(--fjp-spacing-xxl) 0;
-}
-
-.fjp-section.bg-light {
-    background: var(--fjp-light-gray);
-}
-
-.fjp-section.bg-primary {
-    background: var(--fjp-primary);
-    color: var(--fjp-white);
-}
-
-.fjp-section.bg-gradient {
+.fjp-icon-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
     background: var(--fjp-gradient);
     color: var(--fjp-white);
-}
-
-/* Cards */
-.fjp-card {
-    background: var(--fjp-white);
-    border-radius: var(--fjp-radius-md);
-    box-shadow: var(--fjp-shadow-lg);
-    overflow: hidden;
-    transition: all 0.3s ease;
-    border: none;
-}
-
-.fjp-card:hover {
-    transform: translateY(-10px);
-    box-shadow: var(--fjp-shadow-xl);
-}
-
-.fjp-card .card-img-top {
-    height: 200px;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.fjp-card:hover .card-img-top {
-    transform: scale(1.05);
-}
-
-/* Formularios */
-.fjp-form .form-control {
-    border: 2px solid var(--fjp-gray);
-    border-radius: var(--fjp-radius-sm);
-    padding: 12px 15px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-.fjp-form .form-control:focus {
-    border-color: var(--fjp-primary);
-    box-shadow: 0 0 0 0.2rem rgba(0, 86, 210, 0.25);
-    outline: none;
-}
-
-.fjp-form .form-label {
-    font-weight: 600;
-    color: var(--fjp-primary);
-    margin-bottom: 8px;
-}
-
-/* Timeline */
-.fjp-timeline {
-    position: relative;
-    padding: var(--fjp-spacing-lg) 0;
-}
-
-.fjp-timeline::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background: var(--fjp-primary);
-    transform: translateX(-50%);
-}
-
-.fjp-timeline-item {
-    position: relative;
-    margin-bottom: 50px;
-    width: 45%;
-}
-
-.fjp-timeline-item:nth-child(odd) {
-    left: 0;
-    text-align: right;
-}
-
-.fjp-timeline-item:nth-child(even) {
-    left: 55%;
-    text-align: left;
-}
-
-.fjp-timeline-content {
-    background: var(--fjp-white);
-    padding: 25px;
-    border-radius: var(--fjp-radius-md);
-    box-shadow: var(--fjp-shadow-lg);
-    position: relative;
-}
-
-.fjp-timeline-date {
-    background: var(--fjp-primary);
-    color: var(--fjp-white);
-    padding: 8px 15px;
-    border-radius: var(--fjp-radius-lg);
-    font-size: 0.9rem;
-    font-weight: 600;
-    display: inline-block;
-    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--fjp-spacing-sm);
+    font-size: 2rem;
 }
 
 /* Footer */
-.fjp-footer {
-    background: var(--fjp-text);
+.site-footer {
+    background: #222; /* Fallback if not set via Customizer */
     color: var(--fjp-white);
-    padding: var(--fjp-spacing-xl) 0 var(--fjp-spacing-md);
 }
 
-.fjp-footer h3, .fjp-footer h4 {
-    color: var(--fjp-white);
-    margin-bottom: var(--fjp-spacing-sm);
-}
-
-.fjp-footer a {
-    color: rgba(255, 255, 255, 0.8);
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.fjp-footer a:hover {
-    color: var(--fjp-secondary);
-}
-
-/* Botón WhatsApp flotante */
-.whatsapp-flotante {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    z-index: 9999;
-    animation: whatsapp-entrada 0.5s ease-out;
-}
-
-.whatsapp-btn {
-    display: flex;
-    align-items: center;
-    background: #25D366;
-    color: var(--fjp-white);
-    padding: 15px 20px;
-    border-radius: var(--fjp-radius-pill);
-    text-decoration: none;
-    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
-    transition: all 0.3s ease;
-    font-family: var(--fjp-font-body);
-    font-weight: 500;
-    position: relative;
-    overflow: hidden;
-}
-
-.whatsapp-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4);
-    background: #128C7E;
-}
-
-.whatsapp-btn i {
-    font-size: 24px;
-    margin-right: 10px;
-}
-
-.whatsapp-text {
-    font-size: 14px;
-    white-space: nowrap;
-}
-
-@keyframes whatsapp-entrada {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-@media (max-width: 768px) {
-    .whatsapp-flotante {
-        bottom: 20px;
-        right: 20px;
-    }
-
-    .whatsapp-btn {
-        padding: 12px 16px;
-    }
-
-    .whatsapp-text {
-        display: none;
-    }
-
-    .whatsapp-btn i {
-        margin-right: 0;
-        font-size: 20px;
-    }
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .fjp-hero h1 {
-        font-size: 2.5rem;
-    }
-
-    .fjp-timeline::before {
-        left: 20px;
-    }
-
-    .fjp-timeline-item {
-        width: calc(100% - 50px);
-        left: 50px !important;
-        text-align: left !important;
-    }
-
-    .fjp-counter-number {
-        font-size: 2rem;
-    }
-
-    h1 { font-size: 2rem; }
-    h2 { font-size: 1.8rem; }
-    h3 { font-size: 1.5rem; }
-}
-
-/* Animaciones */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.fadeInUp {
-    animation: fadeInUp 0.6s ease-out;
-}
-
-/* Utilidades */
+/* Utilities */
 .text-gradient {
     background: var(--fjp-gradient);
     -webkit-background-clip: text;
@@ -530,1253 +211,166 @@ body.fjp-transparent-header .site-header.fjp-is-scrolled .site-title a {
     background-clip: text;
 }
 
-.border-radius-15 {
-    border-radius: var(--fjp-radius-md) !important;
-}
-
-.box-shadow-custom {
-    box-shadow: var(--fjp-shadow-lg) !important;
-}
-
-/* Sobreescribir estilos de Astra */
-.ast-container {
-    max-width: var(--wp--style--global--content-size, 1200px);
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* Permitir ancho completo en contenedores cuando se selecciona "Full Width" */
-.ast-page-builder-template .site-content > .ast-container {
-    max-width: 100%;
-    padding: 0;
-}
-
-.alignfull {
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    max-width: 100vw;
-    width: 100vw;
-}
-
-.alignwide {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: var(--wp--style--global--wide-size, 1400px);
-}
-
-.ast-single-post .entry-header {
-    margin-bottom: 2rem;
-}
-
-.ast-page-title-disabled .site-content {
-    padding-top: 0;
-}
-
-/* Estilos para GiveWP personalizados */
-.give-form-wrap {
-    background: var(--fjp-white);
-    padding: var(--fjp-spacing-lg);
-    border-radius: var(--fjp-radius-md);
-    box-shadow: var(--fjp-shadow-lg);
-}
-
-.give-btn {
-    background: var(--fjp-primary) !important;
-    border: none !important;
-    border-radius: var(--fjp-radius-pill) !important;
-    padding: 12px 30px !important;
-    font-weight: 600 !important;
-    transition: all 0.3s ease !important;
-}
-
-.give-btn:hover {
-    background: #0047b3 !important;
-    transform: translateY(-2px) !important;
-}
-
-/* Estilos para el blog/noticias */
-.fjp-blog-card {
-    transition: all 0.3s ease;
-    height: 100%;
-}
-
-.fjp-blog-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15) !important;
-}
-
-.fjp-blog-meta {
-    font-size: 0.9rem;
-    color: var(--fjp-dark-gray);
-    margin-bottom: var(--fjp-spacing-xs);
-}
-
-.fjp-blog-excerpt {
-    color: var(--fjp-text);
-    line-height: 1.6;
-    margin-bottom: 15px;
-}
-
-/* Paginación personalizada */
-.fjp-pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 40px;
-}
-
-.fjp-pagination .page-numbers {
-    background: var(--fjp-white);
-    border: 2px solid var(--fjp-gray);
-    color: var(--fjp-primary);
-    padding: 8px 12px;
-    margin: 0 5px;
-    border-radius: var(--fjp-radius-xs);
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.fjp-pagination .page-numbers:hover,
-.fjp-pagination .page-numbers.current {
-    background: var(--fjp-primary);
-    color: var(--fjp-white);
-    border-color: var(--fjp-primary);
-}
-
-/* =========================================
-   4. SINGLE NOTICIAS STYLES
-   ========================================= */
-
-.single-noticia-hero {
-    background: var(--fjp-gradient-teal);
-    color: var(--fjp-white);
-    padding: 120px 0 80px;
-    position: relative;
-    overflow: hidden;
-}
-
-.single-noticia-hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0,0,0,0.3);
-    z-index: 1;
-}
-
-.single-noticia-hero .container {
-    position: relative;
-    z-index: 2;
-}
-
-.single-noticia-hero .breadcrumb {
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 25px;
-    padding: var(--fjp-spacing-xs) var(--fjp-spacing-sm);
-    display: inline-block;
-    margin-bottom: var(--fjp-spacing-md);
-}
-
-.single-noticia-hero .breadcrumb a {
-    color: rgba(255,255,255,0.9);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-.single-noticia-hero .breadcrumb a:hover {
-    color: var(--fjp-yellow);
-}
-
-.single-noticia-hero .breadcrumb .separator {
-    margin: 0 10px;
-    color: rgba(255,255,255,0.7);
-}
-
-.single-noticia-hero .noticia-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-bottom: var(--fjp-spacing-md);
-    align-items: center;
-}
-
-.single-noticia-hero .noticia-meta-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(10px);
-    padding: 8px 16px;
-    border-radius: var(--fjp-radius-lg);
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.single-noticia-hero .noticia-meta-item i {
-    color: var(--fjp-yellow);
-    font-size: 16px;
-}
-
-.single-noticia-hero .noticia-categoria {
-    background: var(--fjp-yellow);
-    color: var(--fjp-dark-blue);
-    padding: 10px 20px;
-    border-radius: 25px;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 12px;
-    letter-spacing: 1px;
-    display: inline-block;
-    margin-bottom: 20px;
-}
-
-.single-noticia-hero h1 {
-    font-size: 3.5rem;
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    color: var(--fjp-white);
-}
-
-.single-noticia-hero .noticia-resumen {
-    font-size: 1.3rem;
-    line-height: 1.6;
-    opacity: 0.9;
-    max-width: 800px;
-}
-
-.single-noticia-content {
-    padding: 80px 0;
-    background: var(--fjp-light-gray);
-}
-
-.single-noticia-content .contenido-principal {
-    background: var(--fjp-white);
-    border-radius: var(--fjp-radius-lg);
-    padding: var(--fjp-spacing-xl);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-    margin-bottom: 40px;
-}
-
-.single-noticia-content .imagen-destacada {
-    width: 100%;
-    height: 400px;
-    object-fit: cover;
-    border-radius: var(--fjp-radius-md);
-    margin-bottom: 40px;
-}
-
-.single-noticia-content .contenido-texto {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: #495057;
-}
-
-.single-noticia-content .contenido-texto h2,
-.single-noticia-content .contenido-texto h3,
-.single-noticia-content .contenido-texto h4 {
-    color: var(--fjp-dark-blue);
-    margin-top: 40px;
-    margin-bottom: 20px;
-}
-
-.single-noticia-content .contenido-texto p {
-    margin-bottom: 25px;
-}
-
-.single-noticia-content .contenido-texto ul,
-.single-noticia-content .contenido-texto ol {
-    margin-bottom: 25px;
-    padding-left: 30px;
-}
-
-.single-noticia-content .contenido-texto li {
-    margin-bottom: 10px;
-}
-
-.single-noticia-content .noticia-info-adicional {
-    background: var(--fjp-gray);
-    border-radius: var(--fjp-radius-md);
-    padding: 30px;
-    margin: 40px 0;
-}
-
-.single-noticia-content .noticia-info-adicional h3 {
-    color: var(--fjp-dark-blue);
-    margin-bottom: 20px;
-    font-size: 1.3rem;
-}
-
-.single-noticia-content .info-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 0;
-    border-bottom: 1px solid #dee2e6;
-}
-
-.single-noticia-content .info-item:last-child {
-    border-bottom: none;
-}
-
-.single-noticia-content .info-label {
-    font-weight: 600;
-    color: var(--fjp-dark-blue);
-}
-
-.single-noticia-content .info-value {
-    color: var(--fjp-dark-gray);
-    text-align: right;
-}
-
-.single-noticia-content .info-value a {
-    color: var(--fjp-teal);
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.single-noticia-content .info-value a:hover {
-    text-decoration: underline;
-}
-
-.single-noticia-content .noticia-etiquetas {
-    margin-top: 40px;
-    padding-top: 30px;
-    border-top: 2px solid var(--fjp-gray);
-}
-
-.single-noticia-content .noticia-etiquetas h4 {
-    color: var(--fjp-dark-blue);
-    margin-bottom: 20px;
-    font-size: 1.2rem;
-}
-
-.single-noticia-content .etiquetas-lista {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.single-noticia-content .etiqueta-item {
-    background: var(--fjp-teal);
-    color: var(--fjp-white);
-    padding: 8px 16px;
-    border-radius: var(--fjp-radius-lg);
-    font-size: 14px;
-    font-weight: 500;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.single-noticia-content .etiqueta-item:hover {
-    background: var(--fjp-dark-blue);
-    transform: translateY(-2px);
-}
-
-.single-noticia-content .noticia-compartir {
-    background: var(--fjp-dark-blue);
-    color: var(--fjp-white);
-    border-radius: var(--fjp-radius-md);
-    padding: 30px;
-    text-align: center;
-    margin-top: 40px;
-}
-
-.single-noticia-content .noticia-compartir h4 {
-    margin-bottom: 20px;
-    font-size: 1.3rem;
-    color: var(--fjp-white);
-}
-
-.single-noticia-content .redes-sociales {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-
-.single-noticia-content .red-social {
-    background: rgba(255,255,255,0.1);
-    color: var(--fjp-white);
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    font-size: 20px;
-}
-
-.single-noticia-content .red-social:hover {
-    background: var(--fjp-yellow);
-    color: var(--fjp-dark-blue);
-    transform: translateY(-3px);
-}
-
-.noticias-relacionadas {
-    padding: 80px 0;
-    background: var(--fjp-white);
-}
-
-.noticias-relacionadas h2 {
-    text-align: center;
-    color: var(--fjp-dark-blue);
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 60px;
-}
-
-.noticias-relacionadas .noticia-card {
-    background: var(--fjp-light-gray);
-    border-radius: var(--fjp-radius-md);
-    overflow: hidden;
-    transition: all 0.3s ease;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.noticias-relacionadas .noticia-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-}
-
-.noticias-relacionadas .noticia-imagen {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.noticias-relacionadas .noticia-contenido {
-    padding: 30px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.noticias-relacionadas .noticia-categoria {
-    background: var(--fjp-teal);
-    color: var(--fjp-white);
-    padding: 5px 12px;
-    border-radius: 15px;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    display: inline-block;
-    margin-bottom: 15px;
-    align-self: flex-start;
-}
-
-.noticias-relacionadas .noticia-titulo {
-    color: var(--fjp-dark-blue);
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 15px;
-    line-height: 1.4;
-}
-
-.noticias-relacionadas .noticia-fecha {
-    color: var(--fjp-dark-gray);
-    font-size: 14px;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.noticias-relacionadas .noticia-resumen {
-    color: #495057;
-    font-size: 14px;
-    line-height: 1.5;
-    margin-bottom: 20px;
-    flex-grow: 1;
-}
-
-.noticias-relacionadas .noticia-leer-mas {
-    background: var(--fjp-dark-blue);
-    color: var(--fjp-white);
-    padding: 10px 20px;
-    border-radius: 25px;
-    text-decoration: none;
-    font-weight: 500;
-    text-align: center;
-    transition: all 0.3s ease;
-    align-self: flex-start;
-}
-
-.noticias-relacionadas .noticia-leer-mas:hover {
-    background: var(--fjp-teal);
-    transform: translateY(-2px);
-}
-
-/* Navegación entre noticias */
-.navegacion-noticias {
-    padding: 40px 0;
-    background: var(--fjp-light-gray);
-    border-top: 1px solid var(--fjp-gray);
-}
-
-.navegacion-noticias .nav-links {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-}
-
-.navegacion-noticias .nav-previous,
-.navegacion-noticias .nav-next {
-    flex: 1;
-}
-
-.navegacion-noticias .nav-previous a,
-.navegacion-noticias .nav-next a {
-    background: var(--fjp-white);
-    color: var(--fjp-dark-blue);
-    padding: 20px 30px;
-    border-radius: var(--fjp-radius-md);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-}
-
-.navegacion-noticias .nav-previous a:hover,
-.navegacion-noticias .nav-next a:hover {
-    background: var(--fjp-teal);
-    color: var(--fjp-white);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(42, 157, 143, 0.3);
-}
-
-.navegacion-noticias .nav-next a {
-    justify-content: flex-end;
-    text-align: right;
-}
-
-.navegacion-noticias .nav-title {
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 1.4;
-    margin-bottom: 5px;
-}
-
-.navegacion-noticias .nav-subtitle {
-    font-size: 14px;
-    opacity: 0.8;
-}
-
-
-/* =========================================
-   5. VOLUNTARIADO STYLES
-   ========================================= */
-
-.voluntariado-hero {
-    background: var(--fjp-gradient-teal);
-    color: var(--fjp-white);
-    padding: 120px 0 80px;
-    position: relative;
-    overflow: hidden;
-}
-
-.voluntariado-hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-.voluntariado-hero .container {
-    position: relative;
-    z-index: 2;
-}
-
-.voluntariado-hero h1 {
-    font-size: 3.5rem;
-    font-weight: 700;
-    margin-bottom: 25px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    color: var(--fjp-white);
-}
-
-.voluntariado-hero p {
-    font-size: 1.3rem;
-    line-height: 1.7;
-    margin-bottom: 40px;
-    max-width: 700px;
-}
-
-.voluntariado-hero .btn-primary {
-    background: var(--fjp-yellow);
-    color: var(--fjp-dark-blue);
-    border: none;
-    padding: 15px 40px;
-    border-radius: 30px;
-    font-weight: 600;
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 20px rgba(233, 196, 106, 0.4);
-}
-
-.voluntariado-hero .btn-primary:hover {
-    background: var(--fjp-orange);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(233, 196, 106, 0.6);
-}
-
-/* Beneficios del voluntariado */
-.voluntariado-beneficios {
-    padding: 100px 0;
-    background: var(--fjp-light-gray);
-}
-
-.voluntariado-beneficios h2 {
-    text-align: center;
-    color: var(--fjp-dark-blue);
-    font-size: 2.8rem;
-    font-weight: 700;
-    margin-bottom: 60px;
-}
-
-.beneficio-card {
-    background: var(--fjp-white);
-    border-radius: 20px;
-    padding: 40px 30px;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-    height: 100%;
-    border: 2px solid transparent;
-}
-
-.beneficio-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-    border-color: var(--fjp-teal);
-}
-
-.beneficio-icono {
-    background: var(--fjp-gradient-teal);
-    color: var(--fjp-white);
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 25px;
-    font-size: 2rem;
-    box-shadow: 0 5px 20px rgba(42, 157, 143, 0.3);
-}
-
-.beneficio-titulo {
-    color: var(--fjp-dark-blue);
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin-bottom: 15px;
-}
-
-.beneficio-descripcion {
-    color: var(--fjp-dark-gray);
-    line-height: 1.6;
-    margin-bottom: 0;
-}
-
-/* Áreas de voluntariado */
-.voluntariado-areas {
-    padding: 100px 0;
-    background: var(--fjp-white);
-}
-
-.voluntariado-areas h2 {
-    text-align: center;
-    color: var(--fjp-dark-blue);
-    font-size: 2.8rem;
-    font-weight: 700;
-    margin-bottom: 20px;
-}
-
-.voluntariado-areas .intro {
-    text-align: center;
-    color: var(--fjp-dark-gray);
-    font-size: 1.2rem;
-    margin-bottom: 60px;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.area-card {
-    background: var(--fjp-light-gray);
-    border-radius: 20px;
-    padding: 40px 30px;
-    text-align: center;
-    transition: all 0.3s ease;
-    height: 100%;
-    border: 2px solid transparent;
-    position: relative;
-    overflow: hidden;
-}
-
-.area-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(42, 157, 143, 0.1), transparent);
-    transition: left 0.5s ease;
-}
-
-.area-card:hover::before {
-    left: 100%;
-}
-
-.area-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-    border-color: var(--fjp-teal);
-    background: var(--fjp-white);
-}
-
-.area-icono {
-    background: var(--fjp-gradient-gold);
-    color: var(--fjp-white);
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 25px;
-    font-size: 2.2rem;
-    box-shadow: 0 5px 20px rgba(233, 196, 106, 0.4);
-}
-
-.area-titulo {
-    color: var(--fjp-dark-blue);
-    font-size: 1.3rem;
-    font-weight: 600;
-    margin-bottom: 15px;
-}
-
-.area-descripcion {
-    color: var(--fjp-dark-gray);
-    line-height: 1.6;
-    margin-bottom: 20px;
-}
-
-.area-requisitos {
-    background: rgba(42, 157, 143, 0.1);
-    color: var(--fjp-teal);
-    padding: 15px;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 500;
-    margin-top: 20px;
-}
-
-/* Testimonios */
-.voluntariado-testimonios {
-    padding: 100px 0;
-    background: var(--fjp-gradient-dark);
-    color: var(--fjp-white);
-    position: relative;
-}
-
-.voluntariado-testimonios::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/><circle cx="10" cy="60" r="0.5" fill="white" opacity="0.1"/><circle cx="90" cy="40" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-    opacity: 0.3;
-}
-
-.voluntariado-testimonios .container {
-    position: relative;
-    z-index: 2;
-}
-
-.voluntariado-testimonios h2 {
-    text-align: center;
-    font-size: 2.8rem;
-    font-weight: 700;
-    margin-bottom: 60px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    color: var(--fjp-white);
-}
-
-.testimonio-card {
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 40px 30px;
-    text-align: center;
-    border: 1px solid rgba(255,255,255,0.2);
-    transition: all 0.3s ease;
-    height: 100%;
-}
-
-.testimonio-card:hover {
-    background: rgba(255,255,255,0.15);
-    transform: translateY(-5px);
-}
-
-.testimonio-imagen {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin: 0 auto 25px;
-    border: 4px solid rgba(255,255,255,0.3);
-    object-fit: cover;
-}
-
-.testimonio-texto {
-    font-style: italic;
-    font-size: 1.1rem;
-    line-height: 1.7;
-    margin-bottom: 25px;
-    position: relative;
-}
-
-.testimonio-texto::before {
-    content: '"';
-    font-size: 4rem;
-    color: rgba(233, 196, 106, 0.5);
-    position: absolute;
-    top: -20px;
-    left: -15px;
-    font-family: Georgia, serif;
-}
-
-.testimonio-autor {
-    font-weight: 600;
-    font-size: 1.1rem;
-    margin-bottom: 5px;
-}
-
-.testimonio-cargo {
-    color: rgba(255,255,255,0.8);
-    font-size: 0.95rem;
-}
-
-/* Formulario de inscripción */
-.voluntariado-formulario {
-    padding: 100px 0;
-    background: var(--fjp-white);
-}
-
-.voluntariado-formulario h2 {
-    text-align: center;
-    color: var(--fjp-dark-blue);
-    font-size: 2.8rem;
-    font-weight: 700;
-    margin-bottom: 20px;
-}
-
-.voluntariado-formulario .intro {
-    text-align: center;
-    color: var(--fjp-dark-gray);
-    font-size: 1.2rem;
-    margin-bottom: 60px;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.formulario-container {
-    background: var(--fjp-light-gray);
-    border-radius: 20px;
-    padding: 50px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-}
-
-.form-group {
-    margin-bottom: 25px;
-}
-
-.form-group label {
-    display: block;
-    color: var(--fjp-dark-blue);
-    font-weight: 600;
-    margin-bottom: 8px;
-}
-
-.form-control {
-    width: 100%;
-    padding: 12px 15px;
-    border: 2px solid var(--fjp-gray);
-    border-radius: 10px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    background: var(--fjp-white);
-}
-
-.form-control:focus {
-    border-color: var(--fjp-teal);
-    box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.1);
-    outline: none;
-}
-
-textarea.form-control {
-    resize: vertical;
-    min-height: 120px;
-}
-
-.form-check {
-    margin-bottom: 15px;
-}
-
-.form-check-input {
-    margin-right: 10px;
-}
-
-.form-check-label {
-    color: var(--fjp-dark-gray);
-    font-size: 0.95rem;
-}
-
-.btn-primary {
-    background: var(--fjp-gradient-teal);
-    color: var(--fjp-white);
-    border: none;
-    padding: 15px 40px;
-    border-radius: 30px;
-    font-weight: 600;
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 20px rgba(42, 157, 143, 0.4);
-}
-
-.btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(42, 157, 143, 0.6);
-    background: var(--fjp-gradient-dark);
-}
-
-/* Preguntas frecuentes */
-.voluntariado-faq {
-    padding: 100px 0;
-    background: var(--fjp-light-gray);
-}
-
-.voluntariado-faq h2 {
-    text-align: center;
-    color: var(--fjp-dark-blue);
-    font-size: 2.8rem;
-    font-weight: 700;
-    margin-bottom: 60px;
-}
-
-.accordion-item {
-    background: var(--fjp-white);
-    border: 2px solid var(--fjp-gray);
-    border-radius: 15px;
-    margin-bottom: 20px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-}
-
-.accordion-item:hover {
-    border-color: var(--fjp-teal);
-}
-
-.accordion-header {
-    padding: 25px 30px;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: all 0.3s ease;
-}
-
-.accordion-header:hover {
-    background: rgba(42, 157, 143, 0.05);
-}
-
-.accordion-title {
-    color: var(--fjp-dark-blue);
-    font-weight: 600;
-    font-size: 1.1rem;
-    margin: 0;
-    flex: 1;
-}
-
-.accordion-icon {
-    color: var(--fjp-teal);
-    font-size: 1.2rem;
-    transition: transform 0.3s ease;
-}
-
-.accordion-item.active .accordion-icon {
-    transform: rotate(180deg);
-}
-
-.accordion-content {
-    padding: 0 30px 25px;
-    color: var(--fjp-dark-gray);
-    line-height: 1.7;
-    display: none;
-}
-
-.accordion-content.show {
-    display: block;
-    animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Contacto */
-.voluntariado-contacto {
-    padding: 100px 0;
-    background: var(--fjp-gradient-teal);
-    color: var(--fjp-white);
-    text-align: center;
-}
-
-.voluntariado-contacto h2 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 30px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    color: var(--fjp-white);
-}
-
-.voluntariado-contacto p {
-    font-size: 1.2rem;
-    margin-bottom: 40px;
-    opacity: 0.9;
-}
-
-.contacto-info {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 40px;
-    margin-bottom: 40px;
-}
-
-.contacto-item {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(10px);
-    padding: 20px 30px;
-    border-radius: 15px;
-    border: 1px solid rgba(255,255,255,0.2);
-    transition: all 0.3s ease;
-}
-
-.contacto-item:hover {
-    background: rgba(255,255,255,0.2);
-    transform: translateY(-3px);
-}
-
-.contacto-icono {
-    color: var(--fjp-yellow);
-    font-size: 1.5rem;
-}
-
-.contacto-texto {
-    text-align: left;
-}
-
-.contacto-label {
-    font-size: 0.9rem;
-    opacity: 0.8;
-    margin-bottom: 5px;
-}
-
-.contacto-valor {
-    font-weight: 600;
-    font-size: 1.1rem;
-}
-
-.contacto-valor a {
-    color: var(--fjp-white);
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.contacto-valor a:hover {
-    color: var(--fjp-yellow);
-}
-
-/* =========================================
-   6. GIVEWP STYLES (Consolidated)
-   ========================================= */
-
-.give-form-wrap {
-    background: var(--fjp-gradient-teal); /* Adjusted to match advanced styles if needed, or stick to variables */
-    background: linear-gradient(135deg, var(--fjp-light-gray) 0%, var(--fjp-gray) 100%);
-    padding: var(--fjp-spacing-md);
-    border-radius: var(--fjp-radius-md);
-    box-shadow: var(--fjp-shadow-lg);
-}
-
-.give-total-wrap {
-    background: var(--fjp-teal);
-    color: var(--fjp-white);
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    margin-bottom: 25px;
-}
-
-.give-total-wrap .give-currency-symbol {
-    background: var(--fjp-dark-blue);
-    padding: 5px 10px;
-    border-radius: 5px;
-    margin-right: 5px;
-}
-
-.give-btn {
-    background: var(--fjp-gradient-teal);
-    border: none;
-    padding: 15px 30px;
-    border-radius: 8px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: all 0.3s ease;
-    color: var(--fjp-white) !important;
-}
-
-.give-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(42, 157, 143, 0.4);
-}
-
-.give-form .form-row label {
-    font-weight: 600;
-    color: var(--fjp-dark-blue);
-    margin-bottom: 8px;
-}
-
-.give-form input[type="text"],
-.give-form input[type="email"],
-.give-form input[type="tel"],
-.give-form select,
-.give-form textarea {
-    border: 2px solid var(--fjp-gray);
-    border-radius: 8px;
-    padding: 12px 15px;
-    transition: all 0.3s ease;
-}
-
-.give-form input:focus,
-.give-form select:focus,
-.give-form textarea:focus {
-    border-color: var(--fjp-teal);
-    box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.1);
-    outline: none;
-}
-
-/* =========================================
-   7. UTILITY CLASSES & BLOCK SUPPORT
-   ========================================= */
-
-/* Typography Utilities */
-.display-4 { font-size: 3.5rem; font-weight: 700; line-height: 1.2; }
-.fw-bold { font-weight: 700 !important; }
-.lead { font-size: 1.25rem; font-weight: 300; }
-.text-center { text-align: center !important; }
-.text-white { color: var(--fjp-white) !important; }
-.text-white-50 { color: rgba(255, 255, 255, 0.5) !important; }
-.text-muted { color: var(--fjp-dark-gray) !important; }
-
-/* Spacing Utilities */
-.mb-3 { margin-bottom: var(--fjp-spacing-md) !important; }
-.mb-4 { margin-bottom: var(--fjp-spacing-lg) !important; }
-.mb-5 { margin-bottom: var(--fjp-spacing-xl) !important; }
-.me-2 { margin-right: var(--fjp-spacing-xs) !important; }
-.me-3 { margin-right: var(--fjp-spacing-sm) !important; }
-.py-5 { padding-top: var(--fjp-spacing-xl) !important; padding-bottom: var(--fjp-spacing-xl) !important; }
-.p-4 { padding: var(--fjp-spacing-lg) !important; }
-
-/* Background Utilities */
-.bg-light { background-color: var(--fjp-light-gray) !important; }
-.bg-primary { background-color: var(--fjp-primary) !important; }
-.bg-gradient { background: var(--fjp-gradient) !important; }
-
-/* Color Utilities */
 .has-fjp-primary-color { color: var(--fjp-primary) !important; }
 .has-fjp-secondary-color { color: var(--fjp-secondary) !important; }
-.has-fjp-accent-color { color: var(--fjp-accent) !important; }
+.has-fjp-teal-color { color: var(--fjp-teal) !important; }
+.has-fjp-green-color { color: var(--fjp-green) !important; }
+
 .has-fjp-primary-background-color { background-color: var(--fjp-primary) !important; }
 .has-fjp-secondary-background-color { background-color: var(--fjp-secondary) !important; }
 .has-fjp-teal-background-color { background-color: var(--fjp-teal) !important; }
+.has-fjp-green-background-color { background-color: var(--fjp-green) !important; }
 
-/* Layout Utilities */
-.d-flex { display: flex !important; }
-.flex-column { flex-direction: column !important; }
-.align-items-center { align-items: center !important; }
-.justify-content-center { justify-content: center !important; }
-.min-vh-100 { min-height: 100vh !important; }
-.h-100 { height: 100% !important; }
-.img-fluid { max-width: 100%; height: auto; }
-
-/* Border & Shadow Utilities */
-.rounded-3 { border-radius: var(--fjp-radius-md) !important; }
-.shadow { box-shadow: var(--fjp-shadow-lg) !important; }
-.shadow-lg { box-shadow: var(--fjp-shadow-xl) !important; }
-.border-0 { border: 0 !important; }
-
-/* WordPress Block Mapping */
-.wp-block-columns { margin-bottom: var(--fjp-spacing-lg); }
-.wp-block-column { margin-bottom: var(--fjp-spacing-md); }
-.wp-block-group.fjp-card { background: var(--fjp-white); box-shadow: var(--fjp-shadow-lg); border-radius: var(--fjp-radius-md); }
-.wp-block-button__link { border-radius: var(--fjp-radius-pill); font-weight: 600; padding: 12px 30px; }
-.btn-fjp-primary .wp-block-button__link { background-color: var(--fjp-primary); color: var(--fjp-white) !important; border: none; box-shadow: var(--fjp-shadow-md); transition: all 0.3s ease; }
-.btn-fjp-primary .wp-block-button__link:hover { background-color: #0047b3; transform: translateY(-2px); }
-.btn-fjp-secondary .wp-block-button__link { background-color: var(--fjp-secondary); color: var(--fjp-white) !important; }
-.wp-block-details { background: var(--fjp-white); border: 1px solid var(--fjp-gray); border-radius: var(--fjp-radius-md); padding: 1rem; margin-bottom: 1rem; }
-.wp-block-details summary { font-weight: 700; color: var(--fjp-dark-blue); cursor: pointer; }
-.wp-block-quote { border-left: 4px solid var(--fjp-yellow); padding-left: 1rem; font-style: italic; color: var(--fjp-dark-gray); }
-
-/* Helper for Inner Page Hero */
-.fjp-hero-interior {
-    padding: var(--fjp-spacing-xxl) 0;
-    color: var(--fjp-white);
-    position: relative;
-    overflow: hidden;
+/* Responsive */
+@media (max-width: 768px) {
+    :root {
+        --fjp-spacing-xxl: 50px;
+    }
 }
-.fjp-hero-interior::before {
+
+/* =========================================
+   LEGACY COMPONENT SUPPORT (Shortcodes)
+   ========================================= */
+
+/* FJP Form */
+.fjp-form .form-control:focus {
+    border-color: var(--fjp-primary);
+}
+
+.voluntariado-formulario {
+    padding: 60px 0;
+    background: var(--fjp-white);
+}
+
+.formulario-container {
+    background: #fff;
+    padding: 40px;
+    border-radius: var(--fjp-radius-lg);
+    box-shadow: var(--fjp-shadow-lg);
+}
+
+/* FJP Counter */
+.fjp-counter-section {
+    padding: 60px 0;
+}
+
+.fjp-counter {
+    padding: 30px;
+    background: var(--fjp-white);
+    border-radius: var(--fjp-radius-md);
+    box-shadow: var(--fjp-shadow-sm);
+    transition: transform 0.3s ease;
+}
+
+.fjp-counter:hover {
+    transform: translateY(-5px);
+}
+
+.fjp-counter-number {
+    display: block;
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--fjp-primary);
+    margin-bottom: 10px;
+}
+
+.fjp-counter-label {
+    font-size: 1.1rem;
+    color: var(--fjp-text);
+    font-weight: 500;
+}
+
+/* =========================================
+   SIDEBAR STYLES (Modular)
+   ========================================= */
+.sidebar-widget {
+    margin-bottom: 40px;
+    background: #fff;
+    padding: 30px;
+    border-radius: var(--fjp-radius-md);
+    box-shadow: var(--fjp-shadow-sm);
+}
+
+.widget-title {
+    font-size: 1.25rem;
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--fjp-light-gray);
+    padding-bottom: 10px;
+    position: relative;
+}
+
+.widget-title::after {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.2);
-    z-index: 1;
-}
-.fjp-hero-interior > * {
-    position: relative;
-    z-index: 2;
+    bottom: -2px;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background: var(--fjp-primary);
 }
 
-/* Counter Section Shortcode Styling */
-.fjp-counter-section {
-    padding: var(--fjp-spacing-xl) 0;
-    background-color: var(--fjp-primary); /* Default background to ensure visibility */
-    color: var(--fjp-white);
-    border-radius: var(--fjp-radius-md);
-    margin-bottom: var(--fjp-spacing-lg);
+/* Category List */
+.fjp-cat-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.fjp-cat-list li {
+    margin-bottom: 15px;
+}
+
+.fjp-cat-list a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--fjp-text);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.fjp-cat-list a:hover {
+    color: var(--fjp-primary);
+}
+
+.fjp-cat-list .term-count {
+    background: var(--fjp-light-gray);
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: var(--fjp-dark-gray);
+}
+
+/* Mini News List */
+.fjp-mini-item {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.fjp-mini-img img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: var(--fjp-radius-sm);
+}
+
+.fjp-mini-content h4 {
+    font-size: 0.95rem;
+    margin: 0 0 5px;
+    line-height: 1.4;
+}
+
+.fjp-mini-content h4 a {
+    color: var(--fjp-text);
+    text-decoration: none;
+}
+
+.fjp-mini-content h4 a:hover {
+    color: var(--fjp-primary);
+}
+
+.fjp-mini-content .date {
+    font-size: 0.8rem;
+    color: #999;
 }

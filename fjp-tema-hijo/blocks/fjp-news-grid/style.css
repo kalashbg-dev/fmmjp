@@ -1,0 +1,113 @@
+.fjp-news-grid {
+    padding: 60px 0;
+}
+
+.fjp-news-filters {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.fjp-news-filter-btn {
+    background: transparent;
+    border: 2px solid #e9ecef;
+    padding: 8px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--fjp-text, #333);
+    transition: all 0.3s ease;
+}
+
+.fjp-news-filter-btn.active,
+.fjp-news-filter-btn:hover {
+    background: var(--fjp-primary, #F2385A);
+    color: #fff;
+    border-color: var(--fjp-primary, #F2385A);
+}
+
+.fjp-news-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.fjp-news-card {
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.fjp-news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.fjp-news-img {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.fjp-news-cat-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: var(--fjp-primary, #F2385A);
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.fjp-news-body {
+    padding: 25px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.fjp-news-date {
+    font-size: 0.85rem;
+    color: var(--fjp-secondary, #D95F76);
+    margin-bottom: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.fjp-news-title {
+    font-size: 1.25rem;
+    margin-bottom: 15px;
+    line-height: 1.4;
+    color: var(--fjp-text, #333);
+}
+
+.fjp-news-excerpt {
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.fjp-news-link {
+    color: var(--fjp-primary, #F2385A);
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.fjp-news-link:hover {
+    text-decoration: underline;
+}

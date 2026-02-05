@@ -5,82 +5,173 @@
 
 ## 🎯 INTRODUCCIÓN
 
-Bienvenido a la guía oficial del sitio web de la Fundación Juventud Progresista. Este sitio utiliza una **Arquitectura Híbrida Avanzada** que combina:
+Bienvenido a la guía oficial del sitio web de la Fundación Juventud Progresista. Este documento es tu manual paso a paso para gestionar, editar y mantener el sitio web.
 
-1.  **Editor de Bloques (Gutenberg)**: Para editar textos, imágenes y estructura de las páginas de manera visual.
-2.  **Sistema "Pro" de Layouts**: Opciones avanzadas por página para controlar cabeceras, pies de página y anchos.
-3.  **Patrones de Bloques**: Diseños prefabricados que puedes insertar con un clic.
-4.  **Design Tokens**: Estilos globales centralizados.
+### 📌 Conceptos Clave
+*   **Editor de Bloques (Gutenberg)**: Es la herramienta visual donde escribirás textos y subirás fotos.
+*   **Personalizador (Customizer)**: Donde cambias colores globales, el botón de WhatsApp y el logo.
+*   **CPT (Custom Post Types)**: Menús especiales para "Noticias", "Voluntarios", "Alianzas", etc.
 
 ---
 
 ## 📋 TABLA DE CONTENIDOS
 
-1.  [Opciones de Diseño FJP (Estilo Pro)](#1-opciones-de-diseño-fjp-estilo-pro)
-2.  [Patrones de Bloques: Diseña Rápido](#2-patrones-de-bloques-diseña-rápido)
-3.  [Arquitectura Híbrida y Fallbacks](#3-arquitectura-híbrida-y-fallbacks)
-4.  [Design Tokens (Colores y Fuentes)](#4-design-tokens-colores-y-fuentes)
-5.  [Componentes Dinámicos (Shortcodes)](#5-componentes-dinámicos-shortcodes)
+1.  [Cómo Crear y Editar Páginas (Paso a Paso)](#1-cómo-crear-y-editar-páginas)
+2.  [Guía de Bloques y Patrones](#2-guía-de-bloques-y-patrones)
+3.  [Gestión de Noticias, Voluntarios y Alianzas](#3-gestión-de-noticias-voluntarios-y-alianzas)
+4.  [Configuración del Sitio (Colores y WhatsApp)](#4-configuración-del-sitio)
+5.  [Solución de Problemas Comunes](#5-solución-de-problemas-comunes)
 
 ---
 
-## 1. OPCIONES DE DISEÑO FJP (ESTILO PRO)
+## 1. CÓMO CREAR Y EDITAR PÁGINAS (PASO A PASO)
 
-Hemos desbloqueado capacidades avanzadas de personalización directamente en el editor de cada página.
+### Editar la Página de Inicio (Home)
+1.  Ve al Panel de Administración > **Páginas**.
+2.  Busca la página "Home" o "Inicio" y haz clic en **Editar**.
+3.  Verás el editor visual. Haz clic en cualquier texto para cambiarlo.
+4.  Para cambiar una imagen: Haz clic en la imagen > "Reemplazar" > Subir o Biblioteca de Medios.
+5.  **Importante**: Si la página se ve vacía o rota, copia el código del [Capítulo 2](#2-guía-de-bloques-y-patrones) y pégalo en el editor de código.
 
-### ⚙️ Panel "Opciones de Diseño FJP"
-Al editar cualquier página, busca en la barra lateral derecha el panel **"⚙️ Opciones de Diseño FJP"**.
-
-#### Funciones Disponibles:
-*   **Header Transparente**: Actívalo para que el menú se superponga a la imagen principal (ideal para la Home).
-*   **Header Pegajoso (Sticky)**: Hace que el menú te siga al hacer scroll hacia abajo.
-*   **Ocultar Título**: Elimina el título automático de la página (H1) para que puedas diseñar tu propio Hero con bloques.
-*   **Ocultar Footer**: Útil para Landing Pages donde no quieres distracciones.
-
----
-
-## 2. PATRONES DE BLOQUES: DISEÑA RÁPIDO
-
-Ya no dependes de plantillas fijas. Hemos convertido los diseños originales en **Patrones**.
-
-### ¿Cómo usarlos?
-1.  En el editor de una página, haz clic en el botón **`+`** (arriba a la izquierda).
-2.  Ve a la pestaña **Patrones**.
-3.  Selecciona la categoría **"FJP Secciones"** o **"FJP Páginas Completas"**.
-4.  Haz clic en un diseño (ej: "Hero Home", "Contadores", "Página Home Completa") y se insertará automáticamente.
-5.  **¡Edita todo!** Cambia textos, imágenes y colores directamente haciendo clic sobre ellos.
+### Editar la Página de Voluntariado
+Esta página tiene secciones automáticas (los testimonios vienen del menú "Testimonios").
+1.  Edita la página "Voluntariado".
+2.  Puedes cambiar el título "Sumate como voluntario/a" y la descripción directamente en los bloques.
+3.  **El Formulario**: Es un bloque especial `[fjp_volunteer_form]`. No lo borres.
 
 ---
 
-## 3. ARQUITECTURA HÍBRIDA Y FALLBACKS
+## 2. GUÍA DE BLOQUES Y PATRONES (COPIAR Y PEGAR)
 
-El tema sigue siendo seguro ante fallos ("Safe-Fail").
+Si necesitas reconstruir una página desde cero, usa estos códigos.
 
-1.  **Si borras todo el contenido**: La página mostrará automáticamente un diseño por defecto (Fallback PHP) para que nunca se vea rota.
-2.  **Si añades un bloque**: El sistema detecta que quieres personalizar y te da control total.
+### 🛠️ Cómo usar estos códigos:
+1.  En el editor de la página, ve a los tres puntos (arriba derecha) > **Editor de código**.
+2.  Borra todo.
+3.  Copia el bloque de código abajo y pégalo.
+4.  Vuelve a **Editor visual** para ver el resultado.
+
+### 🏠 PÁGINA DE INICIO (HOME)
+
+```html
+<!-- wp:group {"tagName":"section","className":"fjp-hero","layout":{"type":"constrained"}} -->
+<section class="wp-block-group fjp-hero"><!-- wp:columns {"verticalAlignment":"center","align":"wide"} -->
+<div class="wp-block-columns alignwide are-vertically-aligned-center"><!-- wp:column {"verticalAlignment":"center","width":"50%"} -->
+<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:50%"><!-- wp:heading {"level":1,"className":"display-4 fw-bold mb-4"} -->
+<h1 class="wp-block-heading display-4 fw-bold mb-4">Fundación Juventud Progresista</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"className":"lead mb-4"} -->
+<p class="lead mb-4">Trabajamos por los derechos de niños, niñas y adolescentes en la República Dominicana.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:buttons -->
+<div class="wp-block-buttons"><!-- wp:button {"className":"btn-fjp-primary me-3"} -->
+<div class="wp-block-button btn-fjp-primary me-3"><a class="wp-block-button__link wp-element-button" href="/donaciones">Donar Ahora</a></div>
+<!-- /wp:button -->
+
+<!-- wp:button {"className":"btn-fjp-secondary"} -->
+<div class="wp-block-button btn-fjp-secondary"><a class="wp-block-button__link wp-element-button" href="/voluntariado">Ser Voluntario</a></div>
+<!-- /wp:button --></div>
+<!-- /wp:buttons --></div>
+<!-- /wp:column -->
+
+<!-- wp:column {"verticalAlignment":"center","width":"50%"} -->
+<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:50%"><!-- wp:image {"sizeSlug":"large","linkDestination":"none","className":"rounded-3 shadow"} -->
+<figure class="wp-block-image size-large rounded-3 shadow"><img src="https://via.placeholder.com/600x400" alt="Hero Imagen"/></figure>
+<!-- /wp:image --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns --></section>
+<!-- /wp:group -->
+
+<!-- wp:shortcode -->
+[fjp_counter_section]
+<!-- /wp:shortcode -->
+
+<!-- wp:heading {"textAlign":"center","className":"mt-5"} -->
+<h2 class="wp-block-heading has-text-align-center mt-5">Nuestras Alianzas</h2>
+<!-- /wp:heading -->
+
+<!-- wp:shortcode -->
+[fjp_alliances_loop]
+<!-- /wp:shortcode -->
+```
+
+### 🤝 PÁGINA DE VOLUNTARIADO
+
+```html
+<!-- wp:cover {"overlayColor":"fjp-teal","className":"voluntariado-hero fjp-section"} -->
+<div class="wp-block-cover voluntariado-hero fjp-section"><span aria-hidden="true" class="wp-block-cover__background has-fjp-teal-background-color has-background-dim-100 has-background-dim"></span><div class="wp-block-cover__inner-container"><!-- wp:heading {"textAlign":"center","level":1} -->
+<h1 class="wp-block-heading has-text-align-center">Únete al Voluntariado</h1>
+<!-- /wp:heading -->
+<!-- wp:paragraph {"align":"center","className":"lead"} -->
+<p class="has-text-align-center lead">Tu tiempo puede cambiar vidas.</p>
+<!-- /wp:paragraph --></div></div>
+<!-- /wp:cover -->
+
+<!-- wp:group {"className":"container my-5"} -->
+<div class="wp-block-group container my-5"><!-- wp:heading -->
+<h2 class="wp-block-heading">Inscríbete</h2>
+<!-- /wp:heading -->
+<!-- wp:shortcode -->
+[fjp_volunteer_form]
+<!-- /wp:shortcode --></div>
+<!-- /wp:group -->
+```
 
 ---
 
-## 4. DESIGN TOKENS (COLORES Y FUENTES)
+## 3. GESTIÓN DE NOTICIAS, VOLUNTARIOS Y ALIANZAS
 
-Para cambiar la identidad visual de todo el sitio:
-1.  Ve a **Apariencia > Editor** (o abre los estilos en una página).
-2.  Haz clic en el icono **"Estilos"** (círculo mitad negro/blanco).
-3.  Edita la **Paleta de Colores**.
-    *   Los cambios se aplican instantáneamente al CSS (`style.css`) y a todos los bloques.
+El sitio usa menús especiales en la barra lateral izquierda del administrador.
+
+### 📰 Noticias
+1.  Ve a **Noticias > Añadir Nueva**.
+2.  Escribe el Título y el Contenido.
+3.  **Imagen Destacada** (Barra derecha): Es la foto principal que se ve en la lista.
+4.  **Datos de la Noticia** (Abajo del editor):
+    *   **Fecha**: Cuándo ocurrió.
+    *   **Fuente**: Medio original (ej: Diario Libre).
+    *   **URL**: Si pones un link aquí, al hacer clic en la noticia llevará a esa web externa.
+
+### 🗣️ Testimonios
+Aparecen en la Home y en Voluntariado.
+1.  Ve a **Testimonios > Añadir Nuevo**.
+2.  **Título**: Nombre de la persona.
+3.  **Contenido**: El texto de lo que dijo.
+4.  **Cargo / Rol**: (Campo personalizado abajo) Ej: "Voluntaria Educativa".
+5.  **Imagen Destacada**: Foto de la persona.
+
+### 🤝 Alianzas
+Logos de empresas o instituciones aliadas.
+1.  Ve a **Alianzas > Añadir Nueva**.
+2.  **Título**: Nombre de la organización.
+3.  **Imagen Destacada**: El logo (preferiblemente fondo transparente PNG).
 
 ---
 
-## 5. COMPONENTES DINÁMICOS (SHORTCODES)
+## 4. CONFIGURACIÓN DEL SITIO (COLORES Y WHATSAPP)
 
-Siguen disponibles para funcionalidades complejas:
+### 🎨 Cambiar Colores
+1.  Ve a **Apariencia > Personalizar > Colores Globales**.
+2.  Cambia los colores de la paleta.
+    *   El sitio está conectado a esta paleta: si cambias el "Color Principal", cambiarán todos los botones y títulos automáticamente.
 
-*   `[fjp_news_loop]` - Grid de noticias.
-*   `[fjp_alliances_loop]` - Carrusel de aliados.
-*   `[fjp_volunteer_form]` - Formulario de inscripción.
-*   `[fjp_donation_options]` - Tarjetas de donación.
+### 📞 Botón de WhatsApp
+1.  Ve a **Apariencia > Personalizar > FJP Ajustes Globales**.
+2.  Busca la sección **Botón de WhatsApp**.
+3.  Cambia el número y el mensaje.
+4.  Haz clic en **Publicar**.
 
 ---
 
-**Soporte Técnico**
-Si las opciones de diseño no aparecen, asegúrate de estar editando una "Página" y no una "Entrada", y revisa que el plugin ACF esté activo (aunque estas opciones son nativas del tema hijo).
+## 5. SOLUCIÓN DE PROBLEMAS COMUNES
+
+**El menú se ve raro al bajar (Sticky Header)**
+*   Asegúrate de que en **Apariencia > Personalizar > FJP Ajustes Globales** esté activado "Header Pegajoso". El sistema arregla automáticamente el tamaño.
+
+**Las secciones de Voluntariado se ven horizontales en móvil**
+*   Hemos corregido esto en el código. Si persiste, edita la página y asegúrate de que los bloques estén dentro de "Columnas" configuradas para apilarse en móvil.
+
+**No veo los campos personalizados (Fecha, Fuente)**
+*   Asegúrate de que el plugin **Advanced Custom Fields (ACF)** esté activo. Si lo está, ve a la pantalla de edición de la Noticia y busca la caja "Configuración de Noticias" debajo del editor de texto. Si no la ves, haz clic en los tres puntos (arriba derecha) > Preferencias > Paneles y activa los campos personalizados.
