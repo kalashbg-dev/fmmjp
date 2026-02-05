@@ -167,5 +167,143 @@ HTML
 ,
         )
     );
+
+    // 3. ABOUT US (Quienes Somos)
+    register_block_pattern(
+        'fjp/page-about',
+        array(
+            'title'       => __('Quienes Somos - Layout Completo', 'fjp'),
+            'description' => 'Estructura para la página institucional.',
+            'categories'  => array('fjp-pages'),
+            'content'     => <<<HTML
+<!-- wp:acf/fjp-hero {"name":"acf/fjp-hero","data":{"title":"Quiénes Somos","_title":"field_hero_title","description":"Conoce la historia, misión y visión de la Fundación Juventud Progresista.","_description":"field_hero_description","overlay_color":"fjp-primary","_overlay_color":"field_hero_overlay_color","buttons":0,"_buttons":"field_hero_buttons"},"align":"full","mode":"preview"} /-->
+
+<!-- wp:group {"align":"wide","style":{"spacing":{"padding":{"top":"var:preset|spacing|xl","bottom":"var:preset|spacing|xl"}}}} -->
+<div class="wp-block-group alignwide" style="padding-top:var(--wp--preset--spacing--xl);padding-bottom:var(--wp--preset--spacing--xl)">
+    <!-- wp:columns -->
+    <div class="wp-block-columns">
+        <!-- wp:column -->
+        <div class="wp-block-column">
+            <!-- wp:heading -->
+            <h2 class="wp-block-heading has-fjp-primary-color has-text-color">Nuestra Historia</h2>
+            <!-- /wp:heading -->
+            <!-- wp:paragraph -->
+            <p>Fundada en 2010, la FJP nació del deseo de un grupo de jóvenes líderes comprometidos con el cambio social en la República Dominicana. Desde entonces, hemos impactado a más de 10,000 vidas a través de nuestros programas educativos y deportivos.</p>
+            <!-- /wp:paragraph -->
+        </div>
+        <!-- /wp:column -->
+        <!-- wp:column -->
+        <div class="wp-block-column">
+             <!-- wp:image {"sizeSlug":"large","linkDestination":"none","className":"is-style-default rounded-3 shadow"} -->
+             <figure class="wp-block-image size-large is-style-default rounded-3 shadow"><img src="https://via.placeholder.com/600x400" alt="Historia FJP"/></figure>
+             <!-- /wp:image -->
+        </div>
+        <!-- /wp:column -->
+    </div>
+    <!-- /wp:columns -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|xxl","bottom":"var:preset|spacing|xxl"}}},"backgroundColor":"fjp-background"} -->
+<div class="wp-block-group alignfull has-fjp-background-background-color has-background" style="padding-top:var(--wp--preset--spacing--xxl);padding-bottom:var(--wp--preset--spacing--xxl)">
+    <!-- wp:heading {"textAlign":"center","level":2} -->
+    <h2 class="wp-block-heading has-text-align-center">Nuestros Valores</h2>
+    <!-- /wp:heading -->
+    <!-- wp:columns {"align":"wide","style":{"spacing":{"blockGap":"var:preset|spacing|lg"}}} -->
+    <div class="wp-block-columns alignwide">
+         <!-- wp:column {"className":"has-text-align-center p-4 bg-white rounded shadow-sm"} -->
+         <div class="wp-block-column has-text-align-center p-4 bg-white rounded shadow-sm">
+             <!-- wp:heading {"level":4,"textColor":"fjp-teal"} -->
+             <h4 class="wp-block-heading has-fjp-teal-color has-text-color">Solidaridad</h4>
+             <!-- /wp:heading -->
+             <!-- wp:paragraph -->
+             <p>Apoyo mutuo incondicional.</p>
+             <!-- /wp:paragraph -->
+         </div>
+         <!-- /wp:column -->
+         <!-- wp:column {"className":"has-text-align-center p-4 bg-white rounded shadow-sm"} -->
+         <div class="wp-block-column has-text-align-center p-4 bg-white rounded shadow-sm">
+             <!-- wp:heading {"level":4,"textColor":"fjp-teal"} -->
+             <h4 class="wp-block-heading has-fjp-teal-color has-text-color">Integridad</h4>
+             <!-- /wp:heading -->
+             <!-- wp:paragraph -->
+             <p>Transparencia en todas nuestras acciones.</p>
+             <!-- /wp:paragraph -->
+         </div>
+         <!-- /wp:column -->
+         <!-- wp:column {"className":"has-text-align-center p-4 bg-white rounded shadow-sm"} -->
+         <div class="wp-block-column has-text-align-center p-4 bg-white rounded shadow-sm">
+             <!-- wp:heading {"level":4,"textColor":"fjp-teal"} -->
+             <h4 class="wp-block-heading has-fjp-teal-color has-text-color">Pasión</h4>
+             <!-- /wp:heading -->
+             <!-- wp:paragraph -->
+             <p>Amor por lo que hacemos.</p>
+             <!-- /wp:paragraph -->
+         </div>
+         <!-- /wp:column -->
+    </div>
+    <!-- /wp:columns -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:shortcode -->
+[fjp_alliances_loop title="Nuestros Aliados"]
+<!-- /wp:shortcode -->
+HTML
+,
+        )
+    );
+
+    // 4. DONATIONS (Donaciones)
+    register_block_pattern(
+        'fjp/page-donations',
+        array(
+            'title'       => __('Donaciones - Layout Completo', 'fjp'),
+            'description' => 'Estructura para la página de donaciones.',
+            'categories'  => array('fjp-pages'),
+            'content'     => <<<HTML
+<!-- wp:acf/fjp-hero {"name":"acf/fjp-hero","data":{"title":"Tu aporte cambia vidas","_title":"field_hero_title","description":"Cada donación, grande o pequeña, nos ayuda a seguir construyendo oportunidades.","_description":"field_hero_description","overlay_color":"fjp-secondary","_overlay_color":"field_hero_overlay_color","buttons":0,"_buttons":"field_hero_buttons"},"align":"full","mode":"preview"} /-->
+
+<!-- wp:group {"align":"wide","style":{"spacing":{"padding":{"top":"var:preset|spacing|xl","bottom":"var:preset|spacing|xl"}}}} -->
+<div class="wp-block-group alignwide" style="padding-top:var(--wp--preset--spacing--xl);padding-bottom:var(--wp--preset--spacing--xl)">
+    <!-- wp:heading {"textAlign":"center","level":2,"style":{"spacing":{"margin":{"bottom":"var:preset|spacing|lg"}}}} -->
+    <h2 class="wp-block-heading has-text-align-center" style="margin-bottom:var(--wp--preset--spacing--lg)">¿Cómo puedes ayudar?</h2>
+    <!-- /wp:heading -->
+
+    <!-- wp:shortcode -->
+    [fjp_donation_options]
+    <!-- /wp:shortcode -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:acf/fjp-testimonials {"name":"acf/fjp-testimonials","align":"full","mode":"preview"} /-->
+HTML
+,
+        )
+    );
+
+    // 5. NEWS (Noticias)
+    register_block_pattern(
+        'fjp/page-news',
+        array(
+            'title'       => __('Noticias - Layout Completo', 'fjp'),
+            'description' => 'Estructura para la página de noticias/blog.',
+            'categories'  => array('fjp-pages'),
+            'content'     => <<<HTML
+<!-- wp:acf/fjp-hero {"name":"acf/fjp-hero","data":{"title":"Noticias y Novedades","_title":"field_hero_title","description":"Mantente al día con las últimas actividades de la fundación.","_description":"field_hero_description","overlay_color":"fjp-primary","_overlay_color":"field_hero_overlay_color","buttons":0,"_buttons":"field_hero_buttons"},"align":"full","mode":"preview"} /-->
+
+<!-- wp:group {"align":"wide","style":{"spacing":{"padding":{"top":"var:preset|spacing|xl","bottom":"var:preset|spacing|xl"}}}} -->
+<div class="wp-block-group alignwide" style="padding-top:var(--wp--preset--spacing--xl);padding-bottom:var(--wp--preset--spacing--xl)">
+    <!-- wp:heading {"level":2,"style":{"spacing":{"margin":{"bottom":"var:preset|spacing|md"}}}} -->
+    <h2 class="wp-block-heading" style="margin-bottom:var(--wp--preset--spacing--md)">Últimos Artículos</h2>
+    <!-- /wp:heading -->
+
+    <!-- wp:acf/fjp-news-grid {"name":"acf/fjp-news-grid","data":{"posts_per_page":"9","_posts_per_page":"field_news_count"},"align":"full","mode":"preview"} /-->
+</div>
+<!-- /wp:group -->
+HTML
+,
+        )
+    );
 }
 add_action('init', 'fjp_register_patterns');
