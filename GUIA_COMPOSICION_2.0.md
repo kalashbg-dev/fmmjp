@@ -1,15 +1,34 @@
 # Guía de Construcción Manual - Fundación Juventud Progresista
 
-Esta guía está diseñada para construir el sitio sección por sección utilizando **Bloques de Código** (HTML y Shortcodes). Esto le permite tener control total sobre el diseño sin depender de patrones automáticos.
+Esta guía está diseñada para construir el sitio sección por sección utilizando **Bloques de Código** (HTML y Shortcodes). Esto le permite tener control total sobre el diseño.
 
-## Instrucciones Generales
-1.  Cree una nueva página en WordPress.
-2.  Seleccione la plantilla **"FJP - Ancho Completo (Canvas)"** en los atributos de página.
-3.  Para insertar cada sección, agregue un bloque **"HTML Personalizado"** (o "Custom HTML") y pegue el código correspondiente.
+## 0. Instalación y Estructura
+
+El tema hijo FJP está diseñado para ser ligero y modular.
+
+### Estructura de Carpetas
+Al instalar el tema (archivo `.zip`), encontrará estas carpetas clave:
+*   `/inc/`: Contiene toda la lógica PHP (Shortcodes, CPTs, Configuración). **No borrar**.
+*   `/blocks/`: Contiene los archivos de registro de los Bloques ACF. **No borrar**.
+*   `/acf-json/`: Carpeta donde se guardan automáticamente las configuraciones de los campos ACF. Esto permite que los campos aparezcan en el administrador sin necesidad de configurarlos manualmente. Si mueve el tema a otro sitio, asegúrese de incluir esta carpeta.
+
+### Instalación
+1.  Comprima la carpeta `fjp-tema-hijo` en un archivo `.zip`.
+2.  En WordPress, vaya a Apariencia > Temas > Añadir nuevo > Subir tema.
+3.  Suba el `.zip` y active el tema.
+4.  Asegúrese de que el plugin **Advanced Custom Fields (ACF)** esté instalado y activo.
 
 ---
 
-## 1. Página de Inicio (Home)
+## 1. Instrucciones de Construcción
+
+1.  Cree una nueva página en WordPress.
+2.  Seleccione la plantilla **"FJP - Ancho Completo (Canvas)"** en los atributos de página.
+3.  Para insertar cada sección, agregue un bloque **"HTML Personalizado"** (o "Custom HTML") y pegue el código correspondiente de las secciones abajo.
+
+---
+
+## 2. Página de Inicio (Home)
 
 ### Sección A: Hero (Portada)
 ```html
@@ -71,7 +90,7 @@ Esta guía está diseñada para construir el sitio sección por sección utiliza
 
 ---
 
-## 2. Página de Voluntariado
+## 3. Página de Voluntariado
 
 ### Sección A: Hero Voluntariado
 ```html
@@ -129,7 +148,7 @@ Esta guía está diseñada para construir el sitio sección por sección utiliza
 
 ---
 
-## 3. Página Quiénes Somos
+## 4. Página Quiénes Somos
 
 ### Sección A: Historia y Valores
 ```html
@@ -174,7 +193,7 @@ Esta guía está diseñada para construir el sitio sección por sección utiliza
 
 ---
 
-## 4. Página Donaciones
+## 5. Página Donaciones
 
 ### Sección A: Opciones de Donación
 ```html
@@ -188,7 +207,7 @@ Esta guía está diseñada para construir el sitio sección por sección utiliza
 
 ---
 
-## 5. Página Noticias
+## 6. Página Noticias
 
 ### Sección A: Listado Completo
 ```html
