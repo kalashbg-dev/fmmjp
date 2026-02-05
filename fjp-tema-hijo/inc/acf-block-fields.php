@@ -317,9 +317,9 @@ function fjp_register_block_fields() {
         'location' => array(
             array(
                 array(
-                    'param' => 'post_type',
+                    'param' => 'page_template',
                     'operator' => '==',
-                    'value' => 'page',
+                    'value' => 'template-full-width.php', // Only show on Full Width Canvas (Patterns)
                 ),
             ),
         ),
