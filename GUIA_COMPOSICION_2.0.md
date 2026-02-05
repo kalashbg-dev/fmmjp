@@ -3,16 +3,17 @@
 Esta guía proporciona el código fuente para construir las páginas del sitio utilizando **Bloques Nativos de Gutenberg y Astra**. Esto garantiza máxima compatibilidad, velocidad y facilidad de edición visual.
 
 ## Instrucciones de Uso
-1.  Abra el editor de la página (ej: Inicio).
-2.  Haga clic en los tres puntos verticales (arriba derecha) > **Editor de código**.
-3.  Copie el bloque de código deseado de abajo y péguelo en el editor.
-4.  Salga del editor de código para ver y personalizar el diseño visualmente.
+1.  Cree una nueva página en WordPress.
+2.  **IMPORTANTE:** En la barra lateral derecha, bajo "Atributos de página", seleccione la plantilla **"FJP - Ancho Completo (Canvas)"**.
+3.  Haga clic en los tres puntos verticales (arriba derecha) > **Editor de código**.
+4.  Copie el bloque de código deseado de abajo y péguelo en el editor.
+5.  Salga del editor de código para ver y personalizar el diseño visualmente.
 
 ---
 
 ## 1. CSS de Animaciones y Efectos (Copiar en Personalizar)
 
-Para que los bloques tengan movimiento y estilos especiales, vaya a **Apariencia > Personalizar > CSS Adicional** y pegue este código. No contiene colores fijos, por lo que responderá a la paleta que elija en el personalizador.
+Para que los bloques tengan movimiento y estilos especiales, vaya a **Apariencia > Personalizar > CSS Adicional** y pegue este código.
 
 ```css
 /* Animación de entrada suave */
@@ -46,7 +47,6 @@ Para que los bloques tengan movimiento y estilos especiales, vaya a **Apariencia
 
 ## 2. Bloques de Página: Inicio (Home)
 
-### Sección A: Hero (Portada Astra)
 ```html
 <!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"}}},"backgroundColor":"ast-global-color-4","layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignfull has-ast-global-color-4-background-color has-background" style="padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)">
@@ -79,10 +79,7 @@ Para que los bloques tengan movimiento y estilos especiales, vaya a **Apariencia
     <!-- /wp:cover -->
 </div>
 <!-- /wp:group -->
-```
 
-### Sección B: Contadores (Integrado con Shortcode)
-```html
 <!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"60px","bottom":"60px"}}},"backgroundColor":"white","layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignfull has-white-background-color has-background" style="padding-top:60px;padding-bottom:60px">
     <!-- wp:shortcode -->
@@ -90,10 +87,7 @@ Para que los bloques tengan movimiento y estilos especiales, vaya a **Apariencia
     <!-- /wp:shortcode -->
 </div>
 <!-- /wp:group -->
-```
 
-### Sección C: Misión (Columnas Astra)
-```html
 <!-- wp:group {"align":"wide","style":{"spacing":{"padding":{"top":"80px","bottom":"80px"}}},"layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignwide" style="padding-top:80px;padding-bottom:80px">
     <!-- wp:columns {"align":"wide","style":{"spacing":{"blockGap":{"top":"2rem","left":"2rem"}}}} -->
@@ -127,14 +121,39 @@ Para que los bloques tengan movimiento y estilos especiales, vaya a **Apariencia
     <!-- /wp:columns -->
 </div>
 <!-- /wp:group -->
+
+<!-- wp:group {"align":"wide"} -->
+<div class="wp-block-group alignwide">
+    <!-- wp:heading {"textAlign":"center"} -->
+    <h2 class="wp-block-heading has-text-align-center">Últimas Noticias</h2>
+    <!-- /wp:heading -->
+    <!-- wp:shortcode -->
+    [fjp_news_loop posts="3"]
+    <!-- /wp:shortcode -->
+</div>
+<!-- /wp:group -->
 ```
 
 ---
 
-## 3. Página de Voluntariado
+## 3. Bloques de Página: Voluntariado
 
-### Sección A: Beneficios (Grid de Tarjetas)
 ```html
+<!-- wp:cover {"url":"https://via.placeholder.com/1920x600","dimRatio":70,"overlayColor":"ast-global-color-2","align":"full","layout":{"type":"constrained"}} -->
+<div class="wp-block-cover alignfull">
+    <span aria-hidden="true" class="wp-block-cover__background has-ast-global-color-2-background-color has-background-dim-70 has-background-dim"></span>
+    <img class="wp-block-cover__image-background" src="https://via.placeholder.com/1920x600" alt="" data-object-fit="cover"/>
+    <div class="wp-block-cover__inner-container">
+        <!-- wp:heading {"textAlign":"center","level":1,"textColor":"white"} -->
+        <h1 class="wp-block-heading has-text-align-center has-white-color has-text-color">Únete al Voluntariado</h1>
+        <!-- /wp:heading -->
+        <!-- wp:paragraph {"align":"center","textColor":"white"} -->
+        <p class="has-text-align-center has-white-color has-text-color">Tu tiempo y talento pueden transformar vidas.</p>
+        <!-- /wp:paragraph -->
+    </div>
+</div>
+<!-- /wp:cover -->
+
 <!-- wp:group {"align":"wide","style":{"spacing":{"padding":{"top":"60px","bottom":"60px"}}},"layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignwide" style="padding-top:60px;padding-bottom:60px">
     <!-- wp:heading {"textAlign":"center","style":{"spacing":{"margin":{"bottom":"40px"}}}} -->
@@ -179,10 +198,11 @@ Para que los bloques tengan movimiento y estilos especiales, vaya a **Apariencia
     <!-- /wp:columns -->
 </div>
 <!-- /wp:group -->
-```
 
-### Sección B: Formulario (Fondo Gris)
-```html
+<!-- wp:shortcode -->
+[fjp_volunteer_testimonials]
+<!-- /wp:shortcode -->
+
 <!-- wp:group {"align":"full","backgroundColor":"ast-global-color-5","layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignfull has-ast-global-color-5-background-color has-background">
     <!-- wp:shortcode -->
@@ -191,3 +211,134 @@ Para que los bloques tengan movimiento y estilos especiales, vaya a **Apariencia
 </div>
 <!-- /wp:group -->
 ```
+
+---
+
+## 4. Bloques de Página: Quiénes Somos
+
+```html
+<!-- wp:group {"align":"full","backgroundColor":"white","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignfull has-white-background-color has-background">
+    <!-- wp:columns {"align":"wide","style":{"spacing":{"padding":{"top":"60px","bottom":"60px"}}}} -->
+    <div class="wp-block-columns alignwide" style="padding-top:60px;padding-bottom:60px">
+        <!-- wp:column {"verticalAlignment":"center"} -->
+        <div class="wp-block-column is-vertically-aligned-center">
+            <!-- wp:heading {"className":"fjp-text-gradient"} -->
+            <h2 class="wp-block-heading fjp-text-gradient">Nuestra Historia</h2>
+            <!-- /wp:heading -->
+            <!-- wp:paragraph -->
+            <p>Desde 2010, hemos trabajado incansablemente para mejorar la calidad de vida de las comunidades dominicanas.</p>
+            <!-- /wp:paragraph -->
+        </div>
+        <!-- /wp:column -->
+        <!-- wp:column -->
+        <div class="wp-block-column">
+            <!-- wp:image {"sizeSlug":"large","linkDestination":"none","className":"rounded shadow"} -->
+            <figure class="wp-block-image size-large rounded shadow"><img src="https://via.placeholder.com/600x400" alt=""/></figure>
+            <!-- /wp:image -->
+        </div>
+        <!-- /wp:column -->
+    </div>
+    <!-- /wp:columns -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"align":"full","backgroundColor":"ast-global-color-0","textColor":"white","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignfull has-white-color has-ast-global-color-0-background-color has-text-color has-background">
+    <!-- wp:heading {"textAlign":"center","textColor":"white"} -->
+    <h2 class="wp-block-heading has-text-align-center has-white-color">Nuestros Valores</h2>
+    <!-- /wp:heading -->
+    <!-- wp:columns {"align":"wide","style":{"spacing":{"padding":{"top":"40px","bottom":"40px"}}}} -->
+    <div class="wp-block-columns alignwide" style="padding-top:40px;padding-bottom:40px">
+        <!-- wp:column {"className":"has-text-align-center"} -->
+        <div class="wp-block-column has-text-align-center">
+            <!-- wp:heading {"level":4,"textColor":"white"} -->
+            <h4 class="wp-block-heading has-white-color">Solidaridad</h4>
+            <!-- /wp:heading -->
+        </div>
+        <!-- /wp:column -->
+        <!-- wp:column {"className":"has-text-align-center"} -->
+        <div class="wp-block-column has-text-align-center">
+            <!-- wp:heading {"level":4,"textColor":"white"} -->
+            <h4 class="wp-block-heading has-white-color">Integridad</h4>
+            <!-- /wp:heading -->
+        </div>
+        <!-- /wp:column -->
+        <!-- wp:column {"className":"has-text-align-center"} -->
+        <div class="wp-block-column has-text-align-center">
+            <!-- wp:heading {"level":4,"textColor":"white"} -->
+            <h4 class="wp-block-heading has-white-color">Pasión</h4>
+            <!-- /wp:heading -->
+        </div>
+        <!-- /wp:column -->
+    </div>
+    <!-- /wp:columns -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:shortcode -->
+[fjp_alliances_loop title="Nuestros Aliados"]
+<!-- /wp:shortcode -->
+```
+
+---
+
+## 5. Bloques de Página: Donaciones
+
+```html
+<!-- wp:cover {"url":"https://via.placeholder.com/1920x600","dimRatio":50,"overlayColor":"ast-global-color-1","align":"full"} -->
+<div class="wp-block-cover alignfull">
+    <span aria-hidden="true" class="wp-block-cover__background has-ast-global-color-1-background-color has-background-dim-50 has-background-dim"></span>
+    <img class="wp-block-cover__image-background" src="https://via.placeholder.com/1920x600" alt="" data-object-fit="cover"/>
+    <div class="wp-block-cover__inner-container">
+        <!-- wp:heading {"textAlign":"center","level":1,"textColor":"white"} -->
+        <h1 class="wp-block-heading has-text-align-center has-white-color has-text-color">Tu Aporte Cambia Vidas</h1>
+        <!-- /wp:heading -->
+    </div>
+</div>
+<!-- /wp:cover -->
+
+<!-- wp:group {"align":"wide","style":{"spacing":{"padding":{"top":"60px","bottom":"60px"}}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignwide" style="padding-top:60px;padding-bottom:60px">
+    <!-- wp:heading {"textAlign":"center","style":{"spacing":{"margin":{"bottom":"40px"}}}} -->
+    <h2 class="wp-block-heading has-text-align-center" style="margin-bottom:40px">¿Cómo ayudar?</h2>
+    <!-- /wp:heading -->
+
+    <!-- wp:shortcode -->
+    [fjp_donation_options]
+    <!-- /wp:shortcode -->
+</div>
+<!-- /wp:group -->
+```
+
+---
+
+## 6. Bloques de Página: Noticias
+
+```html
+<!-- wp:group {"align":"wide","style":{"spacing":{"padding":{"top":"60px","bottom":"60px"}}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignwide" style="padding-top:60px;padding-bottom:60px">
+    <!-- wp:heading {"level":1,"style":{"spacing":{"margin":{"bottom":"40px"}}}} -->
+    <h1 class="wp-block-heading" style="margin-bottom:40px">Noticias y Actualidad</h1>
+    <!-- /wp:heading -->
+
+    <!-- wp:shortcode -->
+    [fjp_news_loop posts="9"]
+    <!-- /wp:shortcode -->
+</div>
+<!-- /wp:group -->
+```
+
+---
+
+## Anexo: Shortcodes Disponibles
+
+Si necesita insertar funcionalidades específicas en cualquier lugar:
+
+*   `[fjp_volunteer_form]`: Formulario de inscripción.
+*   `[fjp_news_loop posts="3"]`: Grilla de noticias.
+*   `[fjp_testimonials_loop]`: Slider de testimonios.
+*   `[fjp_volunteer_testimonials]`: Testimonios de voluntarios (requiere configurar la página).
+*   `[fjp_alliances_loop]`: Logos de aliados.
+*   `[fjp_contador_impacto]`: Contadores animados.
+*   `[fjp_donation_options]`: Opciones de donación.
