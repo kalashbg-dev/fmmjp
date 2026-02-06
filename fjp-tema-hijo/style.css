@@ -12,25 +12,22 @@ Domain Path: /languages
    1. DESIGN TOKENS (VARIABLES)
    ========================================= */
 :root {
-    /* Use Astra/WordPress Global Color Variables for easy customization in Editor */
-    --fjp-primary: var(--wp--preset--color--primary, #F2385A);
-    --fjp-secondary: var(--wp--preset--color--secondary, #D95F76);
-    --fjp-teal: var(--wp--preset--color--cyan-bluish-gray, #5BD9D9); /* Default fallback mapped to 'cyan-bluish-gray' or similar standard slug */
-    --fjp-green: var(--wp--preset--color--vivid-green-cyan, #56BF66);
-    --fjp-text: var(--wp--preset--color--black, #333333);
-    --fjp-background: var(--wp--preset--color--white, #F2F2F2);
-    --fjp-white: #ffffff;
+    /* Mapped to theme.json Presets for Consistency */
+    --fjp-primary: var(--wp--preset--color--fjp-primary, #F2385A);
+    --fjp-secondary: var(--wp--preset--color--fjp-secondary, #D95F76);
+    --fjp-teal: var(--wp--preset--color--fjp-teal, #5BD9D9);
+    --fjp-green: var(--wp--preset--color--fjp-green, #56BF66);
+    --fjp-text: var(--wp--preset--color--fjp-text, #333333);
+    --fjp-background: var(--wp--preset--color--fjp-background, #F2F2F2);
+    --fjp-white: var(--wp--preset--color--fjp-white, #FFFFFF);
 
     /* Gradients */
     --fjp-gradient: linear-gradient(135deg, var(--fjp-primary) 0%, var(--fjp-secondary) 100%);
-    --fjp-gradient-teal: linear-gradient(135deg, var(--fjp-teal) 0%, var(--fjp-green) 100%);
 
-    /* Spacing & Radius */
+    /* UI Helpers */
     --fjp-radius-md: 15px;
     --fjp-radius-lg: 20px;
     --fjp-radius-pill: 50px;
-
-    /* Shadows */
     --fjp-shadow-md: 0 4px 15px rgba(0, 0, 0, 0.08);
     --fjp-shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
@@ -42,24 +39,29 @@ body {
     background-color: var(--fjp-background);
 }
 
-/* Buttons - Inherit global color but enforce shape */
+/*
+   Button Shapes ONLY.
+   Colors are handled by Gutenberg/Astra classes (has-background, etc).
+   We only enforce shape and hover lift here.
+*/
+.wp-block-button__link.btn-fjp-primary,
 .btn-fjp-primary {
-    background: var(--fjp-primary);
-    color: var(--fjp-white) !important;
     border-radius: var(--fjp-radius-pill);
     padding: 12px 30px;
     border: none;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
 }
 
+.wp-block-button__link.btn-fjp-primary:hover,
 .btn-fjp-primary:hover {
     transform: translateY(-2px);
+    -webkit-transform: translateY(-2px);
     box-shadow: var(--fjp-shadow-md);
     opacity: 0.9;
 }
 
 /* =========================================
-   3. SHORTCODE COMPONENTS
+   3. SHORTCODE COMPONENTS (Responsive)
    ========================================= */
 
 /* Volunteer Form */
@@ -73,6 +75,15 @@ body {
     box-shadow: var(--fjp-shadow-lg);
 }
 
+@media (max-width: 768px) {
+    .voluntariado-formulario {
+        padding: 40px 0;
+    }
+    .formulario-container {
+        padding: 20px;
+    }
+}
+
 /* Counters */
 .fjp-counter-section {
     padding: 60px 0;
@@ -83,15 +94,26 @@ body {
     border-radius: var(--fjp-radius-md);
     box-shadow: var(--fjp-shadow-md);
     transition: transform 0.3s ease;
+    margin-bottom: 20px; /* Mobile spacing */
 }
 .fjp-counter:hover {
     transform: translateY(-5px);
+    -webkit-transform: translateY(-5px);
 }
 .fjp-counter-number {
     display: block;
     font-size: 3rem;
     font-weight: 800;
     color: var(--fjp-primary);
+}
+
+@media (max-width: 768px) {
+    .fjp-counter-number {
+        font-size: 2.5rem;
+    }
+    .fjp-counter {
+        padding: 20px;
+    }
 }
 
 /* Cards (Generic) */
@@ -101,12 +123,18 @@ body {
     box-shadow: var(--fjp-shadow-md);
     overflow: hidden;
     transition: transform 0.3s;
+    height: 100%; /* Equal height in flex */
 }
 .fjp-card:hover {
     transform: translateY(-5px);
+    -webkit-transform: translateY(-5px);
 }
 
-/* Header Utilities */
+/* =========================================
+   4. HEADER UTILITIES (Mobile Safe)
+   ========================================= */
+
+/* Transparent Header */
 .fjp-transparent-header .site-header {
     position: absolute;
     width: 100%;
@@ -117,11 +145,28 @@ body {
     border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-.fjp-sticky-header .site-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 999;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+/* Sticky Header - Desktop */
+@media (min-width: 992px) {
+    .fjp-sticky-header .site-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 999;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* Sticky Header - Mobile Adjustment */
+@media (max-width: 991px) {
+    /* Optional: Disable sticky on mobile if content is dense,
+       or keep it but ensure menu doesn't overflow */
+    .fjp-sticky-header .site-header {
+        position: relative; /* Default back to relative if sticky is annoying on small screens */
+    }
+
+    /* If transparency causes readibility issues on mobile hero images */
+    .fjp-transparent-header .site-header {
+        border-bottom: none;
+    }
 }
