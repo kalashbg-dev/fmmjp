@@ -90,7 +90,8 @@ body {
 }
 .fjp-counter {
     padding: 30px;
-    background: var(--fjp-white);
+    background-color: #ffffff; /* Fallback for Firefox */
+    background-color: var(--fjp-white);
     border-radius: var(--fjp-radius-md);
     box-shadow: var(--fjp-shadow-md);
     transition: transform 0.3s ease;
@@ -151,7 +152,8 @@ body {
         position: fixed;
         top: 0;
         left: 0;
-        width: 100%;
+        right: 0; /* Ensures full width without 100vw scrollbar issues */
+        width: auto;
         z-index: 999;
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }

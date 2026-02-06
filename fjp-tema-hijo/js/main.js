@@ -47,10 +47,18 @@ jQuery(document).ready(function($) {
     var counters = document.querySelectorAll('.fjp-counter-number');
 
     if (counters.length > 0) {
+        // Fallback for browsers without IntersectionObserver
+        if (!('IntersectionObserver' in window)) {
+            counters.forEach(function(c) {
+                c.innerHTML = c.getAttribute('data-target');
+            });
+            return;
+        }
+
         var observerOptions = {
             root: null,
             rootMargin: '0px',
-            threshold: 0.1
+            threshold: 0 // Trigger as soon as 1 pixel is visible
         };
 
         var counterObserver = new IntersectionObserver(function(entries, observer) {
