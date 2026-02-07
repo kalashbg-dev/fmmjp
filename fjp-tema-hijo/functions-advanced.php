@@ -71,31 +71,6 @@ add_filter('the_content', 'fjp_add_lazy_loading_attribute');
 // 3. UI ENHANCEMENTS & ASTRA HOOKS
 // ==========================================
 
-/**
- * WhatsApp Floating Button (Hooked into Astra Footer)
- */
-function fjp_whatsapp_floating_button() {
-    if (is_admin()) return;
-
-    // Get Customizer Values
-    $whatsapp_number = get_theme_mod('fjp_whatsapp_number', '+5491134567890');
-    $whatsapp_message = get_theme_mod('fjp_whatsapp_message', __('Hola, quisiera obtener más información.', 'fjp'));
-
-    ?>
-    <div class="whatsapp-flotante">
-        <a href="https://wa.me/<?php echo esc_attr(str_replace(['+', ' ', '-'], '', $whatsapp_number)); ?>?text=<?php echo urlencode($whatsapp_message); ?>"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="whatsapp-btn"
-           aria-label="<?php esc_attr_e('Chat on WhatsApp', 'fjp'); ?>">
-            <i class="fab fa-whatsapp"></i>
-            <span class="screen-reader-text"><?php _e('Chat on WhatsApp', 'fjp'); ?></span>
-        </a>
-    </div>
-    <?php
-}
-// Hook into wp_footer to ensure it is outside main wrappers
-add_action('wp_footer', 'fjp_whatsapp_floating_button');
 
 
 // ==========================================

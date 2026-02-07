@@ -91,38 +91,6 @@ function fjp_customize_register($wp_customize) {
         'section'     => 'fjp_hooks_options',
         'type'        => 'textarea',
     ));
-
-    // 5. Sección WhatsApp Flotante
-    $wp_customize->add_section('fjp_whatsapp_options', array(
-        'title'       => __('Botón de WhatsApp', 'fjp'),
-        'description' => __('Configura el botón flotante de contacto.', 'fjp'),
-        'panel'       => 'fjp_global_settings',
-    ));
-
-    // Setting: Número
-    $wp_customize->add_setting('fjp_whatsapp_number', array(
-        'default'           => '+5491134567890',
-        'sanitize_callback' => 'sanitize_text_field',
-    ));
-
-    $wp_customize->add_control('fjp_whatsapp_number', array(
-        'label'       => __('Número de WhatsApp', 'fjp'),
-        'description' => __('Incluye el código de país (ej: +54...)', 'fjp'),
-        'section'     => 'fjp_whatsapp_options',
-        'type'        => 'text',
-    ));
-
-    // Setting: Mensaje
-    $wp_customize->add_setting('fjp_whatsapp_message', array(
-        'default'           => __('Hola, quisiera más información.', 'fjp'),
-        'sanitize_callback' => 'sanitize_textarea_field',
-    ));
-
-    $wp_customize->add_control('fjp_whatsapp_message', array(
-        'label'       => __('Mensaje Predeterminado', 'fjp'),
-        'section'     => 'fjp_whatsapp_options',
-        'type'        => 'textarea',
-    ));
 }
 add_action('customize_register', 'fjp_customize_register');
 
