@@ -82,7 +82,7 @@ function fjp_whatsapp_floating_button() {
     $whatsapp_message = get_theme_mod('fjp_whatsapp_message', __('Hola, quisiera obtener más información.', 'fjp'));
 
     ?>
-    <div id="whatsapp-flotante" class="whatsapp-flotante" style="display:none;">
+    <div class="whatsapp-flotante">
         <a href="https://wa.me/<?php echo esc_attr(str_replace(['+', ' ', '-'], '', $whatsapp_number)); ?>?text=<?php echo urlencode($whatsapp_message); ?>"
            target="_blank"
            rel="noopener noreferrer"
@@ -92,19 +92,10 @@ function fjp_whatsapp_floating_button() {
             <span class="screen-reader-text"><?php _e('Chat on WhatsApp', 'fjp'); ?></span>
         </a>
     </div>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var whatsappFlotante = document.getElementById('whatsapp-flotante');
-        setTimeout(function() {
-            if(whatsappFlotante) whatsappFlotante.style.display = 'block';
-        }, 2000);
-    });
-    </script>
     <?php
 }
-// Hook into Astra Footer Before to avoid structural issues
-add_action('astra_footer_before', 'fjp_whatsapp_floating_button');
+// Hook into wp_footer to ensure it is outside main wrappers
+add_action('wp_footer', 'fjp_whatsapp_floating_button');
 
 
 // ==========================================
